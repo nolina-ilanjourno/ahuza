@@ -14,6 +14,8 @@ Route::get('/articles', [ArticleController::class, 'index'])->name('articles.ind
 Route::middleware('auth')->prefix('/dashboard')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
+    Route::patch('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
     Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
     Route::get('/faq', [FAQController::class, 'index'])->name('faqs.index');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

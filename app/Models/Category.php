@@ -13,6 +13,12 @@ class Category extends Model
 {
     use HasFactory, HasUuids, HasTraduction, SoftDeletes;
 
+    protected $fillable = [
+        'label',
+        'background_color',
+        'text_color',
+    ];
+
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? null, fn ($query, string $search) =>

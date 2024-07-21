@@ -1,5 +1,11 @@
 import Traduction from "./Traduction";
 
+export interface CategoryForm {
+    label: string;
+    text_color: string;
+    background_color: string;
+    traductions: Partial<Traduction>[];
+}
 export default interface Category {
     id: string;
     label: string;

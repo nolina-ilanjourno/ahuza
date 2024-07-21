@@ -1,3 +1,8 @@
+export interface TraductionForm {
+    langue: string;
+    traduction: string;
+}
+
 export default interface Traduction {
     id: string;
     langue: string;

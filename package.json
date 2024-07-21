@@ -8,7 +8,6 @@
     "devDependencies": {
         "@headlessui/react": "^2.0.0",
         "@inertiajs/react": "^1.0.0",
-        "@tailwindcss/forms": "^0.5.7",
         "@types/lodash": "^4.17.6",
         "@types/node": "^18.13.0",
         "@types/react": "^18.0.28",
@@ -39,6 +38,6 @@
     "dependencies": {
         "bootstrap": "^5.3.3",
         "bootstrap-icons": "^1.11.3",
-        "tailwindcss": "^3.4.4"
+        "react-use": "^17.5.1"
     }
 }

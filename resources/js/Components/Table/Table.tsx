@@ -53,34 +53,30 @@ export default function Table<T>({
                                     return (
                                         <td
                                             key={column.name}
-                                            className="border-top"
+                                            className="border-top align-content-center"
                                         >
-                                            <a
+                                            <Link
                                                 tabIndex={-1}
                                                 href={
                                                     getRowDetailsUrl?.(
                                                         row
                                                     ) as string
                                                 }
-                                                className="d-flex align-items-center px-3 py-2"
                                             >
                                                 {column.renderCell?.(row) ??
                                                     get(row, column.name) ??
                                                     "N/A"}
-                                            </a>
+                                            </Link>
                                         </td>
                                     );
                                 })}
-                                <td className="border-top">
-                                    <a
-                                        href={getRowDetailsUrl?.(row)!}
-                                        className="d-flex align-items-center px-3"
-                                    >
+                                <td className="border-top align-content-center">
+                                    <Link href={getRowDetailsUrl?.(row)!}>
                                         <ChevronRight
                                             size={24}
                                             className="text-secondary"
                                         />
-                                    </a>
+                                    </Link>
                                 </td>
                             </tr>
                         );

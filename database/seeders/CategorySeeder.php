@@ -14,12 +14,14 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        Category::create([
+        for ($i = 0; $i < 10; $i++) {
+            Category::create([
             'label' => Str::random(10),
-        ])->traductions()->create([
-            'langue' => 'fr',
-            'traduction' => 'Catégorie 1',
-        ]);
+            ])->traductions()->create([
+                'langue' => ['fr', 'en'][rand(0, 1)],
+                'traduction' => Str::random(10),
+            ]);
+        }
 
 
     }
