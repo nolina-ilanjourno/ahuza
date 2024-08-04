@@ -1,6 +1,6 @@
 import { Link } from "@inertiajs/react";
 import get from "lodash/get";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, EyeIcon } from "lucide-react";
 
 interface TableProps<T> {
     columns: {
@@ -23,6 +23,7 @@ export default function Table<T>({
             <table className="table table-hover">
                 <thead>
                     <tr className="fw-bold text-start">
+                        <th className="px-3 py-3">Actions</th>
                         {columns?.map((column) => (
                             <th
                                 key={column.label}
@@ -49,6 +50,17 @@ export default function Table<T>({
                     {rows?.map((row, index) => {
                         return (
                             <tr key={index}>
+                                <td className="border-top align-content-center">
+                                    <Link
+                                        href={getRowDetailsUrl?.(row)!}
+                                        className="bg-primary p-2 rounded"
+                                    >
+                                        <EyeIcon
+                                            size={24}
+                                            className="text-white"
+                                        />
+                                    </Link>
+                                </td>
                                 {columns.map((column) => {
                                     return (
                                         <td
@@ -70,14 +82,6 @@ export default function Table<T>({
                                         </td>
                                     );
                                 })}
-                                <td className="border-top align-content-center">
-                                    <Link href={getRowDetailsUrl?.(row)!}>
-                                        <ChevronRight
-                                            size={24}
-                                            className="text-secondary"
-                                        />
-                                    </Link>
-                                </td>
                             </tr>
                         );
                     })}

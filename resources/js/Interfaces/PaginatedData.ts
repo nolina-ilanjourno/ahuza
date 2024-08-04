@@ -1,3 +1,9 @@
+export interface MetaLinks {
+    url: null | string;
+    label: string;
+    active: boolean;
+}
+
 type PaginatedData<T> = {
     data: T[];
     links: {
@@ -6,7 +12,6 @@ type PaginatedData<T> = {
         prev: string | null;
         next: string | null;
     };
-
     meta: {
         current_page: number;
         from: number;
@@ -15,12 +20,7 @@ type PaginatedData<T> = {
         per_page: number;
         to: number;
         total: number;
-
-        links: {
-            url: null | string;
-            label: string;
-            active: boolean;
-        }[];
+        links: MetaLinks[];
     };
 };
 

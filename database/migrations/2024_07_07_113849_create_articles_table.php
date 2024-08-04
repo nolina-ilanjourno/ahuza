@@ -15,8 +15,10 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('slug')->unique();
             $table->string('title');
-            $table->text('content');  // Pour stocker le contenu Markdown
+            $table->text('content');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

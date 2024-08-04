@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Inertia\InertiaHttpGateway;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Ssr\HttpGateway;
 
@@ -25,6 +26,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        JsonResource::withoutWrapping();
     }
 }

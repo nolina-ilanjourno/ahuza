@@ -1,54 +1,71 @@
-import Category, { CategoryForm } from "@/Interfaces/Category";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { PageProps } from "@/types";
+import SelectInput from "@/Components/Form/SelectInput";
+import Category, { type CategoryForm } from "@/Interfaces/Category";
 import { Transition } from "@headlessui/react";
-import { useForm } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 import classNames from "classnames";
-import { FormEventHandler, Fragment } from "react";
-import { Button, Form } from "react-bootstrap";
+import { ArrowLeft } from "lucide-react";
+import { FC, FormEventHandler, Fragment } from "react";
+import { Button, Card, Col, Form, Row } from "react-bootstrap";
 
-const CategoryEditView = ({
-    auth,
-    category,
-}: PageProps<{
-    mustVerifyEmail: boolean;
-    status?: string;
-    category: Category;
-}>) => {
-    const { data, setData, patch, errors, processing, recentlySuccessful } =
-        useForm<CategoryForm>({
-            label: category.label,
-            background_color: category.background_color,
-            text_color: category.text_color,
-            traductions: category.traductions,
-        });
+const CategoryForm: FC<{
+    category?: Category;
+}> = ({ category }) => {
+    const {
+        data,
+        setData,
+        patch,
+        post,
+        errors,
+        processing,
+        recentlySuccessful,
+    } = useForm<CategoryForm>({
+        label: category?.label ?? "",
+        background_color: category?.background_color ?? "",
+        text_color: category?.text_color ?? "",
+        traductions: category?.traductions ?? [],
+    });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        patch(route("categories.update", category.id));
+        if (category) {
+            return patch(route("categories.update", category.id));
+        }
+
+        return post(route("categories.store"));
     };
 
     return (
-        <AuthenticatedLayout user={auth.user}>
-            <div className="card border-0 shadow-sm mb-4">
-                <div className="card-body p-lg-5">
-                    <div className="mb-5">
-                        <h4 className="mb-1">Modification de la catégorie </h4>
-                        <p className="mb-0 fs-6">
-                            Edit your personal information and address.
-                        </p>
-                    </div>
-                    <Form
-                        noValidate
-                        className="row g-3 needs-validation"
-                        onSubmit={submit}
-                    >
-                        <div className="col-lg-6 col-md-12">
+        <Card className="border-0 shadow-sm mb-4">
+            <Card.Header>
+                <Link href={route("categories.index")}>
+                    <ArrowLeft size={16} />
+                </Link>
+                <div className="mt-3">
+                    <h4>
+                        {!!category
+                            ? "Modification de la catégorie"
+                            : "Création d'une catégorie"}
+                    </h4>
+                    <p className="mb-0 fs-6">
+                        {!!category
+                            ? `Catégorie numéro ${category.id}`
+                            : "Remplissez les informations de la catégorie"}
+                    </p>
+                </div>
+            </Card.Header>
+            <Card.Body>
+                <Form noValidate onSubmit={submit}>
+                    <Row className="g-3">
+                        <Col md={6}>
                             <Form.Group>
-                                <Form.Label htmlFor="label">Label</Form.Label>
+                                <Form.Label htmlFor="label">
+                                    Label <span className="text-danger">*</span>{" "}
+                                    :
+                                </Form.Label>
                                 <Form.Control
-                                    id="name"
-                                    className="mt-1 block w-full"
+                                    id="label"
+                                    name="label"
+                                    isInvalid={!!errors.label}
                                     value={data.label}
                                     onChange={(e) =>
                                         setData("label", e.target.value)
@@ -61,16 +78,19 @@ const CategoryEditView = ({
                                     {errors.label}
                                 </Form.Control.Feedback>
                             </Form.Group>
-                        </div>
-                        <div className="col-lg-6 col-md-12">
+                        </Col>
+                        <Col md={6}>
                             <Form.Group>
-                                <Form.Label htmlFor="profileLastNameInput">
-                                    Couleur de fond
+                                <Form.Label htmlFor="background_color">
+                                    Couleur de fond{" "}
+                                    <span className="text-danger">*</span> :
                                 </Form.Label>
                                 <Form.Control
-                                    id="email"
                                     type="color"
-                                    className="mt-1 w-100"
+                                    id="background_color"
+                                    name="background_color"
+                                    className="w-100"
+                                    isInvalid={!!errors.background_color}
                                     value={data.background_color}
                                     onChange={(e) =>
                                         setData(
@@ -85,20 +105,23 @@ const CategoryEditView = ({
                                     {errors.background_color}
                                 </Form.Control.Feedback>
                             </Form.Group>
-                        </div>
-                        <div className="col-lg-6 col-md-12">
+                        </Col>
+                        <Col md={12}>
                             <Form.Group>
-                                <Form.Label htmlFor="profileLastNameInput">
-                                    Couleur de texte
+                                <Form.Label htmlFor="text_color">
+                                    Couleur de texte{" "}
+                                    <span className="text-danger">*</span> :
                                 </Form.Label>
                                 <Form.Control
-                                    id="email"
                                     type="color"
-                                    className="mt-1 w-100"
+                                    id="text_color"
+                                    name="text_color"
                                     value={data.text_color}
                                     onChange={(e) =>
                                         setData("text_color", e.target.value)
                                     }
+                                    className="w-100"
+                                    isInvalid={!!errors.text_color}
                                     required
                                     autoComplete="off"
                                 />
@@ -106,9 +129,12 @@ const CategoryEditView = ({
                                     {errors.text_color}
                                 </Form.Control.Feedback>
                             </Form.Group>
-                        </div>
+                        </Col>
                         <hr className="my-4" />
-                        <div className="col-12 d-flex justify-content-between align-items-center mt-0">
+                        <Col
+                            lg={12}
+                            className="d-flex justify-content-between align-items-center"
+                        >
                             <h2 className="mb-0">Les traductions</h2>
                             <Button
                                 variant="primary"
@@ -126,13 +152,14 @@ const CategoryEditView = ({
                             >
                                 Ajouter
                             </Button>
-                        </div>
+                        </Col>
                         {data.traductions.map(
                             ({ id, traduction, langue }, index) => (
                                 <Fragment key={id}>
-                                    <div
+                                    <Col
+                                        lg={12}
                                         className={classNames(
-                                            "col-12 d-flex justify-content-between align-items-center",
+                                            "d-flex justify-content-between align-items-center",
                                             {
                                                 "border-top pt-4 mt-4":
                                                     index > 0,
@@ -155,16 +182,24 @@ const CategoryEditView = ({
                                         >
                                             Supprimer
                                         </Button>
-                                    </div>
-                                    <div className="col-lg-6 col-md-12">
+                                    </Col>
+                                    <Col lg={6} md={12}>
                                         <Form.Group>
-                                            <Form.Label htmlFor="profileFirstNameInput">
-                                                Traduction
+                                            <Form.Label
+                                                htmlFor={`traduction_${index}`}
+                                            >
+                                                Traduction{" "}
+                                                <span className="text-danger">
+                                                    *
+                                                </span>{" "}
+                                                :
                                             </Form.Label>
                                             <Form.Control
-                                                id="email"
-                                                className="mt-1 block w-full"
+                                                className="w-full"
+                                                id={`traduction_${index}`}
+                                                name={`traduction_${index}`}
                                                 value={traduction}
+                                                isInvalid={!!errors.traductions}
                                                 onChange={(e) =>
                                                     setData("traductions", [
                                                         ...data.traductions.slice(
@@ -190,16 +225,35 @@ const CategoryEditView = ({
                                                 {errors.traductions}
                                             </Form.Control.Feedback>
                                         </Form.Group>
-                                    </div>
-                                    <div className="col-lg-6 col-md-12">
+                                    </Col>
+                                    <Col lg={6} md={12}>
                                         <Form.Group>
-                                            <Form.Label htmlFor="profileFirstNameInput">
-                                                Langue
+                                            <Form.Label
+                                                htmlFor={`langue_${index}`}
+                                            >
+                                                Langue{" "}
+                                                <span className="text-danger">
+                                                    *
+                                                </span>{" "}
+                                                :
                                             </Form.Label>
-                                            <Form.Control
-                                                id="email"
-                                                className="mt-1 block w-full"
+                                            <SelectInput
+                                                id={`langue_${index}`}
+                                                name={`langue_${index}`}
+                                                aria-errormessage={
+                                                    errors.traductions
+                                                }
                                                 value={langue}
+                                                options={[
+                                                    {
+                                                        value: "fr",
+                                                        label: "Français",
+                                                    },
+                                                    {
+                                                        value: "en",
+                                                        label: "Anglais",
+                                                    },
+                                                ]}
                                                 onChange={(e) =>
                                                     setData("traductions", [
                                                         ...data.traductions.slice(
@@ -221,15 +275,12 @@ const CategoryEditView = ({
                                                 required
                                                 autoComplete="off"
                                             />
-                                            <Form.Control.Feedback type="invalid">
-                                                {errors.traductions}
-                                            </Form.Control.Feedback>
                                         </Form.Group>
-                                    </div>
+                                    </Col>
                                 </Fragment>
                             )
                         )}
-                        <div className="col-12 mt-4">
+                        <Col lg={12} className="mt-4">
                             <Button
                                 variant="primary"
                                 type="submit"
@@ -246,12 +297,12 @@ const CategoryEditView = ({
                             >
                                 <p className="text-sm text-gray-600">Saved.</p>
                             </Transition>
-                        </div>
-                    </Form>
-                </div>
-            </div>
-        </AuthenticatedLayout>
+                        </Col>
+                    </Row>
+                </Form>
+            </Card.Body>
+        </Card>
     );
 };
 
-export default CategoryEditView;
+export default CategoryForm;

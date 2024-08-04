@@ -19,11 +19,16 @@ class Category extends Model
         'text_color',
     ];
 
+    public function articles()
+    {
+        return $this->belongsToMany(Article::class)->using(ArticleCategory::class)->withTimestamps();
+    }
+
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? null, fn ($query, string $search) =>
             $query->where(fn ($query) =>
-                $query->where('name', 'like', '%'.$search.'%')
+                $query->where('label', 'like', '%'.$search.'%')
             )
         );
 
