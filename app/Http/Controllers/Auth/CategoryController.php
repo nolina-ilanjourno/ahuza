@@ -22,6 +22,7 @@ class CategoryController extends Controller
             'categories' => new CategoryCollection(
                 Category::with('traductions')
                 ->filter(Request::only('search', 'trashed'))
+                ->orderBy('created_at', 'desc')
                 ->paginate()
             ),
         ]);

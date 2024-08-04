@@ -49,6 +49,17 @@ export default function Authenticated({
                                         <li className="nav-item">
                                             <Link
                                                 className="nav-link"
+                                                href={route("articles.index")}
+                                            >
+                                                <i className="align-bottom bx bx-user"></i>
+                                                <span className="ms-2">
+                                                    Articles
+                                                </span>
+                                            </Link>
+                                        </li>
+                                        <li className="nav-item">
+                                            <Link
+                                                className="nav-link"
                                                 href={route("categories.index")}
                                             >
                                                 <i className="align-bottom bx bx-user"></i>
@@ -71,11 +82,11 @@ export default function Authenticated({
                                         <li className="nav-item">
                                             <Link
                                                 className="nav-link"
-                                                href={route("articles.index")}
+                                                href={route("images.index")}
                                             >
                                                 <i className="align-bottom bx bx-user"></i>
                                                 <span className="ms-2">
-                                                    Articles
+                                                    Images
                                                 </span>
                                             </Link>
                                         </li>

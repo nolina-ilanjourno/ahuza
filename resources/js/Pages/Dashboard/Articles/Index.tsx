@@ -95,7 +95,7 @@ const ArticlesView: FC<
             header: "Créé le",
             footer: (props) => props.column.id,
             accessorFn: ({ created_at }) =>
-                DateTime.fromISO(created_at).toFormat("dd-MM-yyyy"),
+                DateTime.fromISO(created_at).toFormat("dd-MM-yyyy HH:mm"),
             id: "created_at",
             cell: (info) => info.getValue(),
         },

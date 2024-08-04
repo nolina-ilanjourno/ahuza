@@ -1,43 +1,43 @@
 import IconButton from "@/Components/atoms/IconButton";
 import TableV2 from "@/Components/Table/TableV2";
-import Category from "@/Interfaces/Category";
+import type File from "@/Interfaces/File";
 import PaginatedData from "@/Interfaces/PaginatedData";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
 import { router } from "@inertiajs/react";
 import { ColumnDef } from "@tanstack/react-table";
-import classNames from "classnames";
 import { DateTime } from "luxon";
-import { Fragment } from "react";
-import { Badge } from "react-bootstrap";
+import { Fragment, useRef } from "react";
+import { Image } from "react-bootstrap";
+import { useCopyToClipboard } from "react-use";
 
-export default function CategoriesView({
+export default function ImagesView({
     auth,
-    categories: {
+    images: {
         data,
         meta: { links },
     },
 }: PageProps<{
-    mustVerifyEmail: boolean;
-    status?: string;
-    categories: PaginatedData<Category>;
+    images: PaginatedData<File>;
 }>) {
+    const [_, copy] = useCopyToClipboard();
+
     const onDelete = (id: string) => {
-        if (confirm("Êtes-vous sûr de vouloir supprimer cette catégorie ?")) {
-            return router.delete(route("categories.destroy", id));
+        if (confirm("Êtes-vous sûr de vouloir supprimer cette image ?")) {
+            return router.delete(route("images.destroy", id));
         }
     };
 
-    const columns: ColumnDef<Category>[] = [
+    const columns = useRef<ColumnDef<File>[]>([
         {
             header: "Actions",
             footer: (props) => props.column.id,
-            accessorFn: ({ id }) => (
+            accessorFn: ({ id, link }) => (
                 <Fragment>
                     <IconButton
                         size="sm"
                         icon="eye"
-                        href={route("categories.edit", id)}
+                        href={route("images.edit", id)}
                     />
                     <IconButton
                         size="sm"
@@ -46,6 +46,13 @@ export default function CategoriesView({
                         variant="danger"
                         onClick={() => onDelete(id)}
                     />
+                    <IconButton
+                        size="sm"
+                        icon="copy"
+                        className="ms-1"
+                        variant="secondary"
+                        onClick={() => copy(link)}
+                    />
                 </Fragment>
             ),
             cell: (info) => info.getValue(),
@@ -53,26 +60,17 @@ export default function CategoriesView({
         {
             header: "Label",
             footer: (props) => props.column.id,
-            accessorFn: ({ label }) => label,
+            accessorFn: ({ label }) => label ?? "N/A",
             id: "label",
             cell: (info) => info.getValue(),
         },
         {
-            header: "Traductions",
+            header: "Aperçu",
             footer: (props) => props.column.id,
-            accessorFn: ({ traductions }) =>
-                traductions.map((traduction, index) => (
-                    <Badge
-                        key={traduction.id}
-                        className={classNames({
-                            "ms-1": index > 0,
-                        })}
-                    >
-                        {traduction.traduction} (
-                        {traduction.langue.toUpperCase()})
-                    </Badge>
-                )),
-            id: "traductions",
+            accessorFn: ({ link }) => (
+                <Image src={link} thumbnail width={100} />
+            ),
+            id: "link",
             cell: (info) => info.getValue(),
         },
         {
@@ -83,11 +81,11 @@ export default function CategoriesView({
             id: "created_at",
             cell: (info) => info.getValue(),
         },
-    ];
+    ]).current;
 
     return (
         <AuthenticatedLayout user={auth.user}>
-            <TableV2<Category> data={data} columns={columns} links={links} />
+            <TableV2<File> data={data} columns={columns} links={links} />
         </AuthenticatedLayout>
     );
 }

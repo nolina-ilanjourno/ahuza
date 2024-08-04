@@ -145,7 +145,7 @@ const CategoryForm: FC<{
                                         {
                                             id: Math.random().toString(),
                                             traduction: "",
-                                            langue: "",
+                                            langue: "fr",
                                         },
                                     ])
                                 }

@@ -3,7 +3,7 @@ import api from "./api";
 import Category from "@/Interfaces/Category";
 import Filters from "@/Interfaces/Fetch";
 
-export const profilesApi = api.injectEndpoints({
+export const categoriesApi = api.injectEndpoints({
     endpoints: (build) => ({
         getCategories: build.query<PaginatedData<Category>, Filters>({
             query: (params) => ({
@@ -15,4 +15,5 @@ export const profilesApi = api.injectEndpoints({
     overrideExisting: true,
 });
 
-export const { useGetCategoriesQuery, useLazyGetCategoriesQuery } = profilesApi;
+export const { useGetCategoriesQuery, useLazyGetCategoriesQuery } =
+    categoriesApi;

@@ -6,6 +6,7 @@ import useLoadOptions from "@/Hooks/useLoadOptions";
 import Article, { type ArticleForm } from "@/Interfaces/Article";
 import { Transition } from "@headlessui/react";
 import { Link, router, useForm } from "@inertiajs/react";
+import classNames from "classnames";
 import { ArrowLeft } from "lucide-react";
 import { FC, FormEventHandler } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
@@ -69,7 +70,11 @@ const ArticleForm: FC<{
                             ? "Modification de l'article"
                             : "Création d'un article"}
                     </h4>
-                    <p className="mb-0 fs-6">
+                    <p
+                        className={classNames("mb-0 fs-6", {
+                            "mb-3": article?.deleted_at,
+                        })}
+                    >
                         {!!article
                             ? `Article numéro ${article.id}`
                             : "Remplissez les informations de l'article"}
@@ -153,6 +158,7 @@ const ArticleForm: FC<{
                                             onEditorChange={(content: string) =>
                                                 setData("content", content)
                                             }
+                                            value={data.content}
                                         />
                                     </Col>
                                 </Row>

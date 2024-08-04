@@ -11,11 +11,8 @@ import SocialNetworks from "@/Components/Sections/SocialNetworks";
 import Whatsapp from "@/Components/Sections/Whatsapp";
 import Navigation from "@/Components/Layouts/Navbar";
 import Footer from "@/Components/Layouts/Footer";
-export default function Welcome({
-    auth,
-    laravelVersion,
-    phpVersion,
-}: PageProps<{ laravelVersion: string; phpVersion: string }>) {
+
+export default function Welcome() {
     return (
         <main>
             <Head title="Welcome" />

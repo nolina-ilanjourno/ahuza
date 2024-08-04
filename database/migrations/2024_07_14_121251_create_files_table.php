@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('label')->nullable();
+            $table->string('name');
+            $table->bigInteger('size');
+            $table->string('mime_type');
+            $table->text('link');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

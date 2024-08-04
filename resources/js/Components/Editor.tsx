@@ -1,17 +1,17 @@
 import { useForm } from "@inertiajs/react";
 import { Editor as TinEditor, IAllProps } from "@tinymce/tinymce-react";
-import axios from "axios";
 import { FC, Fragment, useRef, useState } from "react";
 import Loader from "./Loader";
+import { useStoreFileMutation } from "@/Services/files";
 
 const Editor: FC<
     Partial<Omit<IAllProps, "apiKey" | "init" | "initialValue">>
-> = (props) => {
+> = ({ value, ...props }) => {
+    const [storeFileMutation] = useStoreFileMutation();
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const { post, transform } = useForm();
     const editorRef = useRef<TinEditor>(null);
     const template = useRef<string>(`
-        <div class="container">
+        <div>
             <header>
                 <h1>[Article Title]</h1>
                 <p>[Author Name], [Author Title]</p>
@@ -65,10 +65,10 @@ const Editor: FC<
     `).current;
 
     const images_upload_handler = async (blobInfo: any): Promise<string> => {
-        return new Promise((resolve, reject) => {
-            transform(() => ({ file: blobInfo.blob() }));
-            axios.post(route("files.store"), {});
-        });
+        const formData = new FormData();
+        formData.append("file", blobInfo.blob());
+        const data = await storeFileMutation(formData).unwrap();
+        return data.link;
     };
 
     return (
@@ -81,12 +81,14 @@ const Editor: FC<
                 init={{
                     height: 900,
                     images_upload_handler,
+                    images_reuse_filename: true,
                     plugins:
                         "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker",
                     toolbar:
                         "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat",
                 }}
-                initialValue={template}
+                initialValue={!value ? template : undefined}
+                value={value}
                 {...props}
             />
         </Fragment>
