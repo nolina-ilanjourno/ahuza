@@ -5,25 +5,21 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FileStoreRequest;
 use App\Models\File;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Storage;
 
 class FileStorageController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+      public function index()
     {
-        
+        return new ResourceCollection(File::paginate()
+        ->appends(Request::all()));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(FileStoreRequest $request)
     {
-        $name = $request->file('file')->store();
+         $name = $request->file('file')->store();
 
         $file = File::create([
             'label' => $request->label,
@@ -32,31 +28,7 @@ class FileStorageController extends Controller
             'mime_type' => $request->file('file')->getMimeType(),
             'link' => Storage::url($name),
         ]);
-        
+
         return $file;
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

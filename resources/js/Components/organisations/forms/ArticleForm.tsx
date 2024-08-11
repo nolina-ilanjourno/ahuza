@@ -1,21 +1,24 @@
 import Editor from "@/Components/Editor";
+import SelectInput from "@/Components/Form/SelectInput";
 import TrashedMessage from "@/Components/molecules/Messages/TrashedMessage";
 import Select from "@/Components/Select";
+import LANGUES from "@/Constants/langues";
 import { slugify } from "@/Helpers/utils";
 import useLoadOptions from "@/Hooks/useLoadOptions";
 import Article, { type ArticleForm } from "@/Interfaces/Article";
+import File from "@/Interfaces/File";
 import { Transition } from "@headlessui/react";
 import { Link, router, useForm } from "@inertiajs/react";
 import classNames from "classnames";
 import { ArrowLeft } from "lucide-react";
-import { FC, FormEventHandler } from "react";
-import { Button, Card, Col, Form, Row } from "react-bootstrap";
+import { FC, FormEventHandler, Fragment } from "react";
+import { Button, Card, Col, Form, Image, Row } from "react-bootstrap";
+import { OptionProps, SingleValueProps, components } from "react-select";
 
 const ArticleForm: FC<{
     article?: Article;
 }> = ({ article }) => {
-    const { loadCategoriesLazy } = useLoadOptions();
-
+    const { loadCategoriesLazy, loadFilesLazy } = useLoadOptions();
     const {
         data,
         setData,
@@ -25,10 +28,18 @@ const ArticleForm: FC<{
         post,
         patch,
     } = useForm<ArticleForm>({
+        illustration_id: article?.illustration_id ?? null,
         title: article?.title ?? "",
         slug: article?.slug ?? "",
+        published_at: article?.published_at ?? null,
         category_ids: article?.categories.map((c) => c.id) ?? [],
-        content: article?.content ?? "",
+        traductions: article?.traductions ?? [
+            {
+                id: Math.random().toString(),
+                traduction: "",
+                langue: "fr",
+            },
+        ],
     });
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,52 +51,115 @@ const ArticleForm: FC<{
         }));
     };
 
+    const addTraduction = () => {
+        setData("traductions", [
+            ...data.traductions,
+            {
+                id: Math.random().toString(),
+                traduction: "",
+                langue: "fr",
+            },
+        ]);
+    };
+
+    const setDataTraductions = (index: number, name: string, value: string) => {
+        setData("traductions", [
+            ...data.traductions.slice(0, index),
+            {
+                ...data.traductions[index],
+                [name]: value,
+            },
+            ...data.traductions.slice(index + 1),
+        ]);
+    };
+
+    const removeTraduction = (index: number) => {
+        setData(
+            "traductions",
+            data.traductions.filter((_, i) => i !== index)
+        );
+    };
+
     const restore = () => {
         if (
             article &&
             confirm("Are you sure you want to restore this contact?")
         ) {
-            router.put(route("articles.restore", article.id));
+            router.put(route("dashboard.articles.restore", article.id));
         }
+    };
+
+    const SingleValue = ({ children, ...props }: SingleValueProps<File>) => (
+        <components.SingleValue {...props}>
+            <Image
+                src={props.data.link}
+                alt={props.data.label}
+                width={50}
+                height={50}
+                className="me-2"
+            />
+            <span>{children}</span>
+        </components.SingleValue>
+    );
+
+    const Option = (props: OptionProps<File>) => {
+        return (
+            <components.Option {...props}>
+                <Image
+                    src={props.data.link}
+                    alt={props.data.label}
+                    width={50}
+                    height={50}
+                    className="me-2"
+                />
+                <span>{props.data.label}</span>
+            </components.Option>
+        );
     };
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
         if (article) {
-            return patch(route("articles.update", article.id));
+            return patch(route("dashboard.articles.update", article.id));
         }
 
-        return post(route("articles.store"));
+        return post(route("dashboard.articles.store"));
     };
 
     return (
         <Card className="border-0 shadow-sm mb-4">
             <Card.Header>
-                <Link href={route("articles.index")}>
+                <Link href={route("dashboard.articles.index")}>
                     <ArrowLeft size={16} />
                 </Link>
-                <div className="mt-3">
-                    <h4>
-                        {!!article
-                            ? "Modification de l'article"
-                            : "Création d'un article"}
-                    </h4>
-                    <p
-                        className={classNames("mb-0 fs-6", {
-                            "mb-3": article?.deleted_at,
-                        })}
-                    >
-                        {!!article
-                            ? `Article numéro ${article.id}`
-                            : "Remplissez les informations de l'article"}
-                    </p>
-                    {article?.deleted_at && (
-                        <TrashedMessage
-                            message="Cet article a été supprimé."
-                            onRestore={restore}
+                <div className="d-flex align-items-center mt-3">
+                    {article?.illustration && (
+                        <Image
+                            src={article.illustration.link}
+                            alt="Preview"
+                            width={100}
+                            className="me-3"
                         />
                     )}
+                    <div>
+                        <h4>
+                            {!!article
+                                ? "Modification de l'article"
+                                : "Création d'un article"}
+                        </h4>
+                        <p className="mb-0 fs-6">
+                            {!!article
+                                ? `Article numéro ${article.id}`
+                                : "Remplissez les informations de l'article"}
+                        </p>
+                    </div>
                 </div>
+                {article?.deleted_at && (
+                    <TrashedMessage
+                        message="Cet article a été supprimé."
+                        onRestore={restore}
+                    />
+                )}
             </Card.Header>
             <Card.Body>
                 <Form noValidate onSubmit={submit}>
@@ -93,7 +167,54 @@ const ArticleForm: FC<{
                         <Col md={6}>
                             <Form.Group>
                                 <Form.Label>
-                                    Titre <span className="text-danger">*</span>
+                                    Image d'illustration{" "}
+                                    <span className="text-danger">*</span> :
+                                </Form.Label>
+                                <Select
+                                    loadOptions={loadFilesLazy}
+                                    getOptionValue={(option) => option.id}
+                                    getOptionLabel={(option) => option.label}
+                                    defaultOptions
+                                    isMulti={false}
+                                    components={{
+                                        Option,
+                                        SingleValue,
+                                    }}
+                                    defaultValue={article?.illustration}
+                                    aria-errormessage={errors.illustration_id}
+                                    onChange={(value) =>
+                                        setData(
+                                            "illustration_id",
+                                            value?.id ?? null
+                                        )
+                                    }
+                                />
+                            </Form.Group>
+                        </Col>
+                        <Col md={6}>
+                            <Form.Group>
+                                <Form.Label>Date de publication</Form.Label>
+                                <Form.Control
+                                    type="date"
+                                    name="published_at"
+                                    value={
+                                        data.published_at
+                                            ? new Date(data.published_at)
+                                                  .toISOString()
+                                                  .split("T")[0]
+                                            : ""
+                                    }
+                                    onChange={(e) =>
+                                        setData("published_at", e.target.value)
+                                    }
+                                />
+                            </Form.Group>
+                        </Col>
+                        <Col lg={12}>
+                            <Form.Group>
+                                <Form.Label>
+                                    Titre <span className="text-danger">*</span>{" "}
+                                    :
                                 </Form.Label>
                                 <Form.Control
                                     type="text"
@@ -108,9 +229,12 @@ const ArticleForm: FC<{
                                 </Form.Control.Feedback>
                             </Form.Group>
                         </Col>
-                        <Col md={6}>
+                        <Col lg={6}>
                             <Form.Group>
-                                <Form.Label>Slug</Form.Label>
+                                <Form.Label>
+                                    Lien <span className="text-danger">*</span>{" "}
+                                    :
+                                </Form.Label>
                                 <Form.Control
                                     type="text"
                                     name="slug"
@@ -123,11 +247,11 @@ const ArticleForm: FC<{
                                 </Form.Control.Feedback>
                             </Form.Group>
                         </Col>
-                        <Col lg={12}>
+                        <Col lg={6}>
                             <Form.Group>
                                 <Form.Label>
                                     Categories{" "}
-                                    <span className="text-danger">*</span>
+                                    <span className="text-danger">*</span> :
                                 </Form.Label>
                                 <Select
                                     loadOptions={loadCategoriesLazy}
@@ -146,27 +270,108 @@ const ArticleForm: FC<{
                                 />
                             </Form.Group>
                         </Col>
-                        <Col lg={12}>
-                            <Form.Group>
-                                <Form.Label>
-                                    Contenu{" "}
-                                    <span className="text-danger">*</span>
-                                </Form.Label>
-                                <Row>
-                                    <Col>
-                                        <Editor
-                                            onEditorChange={(content: string) =>
-                                                setData("content", content)
-                                            }
-                                            value={data.content}
-                                        />
-                                    </Col>
-                                </Row>
-                                <Form.Control.Feedback type="invalid">
-                                    {errors.content}
-                                </Form.Control.Feedback>
-                            </Form.Group>
+                        <hr className="my-4" />
+                        <Col
+                            lg={12}
+                            className="d-flex justify-content-between align-items-center"
+                        >
+                            <h2 className="mb-0">Les traductions</h2>
+                            <Button
+                                variant="primary"
+                                size="sm"
+                                onClick={addTraduction}
+                            >
+                                Ajouter
+                            </Button>
                         </Col>
+                        {data.traductions.map(
+                            ({ id, traduction, langue }, index) => (
+                                <Fragment key={id}>
+                                    <Col
+                                        lg={12}
+                                        className={classNames(
+                                            "d-flex justify-content-between align-items-center",
+                                            {
+                                                "border-top pt-4 mt-4":
+                                                    index > 0,
+                                            }
+                                        )}
+                                    >
+                                        <h4>Traduction {index + 1}</h4>
+                                        <Button
+                                            variant="link"
+                                            size="sm"
+                                            className="text-danger"
+                                            onClick={() =>
+                                                removeTraduction(index)
+                                            }
+                                        >
+                                            Supprimer
+                                        </Button>
+                                    </Col>
+                                    <Col lg={12}>
+                                        <Form.Group>
+                                            <Form.Label
+                                                htmlFor={`langue_${index}`}
+                                            >
+                                                Langue{" "}
+                                                <span className="text-danger">
+                                                    *
+                                                </span>{" "}
+                                                :
+                                            </Form.Label>
+                                            <SelectInput
+                                                id={`langue_${index}`}
+                                                name={`langue`}
+                                                aria-errormessage={
+                                                    errors.traductions
+                                                }
+                                                value={langue}
+                                                options={LANGUES}
+                                                onChange={(e) =>
+                                                    setDataTraductions(
+                                                        index,
+                                                        "langue",
+                                                        e.target.value
+                                                    )
+                                                }
+                                                required
+                                                autoComplete="off"
+                                            />
+                                        </Form.Group>
+                                    </Col>
+                                    <Col lg={12}>
+                                        <Form.Group>
+                                            <Form.Label>
+                                                Contenu{" "}
+                                                <span className="text-danger">
+                                                    *
+                                                </span>
+                                            </Form.Label>
+                                            <Row>
+                                                <Col>
+                                                    <Editor
+                                                        onEditorChange={(
+                                                            value
+                                                        ) =>
+                                                            setDataTraductions(
+                                                                index,
+                                                                "traduction",
+                                                                value
+                                                            )
+                                                        }
+                                                        value={traduction}
+                                                    />
+                                                </Col>
+                                            </Row>
+                                            <Form.Control.Feedback type="invalid">
+                                                {errors.traductions}
+                                            </Form.Control.Feedback>
+                                        </Form.Group>
+                                    </Col>
+                                </Fragment>
+                            )
+                        )}
                         <Col lg={12} className="mt-4">
                             <Button
                                 variant="primary"

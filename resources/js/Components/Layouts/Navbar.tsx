@@ -75,19 +75,42 @@ const Navbar: FC<NavbarProps> = ({
                             </div>
                             <Nav className="align-items-lg-center mx-auto">
                                 <Nav.Item>
-                                    <Nav.Link href="/#">Home</Nav.Link>
+                                    <Nav.Link
+                                        as={Link}
+                                        href={route("welcome") + "/#"}
+                                    >
+                                        Home
+                                    </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link href="/#about">À propos</Nav.Link>
+                                    <Nav.Link
+                                        as={Link}
+                                        href={route("welcome") + "/#about"}
+                                    >
+                                        À propos
+                                    </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link href="/#blog">Le blog</Nav.Link>
+                                    <Nav.Link
+                                        as={Link}
+                                        href={route("articles.index")}
+                                    >
+                                        Les articles
+                                    </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link href="/#faq">F.A.Q</Nav.Link>
+                                    <Nav.Link
+                                        as={Link}
+                                        href={route("welcome") + "/#faq"}
+                                    >
+                                        F.A.Q
+                                    </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link href="/#contact">
+                                    <Nav.Link
+                                        as={Link}
+                                        href={route("welcome") + "/#contact"}
+                                    >
                                         Contact
                                     </Nav.Link>
                                 </Nav.Item>

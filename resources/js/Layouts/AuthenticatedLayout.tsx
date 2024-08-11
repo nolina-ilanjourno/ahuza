@@ -1,13 +1,12 @@
+import Avatar from "@/Assets/images/avatar.jpeg";
 import Footer from "@/Components/Layouts/Footer";
 import Navigation from "@/Components/Layouts/Navbar";
 import { User } from "@/types";
-import { Fragment, PropsWithChildren, ReactNode } from "react";
-import Avatar from "@/Assets/images/avatar.jpeg";
 import { Link } from "@inertiajs/react";
+import { Fragment, PropsWithChildren, ReactNode } from "react";
 
-export default function Authenticated({
+export default function AuthenticatedLayout({
     user,
-    header,
     children,
 }: PropsWithChildren<{ user: User; header?: ReactNode }>) {
     return (
@@ -49,7 +48,9 @@ export default function Authenticated({
                                         <li className="nav-item">
                                             <Link
                                                 className="nav-link"
-                                                href={route("articles.index")}
+                                                href={route(
+                                                    "dashboard.articles.index"
+                                                )}
                                             >
                                                 <i className="align-bottom bx bx-user"></i>
                                                 <span className="ms-2">
@@ -60,7 +61,9 @@ export default function Authenticated({
                                         <li className="nav-item">
                                             <Link
                                                 className="nav-link"
-                                                href={route("categories.index")}
+                                                href={route(
+                                                    "dashboard.categories.index"
+                                                )}
                                             >
                                                 <i className="align-bottom bx bx-user"></i>
                                                 <span className="ms-2">
@@ -71,7 +74,9 @@ export default function Authenticated({
                                         <li className="nav-item">
                                             <Link
                                                 className="nav-link"
-                                                href={route("faqs.index")}
+                                                href={route(
+                                                    "dashboard.faqs.index"
+                                                )}
                                             >
                                                 <i className="align-bottom bx bx-user"></i>
                                                 <span className="ms-2">
@@ -82,7 +87,9 @@ export default function Authenticated({
                                         <li className="nav-item">
                                             <Link
                                                 className="nav-link"
-                                                href={route("images.index")}
+                                                href={route(
+                                                    "dashboard.images.index"
+                                                )}
                                             >
                                                 <i className="align-bottom bx bx-user"></i>
                                                 <span className="ms-2">
@@ -93,7 +100,9 @@ export default function Authenticated({
                                         <li className="nav-item">
                                             <Link
                                                 className="nav-link"
-                                                href={route("profile.edit")}
+                                                href={route(
+                                                    "dashboard.profile.edit"
+                                                )}
                                             >
                                                 <i className="align-bottom bx bx-user"></i>
                                                 <span className="ms-2">

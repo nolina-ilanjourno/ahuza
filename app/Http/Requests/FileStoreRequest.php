@@ -15,7 +15,7 @@ class FileStoreRequest extends FormRequest
     {
         return [
             'file' => ['required', 'file', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-            'label' => ['nullable', 'string'],
+            'label' => ['required', 'string'],
         ];
     }
 }

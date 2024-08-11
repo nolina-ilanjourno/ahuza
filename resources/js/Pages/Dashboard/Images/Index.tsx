@@ -24,7 +24,7 @@ export default function ImagesView({
 
     const onDelete = (id: string) => {
         if (confirm("Êtes-vous sûr de vouloir supprimer cette image ?")) {
-            return router.delete(route("images.destroy", id));
+            return router.delete(route("dashboard.images.destroy", id));
         }
     };
 
@@ -37,7 +37,7 @@ export default function ImagesView({
                     <IconButton
                         size="sm"
                         icon="eye"
-                        href={route("images.edit", id)}
+                        href={route("dashboard.images.edit", id)}
                     />
                     <IconButton
                         size="sm"

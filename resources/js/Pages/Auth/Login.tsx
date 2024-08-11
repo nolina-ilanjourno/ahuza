@@ -58,8 +58,8 @@ export default function Login({
                             >
                                 <Form.Group className="mb-3">
                                     <Form.Label htmlFor="signinEmailInput">
-                                        Email
-                                        <span className="text-danger">*</span>
+                                        Email{" "}
+                                        <span className="text-danger">*</span> :
                                     </Form.Label>
                                     <Form.Control
                                         id="email"
@@ -80,8 +80,8 @@ export default function Login({
                                 </Form.Group>
                                 <Form.Group className="mb-3">
                                     <Form.Label htmlFor="signinEmailInput">
-                                        Password
-                                        <span className="text-danger">*</span>
+                                        Password{" "}
+                                        <span className="text-danger">*</span> :
                                     </Form.Label>
                                     <Form.Control
                                         id="password"

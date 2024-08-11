@@ -3,10 +3,10 @@ export interface TraductionForm {
     traduction: string;
 }
 
-export default interface Traduction {
+export default interface Traduction<T = string> {
     id: string;
     langue: string;
-    traduction: string;
+    traduction: T;
     created_at: string;
     updated_at: string;
     pivot: {

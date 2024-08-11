@@ -1,10 +1,11 @@
 import SelectInput from "@/Components/Form/SelectInput";
+import LANGUES from "@/Constants/langues";
 import Category, { type CategoryForm } from "@/Interfaces/Category";
 import { Transition } from "@headlessui/react";
 import { Link, useForm } from "@inertiajs/react";
 import classNames from "classnames";
 import { ArrowLeft } from "lucide-react";
-import { FC, FormEventHandler, Fragment } from "react";
+import React, { FC, FormEventHandler, Fragment } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 
 const CategoryForm: FC<{
@@ -20,24 +21,59 @@ const CategoryForm: FC<{
         recentlySuccessful,
     } = useForm<CategoryForm>({
         label: category?.label ?? "",
-        background_color: category?.background_color ?? "",
-        text_color: category?.text_color ?? "",
-        traductions: category?.traductions ?? [],
+        background_color: category?.background_color ?? "#cce6ce",
+        text_color: category?.text_color ?? "#003303",
+        traductions: category?.traductions ?? [
+            {
+                id: Math.random().toString(),
+                traduction: "",
+                langue: "fr",
+            },
+        ],
     });
+
+    const addTraduction = () => {
+        setData("traductions", [
+            ...data.traductions,
+            {
+                id: Math.random().toString(),
+                traduction: "",
+                langue: "fr",
+            },
+        ]);
+    };
+
+    const setDataTraduction = (index: number, e: React.ChangeEvent<any>) => {
+        setData("traductions", [
+            ...data.traductions.slice(0, index),
+            {
+                ...data.traductions[index],
+                [e.target.name]: e.target.value,
+            },
+            ...data.traductions.slice(index + 1),
+        ]);
+    };
+
+    const removeTraduction = (index: number) => {
+        setData(
+            "traductions",
+            data.traductions.filter((_, i) => i !== index)
+        );
+    };
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
         if (category) {
-            return patch(route("categories.update", category.id));
+            return patch(route("dashboard.categories.update", category.id));
         }
 
-        return post(route("categories.store"));
+        return post(route("dashboard.categories.store"));
     };
 
     return (
         <Card className="border-0 shadow-sm mb-4">
             <Card.Header>
-                <Link href={route("categories.index")}>
+                <Link href={route("dashboard.categories.index")}>
                     <ArrowLeft size={16} />
                 </Link>
                 <div className="mt-3">
@@ -139,16 +175,7 @@ const CategoryForm: FC<{
                             <Button
                                 variant="primary"
                                 size="sm"
-                                onClick={() =>
-                                    setData("traductions", [
-                                        ...data.traductions,
-                                        {
-                                            id: Math.random().toString(),
-                                            traduction: "",
-                                            langue: "fr",
-                                        },
-                                    ])
-                                }
+                                onClick={addTraduction}
                             >
                                 Ajouter
                             </Button>
@@ -172,12 +199,7 @@ const CategoryForm: FC<{
                                             size="sm"
                                             className="text-danger"
                                             onClick={() =>
-                                                setData(
-                                                    "traductions",
-                                                    data.traductions.filter(
-                                                        (_, i) => i !== index
-                                                    )
-                                                )
+                                                removeTraduction(index)
                                             }
                                         >
                                             Supprimer
@@ -197,26 +219,11 @@ const CategoryForm: FC<{
                                             <Form.Control
                                                 className="w-full"
                                                 id={`traduction_${index}`}
-                                                name={`traduction_${index}`}
+                                                name={`traduction`}
                                                 value={traduction}
                                                 isInvalid={!!errors.traductions}
                                                 onChange={(e) =>
-                                                    setData("traductions", [
-                                                        ...data.traductions.slice(
-                                                            0,
-                                                            index
-                                                        ),
-                                                        {
-                                                            ...data.traductions[
-                                                                index
-                                                            ],
-                                                            traduction:
-                                                                e.target.value,
-                                                        },
-                                                        ...data.traductions.slice(
-                                                            index + 1
-                                                        ),
-                                                    ])
+                                                    setDataTraduction(index, e)
                                                 }
                                                 required
                                                 autoComplete="off"
@@ -239,38 +246,14 @@ const CategoryForm: FC<{
                                             </Form.Label>
                                             <SelectInput
                                                 id={`langue_${index}`}
-                                                name={`langue_${index}`}
+                                                name={`langue`}
                                                 aria-errormessage={
                                                     errors.traductions
                                                 }
                                                 value={langue}
-                                                options={[
-                                                    {
-                                                        value: "fr",
-                                                        label: "Français",
-                                                    },
-                                                    {
-                                                        value: "en",
-                                                        label: "Anglais",
-                                                    },
-                                                ]}
+                                                options={LANGUES}
                                                 onChange={(e) =>
-                                                    setData("traductions", [
-                                                        ...data.traductions.slice(
-                                                            0,
-                                                            index
-                                                        ),
-                                                        {
-                                                            ...data.traductions[
-                                                                index
-                                                            ],
-                                                            langue: e.target
-                                                                .value,
-                                                        },
-                                                        ...data.traductions.slice(
-                                                            index + 1
-                                                        ),
-                                                    ])
+                                                    setDataTraduction(index, e)
                                                 }
                                                 required
                                                 autoComplete="off"

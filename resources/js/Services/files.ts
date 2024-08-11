@@ -1,4 +1,6 @@
+import Filters from "@/Interfaces/Fetch";
 import type File from "@/Interfaces/File";
+import PaginatedData from "@/Interfaces/PaginatedData";
 import api from "./api";
 
 export const filesApi = api.injectEndpoints({
@@ -10,8 +12,14 @@ export const filesApi = api.injectEndpoints({
                 body,
             }),
         }),
+        getFiles: build.query<PaginatedData<File>, Filters>({
+            query: (params) => ({
+                url: "/files",
+                params,
+            }),
+        }),
     }),
     overrideExisting: true,
 });
 
-export const { useStoreFileMutation } = filesApi;
+export const { useStoreFileMutation, useLazyGetFilesQuery } = filesApi;

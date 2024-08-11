@@ -7,7 +7,7 @@ export interface FileForm {
 
 export default interface File {
     id: string;
-    label: string | null;
+    label: string;
     name: string;
     size: number;
     mime_type: string;

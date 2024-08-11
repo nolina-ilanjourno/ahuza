@@ -1,34 +1,32 @@
 import IconButton from "@/Components/atoms/IconButton";
 import TableV2 from "@/Components/Table/TableV2";
-import Category from "@/Interfaces/Category";
+import FAQ from "@/Interfaces/FAQ";
 import PaginatedData from "@/Interfaces/PaginatedData";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
 import { router } from "@inertiajs/react";
 import { ColumnDef } from "@tanstack/react-table";
-import classNames from "classnames";
 import { DateTime } from "luxon";
-import { Fragment } from "react";
-import { Badge } from "react-bootstrap";
+import { FC, Fragment, useRef } from "react";
 
-export default function CategoriesView({
+const FAQView: FC<
+    PageProps<{
+        faqs: PaginatedData<FAQ>;
+    }>
+> = ({
     auth,
-    categories: {
+    faqs: {
         data,
         meta: { links },
     },
-}: PageProps<{
-    mustVerifyEmail: boolean;
-    status?: string;
-    categories: PaginatedData<Category>;
-}>) {
+}) => {
     const onDelete = (id: string) => {
-        if (confirm("Êtes-vous sûr de vouloir supprimer cette catégorie ?")) {
-            return router.delete(route("categories.destroy", id));
+        if (confirm("Êtes-vous sûr de vouloir supprimer cette FAQ ?")) {
+            return router.delete(route("dashboard.faqs.destroy", id));
         }
     };
 
-    const columns: ColumnDef<Category>[] = [
+    const columns = useRef<ColumnDef<FAQ>[]>([
         {
             header: "Actions",
             footer: (props) => props.column.id,
@@ -37,7 +35,7 @@ export default function CategoriesView({
                     <IconButton
                         size="sm"
                         icon="eye"
-                        href={route("dashboard.categories.edit", id)}
+                        href={route("dashboard.faqs.edit", id)}
                     />
                     <IconButton
                         size="sm"
@@ -58,24 +56,6 @@ export default function CategoriesView({
             cell: (info) => info.getValue(),
         },
         {
-            header: "Traductions",
-            footer: (props) => props.column.id,
-            accessorFn: ({ traductions }) =>
-                traductions.map((traduction, index) => (
-                    <Badge
-                        key={traduction.id}
-                        className={classNames({
-                            "ms-1": index > 0,
-                        })}
-                    >
-                        {traduction.traduction} (
-                        {traduction.langue.toUpperCase()})
-                    </Badge>
-                )),
-            id: "traductions",
-            cell: (info) => info.getValue(),
-        },
-        {
             header: "Créé le",
             footer: (props) => props.column.id,
             accessorFn: ({ created_at }) =>
@@ -83,11 +63,12 @@ export default function CategoriesView({
             id: "created_at",
             cell: (info) => info.getValue(),
         },
-    ];
-
+    ]).current;
     return (
         <AuthenticatedLayout user={auth.user}>
-            <TableV2<Category> data={data} columns={columns} links={links} />
+            <TableV2<FAQ> data={data} columns={columns} links={links} />
         </AuthenticatedLayout>
     );
-}
+};
+
+export default FAQView;

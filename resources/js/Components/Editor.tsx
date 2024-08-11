@@ -1,8 +1,7 @@
-import { useForm } from "@inertiajs/react";
-import { Editor as TinEditor, IAllProps } from "@tinymce/tinymce-react";
+import { useStoreFileMutation } from "@/Services/files";
+import { IAllProps, Editor as TinEditor } from "@tinymce/tinymce-react";
 import { FC, Fragment, useRef, useState } from "react";
 import Loader from "./Loader";
-import { useStoreFileMutation } from "@/Services/files";
 
 const Editor: FC<
     Partial<Omit<IAllProps, "apiKey" | "init" | "initialValue">>

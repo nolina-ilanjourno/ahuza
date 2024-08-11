@@ -41,9 +41,14 @@ export default function TableV2<D>({
     trashed = false,
 }: PropsWithoutRef<TableProps<D>>) {
     const entity = useRef<string | undefined>(
-        route().current()?.split(".").shift()
+        route().current()?.split(".").slice(0, -1).join(".")
     ).current;
-    const currentTitle = useRef<string>(capitalizeFirstLetter(entity)).current;
+
+    const currentTitle = useRef<string>(
+        capitalizeFirstLetter(
+            route().current()?.split(".").slice(1, -1).join(" ") || "Table"
+        )
+    ).current;
     const { filters } = usePage<{
         filters: { search?: string; trashed?: string };
     }>().props;

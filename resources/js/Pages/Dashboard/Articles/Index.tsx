@@ -27,11 +27,11 @@ const ArticlesView: FC<
             forDelete &&
             confirm("Êtes-vous sûr de vouloir supprimer cet article ?")
         ) {
-            return router.delete(route("articles.destroy", id));
+            return router.delete(route("dashboard.articles.destroy", id));
         } else if (
             confirm("Êtes-vous sûr de vouloir restaurer cet article ?")
         ) {
-            return router.put(route("articles.restore", id));
+            return router.put(route("dashboard.articles.restore", id));
         }
     };
 
@@ -45,7 +45,7 @@ const ArticlesView: FC<
                         size="sm"
                         icon="eye"
                         className="me-1"
-                        href={route("articles.edit", id)}
+                        href={route("dashboard.articles.edit", id)}
                     />
                     <IconButton
                         size="sm"

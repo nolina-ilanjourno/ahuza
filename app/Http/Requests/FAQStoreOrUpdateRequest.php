@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ArticleStoreOrUpdateRequest extends FormRequest
+class FAQStoreOrUpdateRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,13 +14,10 @@ class ArticleStoreOrUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'illustration_id' => ['nullable', 'exists:files,id'],
-            'title' => ['required', 'max:255'],
-            'category_ids' => ['required', 'exists:categories,id'],
-            'slug' => ['required', 'unique:articles,slug,' . optional($this->article)->id],
-            'published_at' => ['nullable', 'date'],
+            'label' => ['required', 'max:255'],
             'traductions' => ['required', 'array'],
-            'traductions.*.traduction' => ['required'],
+            'traductions.*.traduction.question' => ['required', 'max:255'],
+            'traductions.*.traduction.answer' => ['required'],
             'traductions.*.langue' => ['required', 'max:255'],
         ];
     }

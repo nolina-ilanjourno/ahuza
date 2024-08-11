@@ -18,7 +18,7 @@ class ArticleController extends Controller
         return Inertia::render('Dashboard/Articles/Index', [
             'filters' => Request::all('search', 'trashed'),
             'articles' =>  new ArticleCollection(
-                Article::with('categories')->filter(Request::only('search', 'trashed'))
+                Article::with(['categories', 'illustration'])->filter(Request::only('search', 'trashed'))
                 ->orderBy('created_at', 'desc')
                 ->paginate()
             ),
@@ -34,21 +34,30 @@ class ArticleController extends Controller
     {
         $article = Article::create($request->validated());
 
+        if ($request->has('traductions')) {
+            $article->traductions()->createMany($request->traductions);
+        }
+
         $article->categories()->attach($request->category_ids);
 
-        return Redirect::route('articles.index')->with('success', 'Article created.');
+        return Redirect::route('dashboard.articles.index')->with('success', 'Article created.');
     }
 
      public function edit(Article $article)
     {
         return Inertia::render('Dashboard/Articles/Edit', [
-            'article' => $article->load('categories'),
+            'article' => $article->load(['categories', 'traductions', 'illustration']),
         ]);
     }
 
     public function update(Article $article, ArticleStoreOrUpdateRequest $request): RedirectResponse
     {
         $article->update($request->validated());
+
+        if ($request->has('traductions')) {
+            $article->traductions()->delete();
+            $article->traductions()->createMany($request->traductions);
+        }
 
         $article->categories()->sync($request->category_ids);
 
@@ -59,7 +68,7 @@ class ArticleController extends Controller
     {
         $article->delete();
 
-        return Redirect::route('articles.index')->with('success', 'Article deleted.');
+        return Redirect::route('dashboard.articles.index')->with('success', 'Article deleted.');
     }
 
      public function restore(Article $article): RedirectResponse

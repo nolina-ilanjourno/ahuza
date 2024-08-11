@@ -42,7 +42,7 @@ class ImageController extends Controller
             'link' => Storage::url($name),
         ]);
         
-        return Redirect::route('images.index')->with('success', 'Article created.');
+        return Redirect::route('dashboard.images.index')->with('success', 'Article created.');
     }
 
     public function edit(File $image)

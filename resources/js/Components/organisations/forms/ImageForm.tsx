@@ -35,16 +35,16 @@ const ImageForm: FC<{
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
         if (image) {
-            return patch(route("images.update", image.id));
+            return patch(route("dashboard.images.update", image.id));
         }
 
-        return post(route("images.store"));
+        return post(route("dashboard.images.store"));
     };
 
     return (
         <Card className="border-0 shadow-sm mb-4">
             <Card.Header>
-                <Link href={route("images.index")}>
+                <Link href={route("dashboard.images.index")}>
                     <ArrowLeft size={16} />
                 </Link>
                 <div className="d-flex align-items-center mt-3">

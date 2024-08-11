@@ -40,7 +40,7 @@ class CategoryController extends Controller
             $traductionIds = collect($request->traductions)->map(function ($data) {
                 $traduction = Traduction::updateOrCreate(
                     [
-                        'langue' => $data['langue']
+                        'traduction' => $data['traduction'],
                     ],
                     [
                         'langue' => $data['langue'],
@@ -53,7 +53,7 @@ class CategoryController extends Controller
             $category->traductions()->sync($traductionIds);
         }
 
-        return Redirect::route('categories.index')->with('success', 'Organization created.');
+        return Redirect::route('dashboard.categories.index')->with('success', 'Organization created.');
     }
 
     public function edit(Category $category): Response
@@ -70,7 +70,7 @@ class CategoryController extends Controller
             $traductionIds = collect($request->traductions)->map(function ($data) {
                 $traduction = Traduction::updateOrCreate(
                     [
-                        'langue' => $data['langue']
+                        'traduction' => $data['traduction'],
                     ],
                     [
                         'langue' => $data['langue'],

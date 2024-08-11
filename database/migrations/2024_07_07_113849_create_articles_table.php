@@ -15,9 +15,10 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignId('illustration_id')->nullable()->constrained('files')->onDelete('SET NULL');
             $table->string('slug')->unique();
             $table->string('title');
-            $table->text('content');
+            $table->timestamp('published_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

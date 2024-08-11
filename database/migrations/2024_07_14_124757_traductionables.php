@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('traductionables', function (Blueprint $table) {
             $table->id();
             $table->foreignUuid('traduction_id')->constrained()->onDelete('cascade');
-            $table->uuidMorphs('traductionable');
+            $table->uuidMorphs('traductionable');           
             $table->unique(['traduction_id', 'traductionable_id', 'traductionable_type']);
             $table->timestamps();
         });

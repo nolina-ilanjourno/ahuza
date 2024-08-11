@@ -10,7 +10,7 @@ export default function TrashedMessage({
     onRestore,
 }: TrashedMessageProps) {
     return (
-        <Alert variant="warning" className="d-flex align-items-center">
+        <Alert variant="warning" className="d-flex align-items-center mt-5">
             {message}
             <Button size="sm" variant="link" onClick={onRestore}>
                 Restauré
