@@ -4,6 +4,8 @@ FROM php:8.3-fpm
 # Set the working directory inside the container
 WORKDIR /var/www/html
 
+COPY .env .env
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     curl \
