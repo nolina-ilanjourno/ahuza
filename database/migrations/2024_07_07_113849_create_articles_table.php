@@ -14,7 +14,7 @@ class CreateArticlesTable extends Migration
     public function up()
     {
         Schema::create('articles', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id()->primary();
             $table->foreignId('illustration_id')->nullable()->constrained('files')->onDelete('SET NULL');
             $table->string('slug')->unique();
             $table->string('title');

@@ -15,7 +15,7 @@ Route::get('/articles', [ArticleController::class, 'index'])->name('articles.ind
 Route::get('/articles/{article:slug}', [ArticleController::class, 'show'])->name('articles.show');
 
 Route::middleware('auth')->prefix('/dashboard')->name('dashboard.')->group(function () {
-    Route::get('/', [DashboardController::class, 'index']);
+    Route::get('/', [DashboardController::class, 'index'])->name('index');
     Route::resource('/categories', CategoryController::class);
     Route::resource('/articles', AuthArticleController::class);
     Route::resource('/images', ImageController::class);

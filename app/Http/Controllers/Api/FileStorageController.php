@@ -19,7 +19,7 @@ class FileStorageController extends Controller
 
     public function store(FileStoreRequest $request)
     {
-         $name = $request->file('file')->store();
+        $name = $request->file('file')->store();
 
         $file = File::create([
             'label' => $request->label,

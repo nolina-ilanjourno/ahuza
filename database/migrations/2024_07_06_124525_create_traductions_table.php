@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('traductions', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id()->primary();
             $table->enum('langue', ['fr', 'en', 'he']);
             $table->text('traduction');
             $table->timestamps();

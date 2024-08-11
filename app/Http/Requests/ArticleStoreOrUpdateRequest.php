@@ -17,7 +17,7 @@ class ArticleStoreOrUpdateRequest extends FormRequest
             'illustration_id' => ['nullable', 'exists:files,id'],
             'title' => ['required', 'max:255'],
             'category_ids' => ['required', 'exists:categories,id'],
-            'slug' => ['required', 'unique:articles,slug,' . optional($this->article)->id],
+            'slug' => ['required', 'unique:articles,slug,' . ($this->article ? $this->article->id : 'NULL')],
             'published_at' => ['nullable', 'date'],
             'traductions' => ['required', 'array'],
             'traductions.*.traduction' => ['required'],

@@ -3,14 +3,13 @@
 namespace App\Models;
 
 use App\Helpers\HasTraduction;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use HasFactory, HasUuids, HasTraduction, SoftDeletes;
+    use HasFactory, HasTraduction, SoftDeletes;
 
     protected $fillable = [
         'label',

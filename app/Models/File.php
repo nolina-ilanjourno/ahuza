@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Http\Requests\FileStoreRequest;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,9 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class File extends Model
 {
-    use HasFactory;
-    use HasUuids;
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 

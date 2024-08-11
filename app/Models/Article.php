@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Helpers\HasTraduction;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,7 +11,7 @@ use Illuminate\Support\Facades\App;
 
 class Article extends Model
 {
-    use HasFactory, HasUuids, HasTraduction, SoftDeletes;
+    use HasFactory, HasTraduction, SoftDeletes;
 
     protected $fillable = ['illustration_id', 'title', 'slug', 'published_at'];
 
