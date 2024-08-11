@@ -12,19 +12,20 @@ steps:
         "-f",
         "Dockerfile.production",
         "-t",
-        "europe-west9-docker.pkg.dev/claudeallouche/api/api:lasted",
+        "europe-west9-docker.pkg.dev/claudeallouche/ahuza/ahuza:lasted",
         ".",
       ]
   - name: "gcr.io/cloud-builders/docker"
-    args: ["push", "europe-west9-docker.pkg.dev/claudeallouche/api/api:lasted"]
+    args:
+      ["push", "europe-west9-docker.pkg.dev/claudeallouche/ahuza/ahuza:lasted"]
   - name: "gcr.io/cloud-builders/gcloud"
     args:
       [
         "run",
         "deploy",
-        "api",
+        "ahuza",
         "--image",
-        "europe-west9-docker.pkg.dev/claudeallouche/api/api:lasted",
+        "europe-west9-docker.pkg.dev/claudeallouche/ahuza/ahuza:lasted",
         "--platform",
         "managed",
         "--region",
