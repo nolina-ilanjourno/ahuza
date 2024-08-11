@@ -1,4 +1,5 @@
 import { SecretManagerServiceClient } from "@google-cloud/secret-manager";
+import fs from "fs";
 
 async function getSecret() {
     const client = new SecretManagerServiceClient();
@@ -12,7 +13,6 @@ async function getSecret() {
 
     const secretValue = versionResponse.payload.data.toString("utf8");
 
-    const fs = require("fs");
     fs.writeFileSync(".env", secretValue);
 }
 
