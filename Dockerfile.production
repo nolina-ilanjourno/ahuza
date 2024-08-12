@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY .env .env
 
-# Install system dependencies
+# Install system dependencies and Supervisor
 RUN apt-get update && apt-get install -y \
     curl \
     libpng-dev \
@@ -16,7 +16,8 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     nodejs \
-    npm
+    npm \
+    supervisor
 
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
@@ -39,7 +40,11 @@ RUN php artisan key:generate
 # Build the production assets
 RUN npm install && npm run build
 
+# Copy Supervisor configuration
+COPY ./docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
 # Expose port 8080 for Cloud Run
 EXPOSE 8080
 
-CMD php artisan serve --host=0.0.0.0 --port=8080
+# Start Supervisor
+CMD ["/usr/bin/supervisord"]
