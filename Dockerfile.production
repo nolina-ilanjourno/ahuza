@@ -39,6 +39,9 @@ RUN php artisan key:generate
 # Build the production assets
 RUN npm install && npm run build
 
+# Run database migrations
+RUN php artisan migrate --force
+
 # Copy Supervisor configuration
 COPY ./docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
