@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY .env .env
 
-# Install system dependencies and Supervisor
+# Install system dependencies, PostgreSQL driver, and Supervisor
 RUN apt-get update && apt-get install -y \
     curl \
     libpng-dev \
@@ -17,10 +17,9 @@ RUN apt-get update && apt-get install -y \
     git \
     nodejs \
     npm \
-    supervisor
-
-# Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+    supervisor \
+    libpq-dev \
+    && docker-php-ext-install pdo_pgsql pdo_mysql mbstring exif pcntl bcmath gd
 
 # Install Composer
 COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
