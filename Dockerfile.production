@@ -2,7 +2,7 @@
 FROM php:8.3-fpm
 
 # Set the working directory inside the container
-WORKDIR /var/www/html
+WORKDIR /app
 
 COPY .env .env
 
@@ -28,7 +28,7 @@ COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 COPY . .
 
 # Ensure correct permissions for the working directory
-RUN chown -R www-data:www-data /var/www/html
+RUN chown -R www-data:www-data /app
 
 # Install project dependencies
 RUN composer install --no-interaction --optimize-autoloader
@@ -42,5 +42,4 @@ RUN npm install && npm run build
 # Expose port 8080 for Cloud Run
 EXPOSE 8080
 
-# Start PHP-FPM server and InertiaJS SSR server
-CMD ["sh", "-c", "php artisan migrate --force && php artisan inertia:start-ssr & php-fpm -F"]
+CMD ["php artisan serve"]
