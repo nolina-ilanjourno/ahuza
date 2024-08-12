@@ -12,11 +12,15 @@ steps:
         "-f",
         "Dockerfile.production",
         "-t",
-        "gcr.io/cloudrun/placeholder:lasted",
+        "europe-west9-docker.pkg.dev/claudeallouche/ahuza/ahuza:lasted:lasted",
         ".",
       ]
   - name: "gcr.io/cloud-builders/docker"
-    args: ["push", "gcr.io/cloudrun/placeholder:lasted"]
+    args:
+      [
+        "push",
+        "europe-west9-docker.pkg.dev/claudeallouche/ahuza/ahuza:lasted:lasted",
+      ]
   - name: "gcr.io/cloud-builders/gcloud"
     args:
       [
@@ -24,7 +28,7 @@ steps:
         "deploy",
         "ahuza",
         "--image",
-        "gcr.io/cloudrun/placeholder:lasted",
+        "europe-west9-docker.pkg.dev/claudeallouche/ahuza/ahuza:lasted:lasted",
         "--platform",
         "managed",
         "--region",
