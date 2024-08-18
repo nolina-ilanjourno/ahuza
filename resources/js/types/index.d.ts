@@ -17,5 +17,6 @@ export type PageProps<
         success: string | null;
         error: string | null;
     };
+    locale: string;
     ziggy: Config & { location: string };
 };

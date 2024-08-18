@@ -11,8 +11,10 @@ import Services from "@/Components/Sections/Services";
 import SocialNetworks from "@/Components/Sections/SocialNetworks";
 import Whatsapp from "@/Components/Sections/Whatsapp";
 import { FC } from "react";
+import useTranslation from "@/Hooks/useTranslation";
 
 const Welcome: FC = () => {
+    useTranslation();
     return (
         <main>
             <Head>
