@@ -1,6 +1,6 @@
 import React from "react";
 import { Collapse } from "react-bootstrap";
-import Image from "@/Assets/images/about.png";
+import Image from "@/Assets/images/about.jpeg";
 
 export default function About() {
     const [open, setOpen] = React.useState<boolean>(false);
