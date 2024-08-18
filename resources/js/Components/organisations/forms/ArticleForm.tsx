@@ -1,7 +1,7 @@
 import Editor from "@/Components/Editor";
 import SelectInput from "@/Components/Form/SelectInput";
 import TrashedMessage from "@/Components/molecules/Messages/TrashedMessage";
-import Select from "@/Components/Select";
+import Select, { CreatableSelect } from "@/Components/Select";
 import LANGUES from "@/Constants/langues";
 import { slugify } from "@/Helpers/utils";
 import useLoadOptions from "@/Hooks/useLoadOptions";
@@ -31,6 +31,8 @@ const ArticleForm: FC<{
         illustration_id: article?.illustration_id ?? null,
         title: article?.title ?? "",
         slug: article?.slug ?? "",
+        description: article?.description ?? "",
+        keywords: article?.keywords ?? "",
         published_at: article?.published_at ?? null,
         category_ids: article?.categories.map((c) => c.id) ?? [],
         traductions: article?.traductions ?? [
@@ -268,6 +270,44 @@ const ArticleForm: FC<{
                                         );
                                     }}
                                 />
+                            </Form.Group>
+                        </Col>
+                        <Col lg={12}>
+                            <Form.Group>
+                                <Form.Label>
+                                    Mots clé{" "}
+                                    <span className="text-danger">*</span> :
+                                </Form.Label>
+                                <CreatableSelect
+                                    isMulti
+                                    options={[]}
+                                    value={data.keywords}
+                                    aria-errormessage={errors.keywords}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.keywords}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                        </Col>
+                        <Col lg={12}>
+                            <Form.Group>
+                                <Form.Label>
+                                    Description{" "}
+                                    <span className="text-danger">*</span> :
+                                </Form.Label>
+                                <Form.Control
+                                    as={"textarea"}
+                                    name="description"
+                                    placeholder="ex: Comment bien choisir son matériel de ski ?"
+                                    value={data.description}
+                                    onChange={(e) =>
+                                        setData("description", e.target.value)
+                                    }
+                                    isInvalid={!!errors.description}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.description}
+                                </Form.Control.Feedback>
                             </Form.Group>
                         </Col>
                         <hr className="my-4" />

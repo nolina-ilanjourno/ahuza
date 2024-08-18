@@ -19,7 +19,7 @@ class FileStorageController extends Controller
     }
 
     public function list() {
-        return new ImageCollection(File::all());
+        return new ImageCollection(File::orderBy('label', 'asc')->get());
     }
 
     public function store(FileStoreRequest $request)

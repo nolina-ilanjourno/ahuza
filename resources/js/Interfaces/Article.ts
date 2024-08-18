@@ -5,6 +5,8 @@ import Traduction from "./Traduction";
 export interface ArticleForm {
     illustration_id: string | null;
     title: string;
+    description: string;
+    keywords: string;
     slug: string;
     category_ids: string[];
     published_at: string | null;
@@ -15,6 +17,8 @@ export default interface Article {
     id: string;
     illustration_id: string | null;
     title: string;
+    description: string;
+    keywords: string;
     slug: string;
     traductions: Traduction[];
     categories: Category[];

@@ -41,7 +41,7 @@ const Editor: FC<
                     plugins:
                         "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker",
                     toolbar:
-                        "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough forecolor backcolor | align | link image | numlist bullist indent outdent",
+                        "undo redo | blocks fontfamily fontsize quicklink | bold italic underline image forecolor backcolor | align | link anchor | numlist bullist indent outdent",
                 }}
                 value={value}
                 {...props}

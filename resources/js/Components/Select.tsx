@@ -1,10 +1,44 @@
 import { dot } from "@/Helpers/SelectHelpers";
+import classNames from "classnames";
 import { FC, Fragment } from "react";
 import { Form } from "react-bootstrap";
 import {
     AsyncPaginate,
     WithAsyncPaginateType,
 } from "react-select-async-paginate";
+import RCreatable from "react-select/creatable";
+
+export const CreatableSelect: RCreatable = ({ isRtl = false, ...props }) => {
+    return (
+        <RCreatable
+            styles={{
+                placeholder: (base) => ({
+                    ...base,
+                    color: "#6c757d",
+                    fontSize: "0.875rem",
+                }),
+                control: (base) => ({
+                    ...base,
+                    minHeight: "2.25rem",
+                    borderColor: isRtl ? "#dc3545" : "#ced4da",
+                    fontSize: "0.875rem",
+                }),
+                option: (base) => ({
+                    ...base,
+                    fontSize: "0.875rem",
+                }),
+            }}
+            className={classNames({
+                "is-invalid": isRtl,
+            })}
+            placeholder="Choisir..."
+            noOptionsMessage={() => "Pas de donnée(s) trouvée(s)"}
+            loadingMessage={() => "Chargement..."}
+            closeMenuOnSelect={!props.isMulti}
+            {...props}
+        />
+    );
+};
 
 const Select: WithAsyncPaginateType = ({ styles, ...props }) => {
     return (
