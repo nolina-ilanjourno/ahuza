@@ -26,7 +26,7 @@ class Category extends Model
     {
         $query->when($filters['search'] ?? null, fn ($query, string $search) =>
             $query->where(fn ($query) =>
-                $query->where('label', 'like', '%'.$search.'%')
+                $query->whereRaw('LOWER(label) LIKE ?', ['%' . strtolower($search) . '%'])
             )
         );
 

@@ -20,7 +20,7 @@ class FAQController extends Controller
             'faqs' => new ResourceCollection(
                 FAQ::with('traductions')
                 ->filter(Request::only('search', 'trashed'))
-                ->orderBy('created_at', 'desc')
+                ->orderBy('label', 'asc')
                 ->paginate()
             ),
         ]);

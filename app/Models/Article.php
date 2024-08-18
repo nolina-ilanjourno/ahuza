@@ -41,7 +41,7 @@ class Article extends Model
     {
         $query->when($filters['search'] ?? null, fn ($query, string $search) =>
             $query->where(fn ($query) =>
-                $query->where('title', 'like', '%'.$search.'%')
+                $query->whereRaw('LOWER(title) LIKE ?', ['%' . strtolower($search) . '%'])
             )
         );
 
