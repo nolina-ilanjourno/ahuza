@@ -61,6 +61,20 @@ export default function TableV2<D>({
 
     const prevValues = usePrevious(values);
 
+    const changePageFromLink = (
+        event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+        link: string
+    ) => {
+        event.preventDefault();
+        const page = parseInt(link.split("page=")[1]);
+        if (page) {
+            setValues((values) => ({
+                ...values,
+                page,
+            }));
+        }
+    };
+
     const handleChange = (e: any) => {
         const name = e.target.name;
         const value = e.target.value;
@@ -79,7 +93,7 @@ export default function TableV2<D>({
                 ? pickBy(values)
                 : {};
             router.get(route(route().current() as string), query, {
-                replace: true,
+                replace: false,
                 preserveState: true,
                 preserveScroll: true,
             });
@@ -135,7 +149,6 @@ export default function TableV2<D>({
                                         <Dropdown.Toggle
                                             as={IconButton}
                                             icon="filter"
-                                            split
                                             variant="primary"
                                             size="sm"
                                         >
@@ -251,7 +264,13 @@ export default function TableV2<D>({
                                             />
                                         ) : (
                                             <Link
-                                                href={link.url}
+                                                href={"#"}
+                                                onClick={(e) =>
+                                                    changePageFromLink(
+                                                        e,
+                                                        link.url!
+                                                    )
+                                                }
                                                 className="page-link"
                                                 dangerouslySetInnerHTML={{
                                                     __html: link.label,

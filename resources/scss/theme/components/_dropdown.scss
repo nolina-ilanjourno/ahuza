@@ -66,44 +66,10 @@
     border-radius: 0.5rem;
 }
 
-// Dropdown toggle arrow
 .dropdown-toggle::after {
-    margin-left: 0.255em;
-    vertical-align: 0.255em;
-    font-family: "bootstrap-icons" !important;
-    content: "\F282";
-    border-top: 0rem;
-    border-right: 0rem;
-    border-bottom: 0;
-    border-left: 0rem;
-    float: right;
+    content: none !important;
 }
 
-// Dropup
-.dropup .dropdown-toggle::after {
-    display: inline-block;
-    margin-left: 0.255em;
-    vertical-align: 0.255em;
-    font-family: "bootstrap-icons" !important;
-    content: "\e931";
-    border-top: 0rem;
-    border-right: 0rem;
-    border-bottom: 0;
-    border-left: 0rem;
-}
-
-// Dropright
-.dropend .dropdown-toggle::after {
-    display: inline-block;
-    margin-left: 0.255em;
-    vertical-align: 0.255em;
-    font-family: "Feather" !important;
-    content: "\e930";
-    border-top: 0rem;
-    border-right: 0rem;
-    border-bottom: 0;
-    border-left: 0rem;
-}
 
 // Dropleft
 .dropstart .dropdown-toggle::before {

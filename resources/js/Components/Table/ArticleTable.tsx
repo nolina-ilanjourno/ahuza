@@ -137,18 +137,23 @@ const ArticleTable: FC = () => {
                 <Row className="gy-lg-7 gy-5">
                     {articleList.map((article) => (
                         <Col key={article.id} lg={4} md={6}>
-                            <Figure className="mb-4 zoom-img">
-                                <Link
-                                    href={route("articles.show", article.slug)}
-                                >
-                                    <Image
-                                        src={article.illustration!.link}
-                                        alt={article.title}
-                                        fluid
-                                        rounded
-                                    />
-                                </Link>
-                            </Figure>
+                            {article.illustration && (
+                                <Figure className="mb-4 zoom-img">
+                                    <Link
+                                        href={route(
+                                            "articles.show",
+                                            article.slug
+                                        )}
+                                    >
+                                        <Image
+                                            src={article.illustration.link}
+                                            alt={article.title}
+                                            fluid
+                                            rounded
+                                        />
+                                    </Link>
+                                </Figure>
+                            )}
                             {article.categories.map((category, index) => (
                                 <span
                                     key={category.id}

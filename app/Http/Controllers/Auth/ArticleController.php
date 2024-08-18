@@ -20,7 +20,7 @@ class ArticleController extends Controller
             'articles' =>  new ArticleCollection(
                 Article::with(['categories', 'illustration'])->filter(Request::only('search', 'trashed'))
                 ->orderBy('created_at', 'desc')
-                ->paginate()
+                ->paginate(30)
             ),
         ]);
     }

@@ -1,8 +1,7 @@
-import { Col, Container, Nav, Row, Tab } from "react-bootstrap";
-import Card from "@/Assets/images/landings/finance/card.svg";
-import Tab1 from "@/Assets/images/landings/finance/finance-tab-1.jpg";
-import Tab2 from "@/Assets/images/landings/finance/finance-tab-2.jpg";
-import Tab3 from "@/Assets/images/landings/finance/finance-tab-3.jpg";
+import { Col, Container, Figure, Image, Nav, Row, Tab } from "react-bootstrap";
+import Illustration1 from "@/Assets/images/illustration2.jpeg";
+import Illustration2 from "@/Assets/images/illustration3.jpeg";
+import Illustration3 from "@/Assets/images/illustration4.jpeg";
 
 export default function Services() {
     return (
@@ -148,65 +147,35 @@ export default function Services() {
                             <Tab.Content>
                                 <Tab.Pane eventKey="v-pills-small-business">
                                     <div className="position-relative scene">
-                                        <figure>
-                                            <img
-                                                src={Tab1}
-                                                alt="finance"
-                                                className="img-fluid rounded-3"
+                                        <Figure>
+                                            <Image
+                                                src={Illustration1}
+                                                fluid
+                                                className="rounded-3"
                                             />
-                                        </figure>
-                                        <div
-                                            className="position-relative"
-                                            data-depth="0.05"
-                                        >
-                                            <img
-                                                src={Card}
-                                                alt=""
-                                                className="position-absolute bottom-0 end-0 px-4"
-                                            />
-                                        </div>
+                                        </Figure>
                                     </div>
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="v-pills-profile">
                                     <div className="position-relative scene">
-                                        <figure>
-                                            <img
-                                                src={Tab2}
-                                                alt="finance"
-                                                className="img-fluid rounded-3"
+                                        <Figure>
+                                            <Image
+                                                src={Illustration2}
+                                                fluid
+                                                className="rounded-3"
                                             />
-                                        </figure>
-                                        <div
-                                            className="position-relative"
-                                            data-depth="0.05"
-                                        >
-                                            <img
-                                                src={Card}
-                                                alt=""
-                                                className="position-absolute bottom-0 start-0 px-4"
-                                            />
-                                        </div>
+                                        </Figure>
                                     </div>
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="v-pills-enterprises">
                                     <div className="position-relative scene">
-                                        <figure>
-                                            <img
-                                                src={Tab3}
-                                                alt="finance"
-                                                className="img-fluid rounded-3"
+                                        <Figure>
+                                            <Image
+                                                src={Illustration3}
+                                                fluid
+                                                className="rounded-3"
                                             />
-                                        </figure>
-                                        <div
-                                            className="position-relative"
-                                            data-depth="0.05"
-                                        >
-                                            <img
-                                                src={Card}
-                                                alt=""
-                                                className="position-absolute bottom-0 start-50 translate-middle-x"
-                                            />
-                                        </div>
+                                        </Figure>
                                     </div>
                                 </Tab.Pane>
                             </Tab.Content>

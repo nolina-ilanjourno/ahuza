@@ -1,4 +1,5 @@
 import Youtube from "@/Assets/images/youtube.jpg";
+import Icon from "../atoms/Icon";
 
 export default function Main() {
     return (
@@ -19,9 +20,10 @@ export default function Main() {
                                     </span>
                                 </h1>
                                 <p className="mb-0 text-white-stable lead">
-                                    Mon travail est une mission, tant en privé
-                                    que public, pour aider des patients privés
-                                    et assurés en Israël.
+                                    Spécialiste en gynécologie-obstétrique, je
+                                    vous accompagne avec professionnalisme et
+                                    bienveillance à chaque étape de votre vie de
+                                    femme.
                                 </p>
                             </div>
                             <div data-cues="slideInDown">
@@ -54,7 +56,7 @@ export default function Main() {
                                     target="_blank"
                                     className="play-btn glightbox position-absolute top-50 start-50 translate-middle icon-shape icon-xl rounded-circle text-primary"
                                 >
-                                    <i className="bi bi-play-fill"></i>
+                                    <Icon name="play" />
                                 </a>
                             </div>
                         </div>
