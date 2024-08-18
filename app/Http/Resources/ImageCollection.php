@@ -12,8 +12,13 @@ class ImageCollection extends ResourceCollection
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray(Request $request)
     {
-        return parent::toArray($request);
+        return $this->collection->transform(function($file) {
+            return [
+                'title' => $file->label,
+                'value' => $file->link, 
+            ];
+        });
     }
 }

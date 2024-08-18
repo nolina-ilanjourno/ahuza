@@ -14,6 +14,11 @@ class File extends Model
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
+    public function resolveRouteBinding($value, $field = null)
+    {
+        return $this->where($field ?? 'id', $value)->withTrashed()->firstOrFail();
+    }
+
     public static function store(FileStoreRequest $request)
     {
         $name = $request->file('file')->store();

@@ -4,11 +4,16 @@ import { FC, Fragment, useEffect, useState } from "react";
 import {
     Button,
     Container,
+    Dropdown,
+    DropdownButton,
+    Image,
     Nav,
     Navbar as NavbarBootstrap,
     Offcanvas,
 } from "react-bootstrap";
-
+import FrenchFlag from "@/Assets/svg/french-flag.svg";
+import EnglishFlag from "@/Assets/svg/usa-flag.svg";
+import HebrewFlag from "@/Assets/svg/israel-flag.svg";
 interface NavbarProps {
     isClone?: boolean;
     variant?: "light" | "dark";
@@ -117,6 +122,48 @@ const Navbar: FC<NavbarProps> = ({
                             </Nav>
                         </Offcanvas.Body>
                     </NavbarBootstrap.Offcanvas>
+                    <DropdownButton
+                        id="dropdown-language"
+                        title={
+                            <Image
+                                src={FrenchFlag}
+                                alt="Français"
+                                width={40}
+                                height={16}
+                            />
+                        }
+                        className="mx-3"
+                        size="sm"
+                        variant="light"
+                    >
+                        <Dropdown.Item eventKey="fr">
+                            <Image
+                                src={FrenchFlag}
+                                alt="Français"
+                                width={40}
+                                height={16}
+                            />
+                            Français
+                        </Dropdown.Item>
+                        <Dropdown.Item eventKey="en">
+                            <Image
+                                src={EnglishFlag}
+                                alt="English"
+                                width={40}
+                                height={16}
+                            />
+                            English
+                        </Dropdown.Item>
+                        <Dropdown.Item eventKey="he">
+                            <Image
+                                src={HebrewFlag}
+                                alt="Hebrew"
+                                width={40}
+                                height={16}
+                            />
+                            עברית
+                        </Dropdown.Item>
+                    </DropdownButton>
                     <Link
                         href="tel:058-726-0264"
                         className={classNames("mb-0", {

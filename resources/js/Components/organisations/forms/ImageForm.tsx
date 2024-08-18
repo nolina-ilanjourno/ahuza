@@ -1,7 +1,8 @@
+import TrashedMessage from "@/Components/molecules/Messages/TrashedMessage";
 import type File from "@/Interfaces/File";
 import { type FileForm } from "@/Interfaces/File";
 import { Transition } from "@headlessui/react";
-import { Link, useForm } from "@inertiajs/react";
+import { Link, router, useForm } from "@inertiajs/react";
 import { ArrowLeft } from "lucide-react";
 import { FC, FormEventHandler, Fragment } from "react";
 import {
@@ -31,6 +32,15 @@ const ImageForm: FC<{
     } = useForm<Partial<FileForm>>({
         label: image?.label ?? "",
     });
+
+    const restore = () => {
+        if (
+            image &&
+            confirm("Êtes-vous sûr de vouloir restaurer cette image ?")
+        ) {
+            router.put(route("dashboard.images.restore", image.id));
+        }
+    };
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -69,6 +79,12 @@ const ImageForm: FC<{
                         </p>
                     </div>
                 </div>
+                {image?.deleted_at && (
+                    <TrashedMessage
+                        message="Cette image a été supprimé."
+                        onRestore={restore}
+                    />
+                )}
             </Card.Header>
             <Card.Body>
                 <Form noValidate onSubmit={submit}>

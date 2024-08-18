@@ -45,7 +45,11 @@ const FAQ = () => {
                                                     .question
                                             }
                                         </Accordion.Header>
-                                        <Accordion.Body>
+                                        <Accordion.Body
+                                            style={{
+                                                whiteSpace: "break-spaces",
+                                            }}
+                                        >
                                             {
                                                 faq.traductions[0].traduction
                                                     .answer
