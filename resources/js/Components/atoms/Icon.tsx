@@ -2,6 +2,7 @@ import {
     Copy,
     Eye,
     Facebook,
+    Filter,
     Linkedin,
     LucideProps,
     Play,
@@ -21,7 +22,8 @@ export type CustomIcon =
     | "play"
     | "facebook"
     | "linkedin"
-    | "search";
+    | "search"
+    | "filter";
 
 interface IconProps extends Omit<LucideProps, "ref"> {
     name: CustomIcon;
@@ -50,8 +52,10 @@ const Icon = ({ name, ...props }: IconProps) => {
                 <Facebook {...props} />
             ) : name === "linkedin" ? (
                 <Linkedin {...props} />
-            ) : (
+            ) : name === "search" ? (
                 <Search {...props} />
+            ) : (
+                <Filter {...props} />
             )}
         </Suspense>
     );

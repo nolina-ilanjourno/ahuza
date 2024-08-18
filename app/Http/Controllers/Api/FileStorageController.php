@@ -14,8 +14,9 @@ class FileStorageController extends Controller
 {
       public function index()
     {
-        return new ResourceCollection(File::paginate()
-        ->appends(Request::all()));
+        return new ResourceCollection(
+            File::filter(Request::only('search'))->paginate()
+        );
     }
 
     public function list() {

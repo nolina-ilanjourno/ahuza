@@ -16,9 +16,9 @@ class ArticleController extends Controller
     public function index()
     {
         return Inertia::render('Dashboard/Articles/Index', [
-            'filters' => Request::all('search', 'trashed'),
+            'filters' => Request::all('search', 'trashed', 'published'),
             'articles' =>  new ArticleCollection(
-                Article::with(['categories', 'illustration'])->filter(Request::only('search', 'trashed'))
+                Article::with(['categories', 'illustration'])->filter(Request::only('search', 'trashed', 'published'))
                 ->orderBy('title', 'asc')
                 ->paginate(30)
             ),

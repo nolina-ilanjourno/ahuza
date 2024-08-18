@@ -52,5 +52,11 @@ class Article extends Model
                 $query->onlyTrashed();
             }
         });
+
+        $query->when($filters['published'] ?? null, function($query, string $published) {
+            if ($published === 'only') {
+                $query->whereNotNull('published_at');
+            }
+        });
     }
 }

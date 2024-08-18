@@ -32,6 +32,7 @@ interface TableProps<D> {
     columns: ColumnDef<D>[];
     links: MetaLinks[];
     trashed?: boolean;
+    published?: boolean;
 }
 
 export default function TableV2<D>({
@@ -39,6 +40,7 @@ export default function TableV2<D>({
     columns,
     links,
     trashed = false,
+    published = false,
 }: PropsWithoutRef<TableProps<D>>) {
     const entity = useRef<string | undefined>(
         route().current()?.split(".").slice(0, -1).join(".")
@@ -50,13 +52,14 @@ export default function TableV2<D>({
         )
     ).current;
     const { filters } = usePage<{
-        filters: { search?: string; trashed?: string };
+        filters: { search?: string; trashed?: string; published?: string };
     }>().props;
     const [opened, setOpened] = useState<boolean>(false);
 
     const [values, setValues] = useState({
         search: filters.search || "",
         ...(trashed && { trashed: filters.trashed || "" }),
+        ...(published && { published: filters.published || "" }),
     });
 
     const prevValues = usePrevious(values);
@@ -140,7 +143,7 @@ export default function TableV2<D>({
                         </Row>
                         <div className="border-bottom border-200 my-3"></div>
                         <div className="d-flex align-items-center justify-content-between justify-content-lg-end px-x1">
-                            {trashed && (
+                            {(trashed || published) && (
                                 <Fragment>
                                     <Dropdown
                                         align="end"
@@ -160,30 +163,54 @@ export default function TableV2<D>({
                                                 width: 300,
                                             }}
                                         >
-                                            <FieldGroup
-                                                label="Trashed"
-                                                name="trashed"
-                                            >
-                                                <SelectInput
+                                            {trashed && (
+                                                <FieldGroup
+                                                    label="Trashed"
                                                     name="trashed"
-                                                    value={values.trashed}
-                                                    onChange={handleChange}
-                                                    options={[
-                                                        {
-                                                            value: "",
-                                                            label: "Without Trashed",
-                                                        },
-                                                        {
-                                                            value: "with",
-                                                            label: "With Trashed",
-                                                        },
-                                                        {
-                                                            value: "only",
-                                                            label: "Only Trashed",
-                                                        },
-                                                    ]}
-                                                />
-                                            </FieldGroup>
+                                                >
+                                                    <SelectInput
+                                                        name="trashed"
+                                                        value={values.trashed}
+                                                        onChange={handleChange}
+                                                        options={[
+                                                            {
+                                                                value: "",
+                                                                label: "Without Trashed",
+                                                            },
+                                                            {
+                                                                value: "with",
+                                                                label: "With Trashed",
+                                                            },
+                                                            {
+                                                                value: "only",
+                                                                label: "Only Trashed",
+                                                            },
+                                                        ]}
+                                                    />
+                                                </FieldGroup>
+                                            )}
+                                            {published && (
+                                                <FieldGroup
+                                                    label="Published"
+                                                    name="published"
+                                                >
+                                                    <SelectInput
+                                                        name="published"
+                                                        value={values.published}
+                                                        onChange={handleChange}
+                                                        options={[
+                                                            {
+                                                                value: "",
+                                                                label: "All",
+                                                            },
+                                                            {
+                                                                value: "only",
+                                                                label: "Only Published",
+                                                            },
+                                                        ]}
+                                                    />
+                                                </FieldGroup>
+                                            )}
                                         </Dropdown.Menu>
                                     </Dropdown>
                                     <div
