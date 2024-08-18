@@ -12,7 +12,7 @@ interface ArticleItemProps {
 const ArticleItem: FC<ArticleItemProps> = ({ article }) => {
     return (
         <Col as="article" lg={4} md={6} xs={12}>
-            <Figure className="mb-4 zoom-img">
+            <Figure className="mb-4 zoom-img w-100">
                 <Link href={route("articles.show", article.slug)}>
                     <Image
                         src={
@@ -20,8 +20,10 @@ const ArticleItem: FC<ArticleItemProps> = ({ article }) => {
                                 ? article.illustration!.link
                                 : ""
                         }
+                        width={"100%"}
+                        height={400}
+                        style={{ objectFit: "cover" }}
                         alt={article.title}
-                        fluid
                         rounded
                     />
                 </Link>

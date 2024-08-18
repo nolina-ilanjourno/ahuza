@@ -19,6 +19,7 @@ import {
 import { useInView } from "react-intersection-observer";
 import { usePrevious } from "react-use";
 import TextInput from "../Form/TextInput";
+import ArticleItem from "../molecules/ArticleItem";
 
 const ArticleTable: FC = () => {
     const { articles, filters } = usePage<
@@ -136,70 +137,7 @@ const ArticleTable: FC = () => {
 
                 <Row className="gy-lg-7 gy-5">
                     {articleList.map((article) => (
-                        <Col key={article.id} lg={4} md={6}>
-                            {article.illustration && (
-                                <Figure className="mb-4 zoom-img">
-                                    <Link
-                                        href={route(
-                                            "articles.show",
-                                            article.slug
-                                        )}
-                                    >
-                                        <Image
-                                            src={article.illustration.link}
-                                            alt={article.title}
-                                            fluid
-                                            rounded
-                                        />
-                                    </Link>
-                                </Figure>
-                            )}
-                            {article.categories.map((category, index) => (
-                                <span
-                                    key={category.id}
-                                    style={{
-                                        backgroundColor:
-                                            category.background_color,
-                                        color: category.text_color,
-                                    }}
-                                    className={classNames("badge badge-pill", {
-                                        "ms-1": index > 0,
-                                    })}
-                                >
-                                    {category.label}
-                                </span>
-                            ))}
-                            <h3 className="my-3 lh-base h4">
-                                <Link
-                                    href={route("articles.show", article.slug)}
-                                    className="text-reset"
-                                >
-                                    {article.title}
-                                </Link>
-                            </h3>
-                            <div className="d-flex align-items-center justify-content-between mb-3 mb-md-0">
-                                <div className="d-flex align-items-center">
-                                    <Image
-                                        src={Avatar}
-                                        alt="Avatar"
-                                        className="avatar avatar-xs rounded-circle"
-                                    />
-                                    <div className="ms-2">
-                                        <Link
-                                            href="#"
-                                            className="text-reset fs-6"
-                                        >
-                                            Claude Allouche
-                                        </Link>
-                                    </div>
-                                </div>
-                                <div className="ms-3">
-                                    <span className="fs-6">
-                                        {article.published_at}
-                                    </span>
-                                </div>
-                            </div>
-                        </Col>
+                        <ArticleItem key={article.id} article={article} />
                     ))}
                 </Row>
 
