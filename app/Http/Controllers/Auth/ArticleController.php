@@ -19,8 +19,8 @@ class ArticleController extends Controller
             'filters' => Request::all('search', 'trashed'),
             'articles' =>  new ArticleCollection(
                 Article::with(['categories', 'illustration'])->filter(Request::only('search', 'trashed'))
-                ->orderBy('created_at', 'desc')
-                ->paginate()
+                ->orderBy('title', 'asc')
+                ->paginate(30)
             ),
         ]);
     }

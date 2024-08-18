@@ -19,7 +19,7 @@ class ImageController extends Controller
             'filters' => Request::all('search', 'trashed'),
             'images' =>  new ImageCollection(
                 File::filter(Request::only('search', 'trashed'))
-                ->orderBy('created_at', 'desc')
+                ->orderBy('label', 'asc')
                 ->paginate()
             ),
         ]);

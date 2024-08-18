@@ -1,21 +1,58 @@
-import { LucideProps } from "lucide-react";
-import dynamicIconImports from "lucide-react/dynamicIconImports";
-import { lazy, Suspense, useRef } from "react";
+import {
+    Copy,
+    Eye,
+    Facebook,
+    Linkedin,
+    LucideProps,
+    Play,
+    Plus,
+    RefreshCw,
+    Search,
+    Trash2,
+} from "lucide-react";
+import { Suspense } from "react";
+
+export type CustomIcon =
+    | "eye"
+    | "plus"
+    | "refresh-cw"
+    | "trash-2"
+    | "copy"
+    | "play"
+    | "facebook"
+    | "linkedin"
+    | "search";
 
 interface IconProps extends Omit<LucideProps, "ref"> {
-    name: keyof typeof dynamicIconImports;
+    name: CustomIcon;
 }
 
 const Icon = ({ name, ...props }: IconProps) => {
-    const LucideIcon = useRef(lazy(dynamicIconImports[name])).current;
-
     return (
         <Suspense
             fallback={
                 <div style={{ background: "#ddd", width: 24, height: 24 }} />
             }
         >
-            <LucideIcon {...props} />
+            {name === "copy" ? (
+                <Copy {...props} />
+            ) : name === "refresh-cw" ? (
+                <RefreshCw {...props} />
+            ) : name === "eye" ? (
+                <Eye {...props} />
+            ) : name === "plus" ? (
+                <Plus {...props} />
+            ) : name === "trash-2" ? (
+                <Trash2 {...props} />
+            ) : name === "play" ? (
+                <Play {...props} />
+            ) : name === "facebook" ? (
+                <Facebook {...props} />
+            ) : name === "linkedin" ? (
+                <Linkedin {...props} />
+            ) : (
+                <Search {...props} />
+            )}
         </Suspense>
     );
 };

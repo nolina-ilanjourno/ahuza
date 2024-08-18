@@ -1,5 +1,4 @@
-import Linkedin from "@/Assets/images/client-logo/clients-logo-3.svg";
-import Facebook from "@/Assets/images/client-logo/clients-logo-5.svg";
+import Icon from "../atoms/Icon";
 
 export default function SocialNetworks() {
     return (
@@ -16,12 +15,12 @@ export default function SocialNetworks() {
                             <div className="d-flex justify-content-center gap-5 pb-6">
                                 <div>
                                     <figure className="text-center">
-                                        <img src={Facebook} alt="logo" />
+                                        <Icon name="facebook" />
                                     </figure>
                                 </div>
                                 <div>
                                     <figure className="text-center">
-                                        <img src={Linkedin} alt="logo" />
+                                        <Icon name="linkedin" />
                                     </figure>
                                 </div>
                             </div>

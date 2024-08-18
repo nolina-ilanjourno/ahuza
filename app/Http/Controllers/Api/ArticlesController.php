@@ -16,7 +16,7 @@ class ArticlesController extends Controller
             ->filter(Request::only('search'))
             ->whereNot('published_at', null)
             ->orderBy('published_at', 'desc')
-            ->paginate(1)
+            ->paginate(30)
         );
     }
 }

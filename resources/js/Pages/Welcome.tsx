@@ -1,4 +1,3 @@
-import { PageProps } from "@/types";
 import { Head } from "@inertiajs/react";
 
 import Footer from "@/Components/Layouts/Footer";
@@ -11,17 +10,19 @@ import Main from "@/Components/Sections/Main";
 import Services from "@/Components/Sections/Services";
 import SocialNetworks from "@/Components/Sections/SocialNetworks";
 import Whatsapp from "@/Components/Sections/Whatsapp";
-import type FAQD from "@/Interfaces/FAQ";
 import { FC } from "react";
 
-const Welcome: FC<
-    PageProps<{
-        faqs: FAQD[];
-    }>
-> = ({ faqs }) => {
+const Welcome: FC = () => {
     return (
         <main>
-            <Head title="Welcome" />
+            <Head>
+                <title>Claude Allouche | Gynécologue</title>
+                <meta
+                    name="description"
+                    content="Je suis le Dr Claude Allouche, gynécologue-obstétricien à Raanana et Netanya, avec de nombreuses années d'expérience et un parcours remarquable dans les différents domaines de ma spécialité."
+                />
+                <meta name="robots" content="index, follow" />
+            </Head>
             <Navigation />
             <Main />
             <SocialNetworks />

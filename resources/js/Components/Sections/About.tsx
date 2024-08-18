@@ -21,33 +21,40 @@ export default function About() {
                                 <span className="text-primary">moi</span>
                             </h2>
                             <p>
-                                Je suis le Dr Claude Allouche, gynecologue
-                                obstetricien à Raanana et Netanya, qui possède
-                                de nombreuses années d'expérience et un CV
-                                impressionnant dans le domaine.
+                                Je suis le Dr Claude Allouche,
+                                gynécologue-obstétricien à Raanana et Netanya,
+                                avec de nombreuses années d'expérience et un
+                                parcours remarquable dans les différents
+                                domaines de ma spécialité.
                             </p>
-
+                            <p>
+                                De Formation française, après avoir fait mes
+                                études de médecine à Paris et mon internat de
+                                Gynecologie obstétrique à Caen , j’ai travaillé
+                                pendant plus de 25 ans en tant que praticien
+                                hospitalier à l’hôpital d’Évreux en Normandie,
+                                où j’ai dirigé le pôle Femme-mère-enfants des
+                                hôpitaux d’Évreux et de Vernon.
+                            </p>
+                            <p>
+                                Après avoir fait mon alya fin 2018 je travaille
+                                désormais comme médecin-gynécologue obstétricien
+                                en Israel à l'hôpital Laniado , à la koupat
+                                holim Clalit de Netanya et dans mon cabinet de
+                                la clinique Ahuza à Raanana . Dans ma clinique
+                                de Raanana, une gamme de services est proposée,
+                                notamment
+                            </p>
                             <Collapse in={open}>
                                 <div>
                                     <p>
-                                        De Formation française, après avoir fait
-                                        mes études de médecine à Paris et mon
-                                        internat de Gynecologie obstétrique à
-                                        Caen , j’ai travaillé pendant plus de 25
-                                        ans en tant que praticien hospitalier à
-                                        l’hôpital d’Évreux en Normandie, où j’ai
-                                        dirigé le pôle Femme-mère-enfants des
-                                        hôpitaux d’Évreux et de Vernon.
-                                    </p>
-                                    <p>
-                                        Après avoir fait mon alya fin 2018 je
-                                        travaille désormais comme
-                                        médecin-gynécologue obstétricien en
-                                        Israel à l'hôpital Laniado , à la koupat
-                                        holim Clalit de Netanya et dans mon
-                                        cabinet de la clinique Ahuza à Raanana .
-                                        Dans ma clinique de Raanana, une gamme
-                                        de services est proposée, notamment
+                                        Le suivi gynécologiques avec pose de
+                                        stérilet , suivi de contraception,
+                                        realisation de frottis, échographies
+                                        gynécologiques. Le suivi de la
+                                        grossesse, les échographies
+                                        obstétricales et le traitement des
+                                        femmes enceintes.
                                     </p>
                                 </div>
                             </Collapse>
