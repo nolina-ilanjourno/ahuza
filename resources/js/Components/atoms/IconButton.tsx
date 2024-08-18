@@ -1,13 +1,7 @@
 import { useBreakpoints } from "@/Hooks/useBreakpoints";
 import { router } from "@inertiajs/react";
 import classNames from "classnames";
-import dynamicIconImports from "lucide-react/dynamicIconImports";
-import {
-    FC,
-    forwardRef,
-    ForwardRefExoticComponent,
-    ForwardRefRenderFunction,
-} from "react";
+import { forwardRef, ForwardRefRenderFunction } from "react";
 import {
     Button,
     ButtonProps,
@@ -15,10 +9,10 @@ import {
     OverlayTriggerProps,
     Tooltip,
 } from "react-bootstrap";
-import Icon from "./Icon";
+import Icon, { CustomIcon } from "./Icon";
 
 interface IProps extends ButtonProps {
-    icon: keyof typeof dynamicIconImports;
+    icon: CustomIcon;
     iconAlign?: "left" | "right" | "middle";
     iconClassName?: string;
     transform?: string;
