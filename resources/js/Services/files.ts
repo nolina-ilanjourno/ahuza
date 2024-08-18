@@ -22,4 +22,5 @@ export const filesApi = api.injectEndpoints({
     overrideExisting: true,
 });
 
-export const { useStoreFileMutation, useLazyGetFilesQuery } = filesApi;
+export const { useStoreFileMutation, useLazyGetFilesQuery, useGetFilesQuery } =
+    filesApi;

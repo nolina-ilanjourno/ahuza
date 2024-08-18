@@ -12,6 +12,7 @@ export default interface File {
     size: number;
     mime_type: string;
     link: string;
+    deleted_at: string;
     created_at: string;
     updated_at: string;
 }

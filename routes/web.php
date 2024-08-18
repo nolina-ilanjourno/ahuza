@@ -19,6 +19,7 @@ Route::middleware('auth')->prefix('/dashboard')->name('dashboard.')->group(funct
     Route::resource('/categories', CategoryController::class);
     Route::resource('/articles', AuthArticleController::class);
     Route::resource('/images', ImageController::class);
+    Route::put('/images/{file}/restore', [ImageController::class, 'restore'])->name('images.restore');
     Route::resource('/faq', FAQController::class)->names('faqs');
     Route::put('/articles/{article}/restore', [AuthArticleController::class, 'restore'])->name('articles.restore');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

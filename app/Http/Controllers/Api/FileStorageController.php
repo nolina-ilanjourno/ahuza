@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FileStoreRequest;
+use App\Http\Resources\ImageCollection;
 use App\Models\File;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -15,6 +16,10 @@ class FileStorageController extends Controller
     {
         return new ResourceCollection(File::paginate()
         ->appends(Request::all()));
+    }
+
+    public function list() {
+        return new ImageCollection(File::all());
     }
 
     public function store(FileStoreRequest $request)

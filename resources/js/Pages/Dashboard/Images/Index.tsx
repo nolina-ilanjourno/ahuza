@@ -22,9 +22,16 @@ export default function ImagesView({
 }>) {
     const [_, copy] = useCopyToClipboard();
 
-    const onDelete = (id: string) => {
-        if (confirm("Êtes-vous sûr de vouloir supprimer cette image ?")) {
+    const onTrigger = (id: string, forDelete: boolean = false) => {
+        if (
+            forDelete &&
+            confirm("Êtes-vous sûr de vouloir supprimer cette image ?")
+        ) {
             return router.delete(route("dashboard.images.destroy", id));
+        } else if (
+            confirm("Êtes-vous sûr de vouloir restaurer cette image ?")
+        ) {
+            return router.put(route("dashboard.images.restore", id));
         }
     };
 
@@ -32,7 +39,7 @@ export default function ImagesView({
         {
             header: "Actions",
             footer: (props) => props.column.id,
-            accessorFn: ({ id, link }) => (
+            accessorFn: ({ id, link, deleted_at }) => (
                 <Fragment>
                     <IconButton
                         size="sm"
@@ -41,15 +48,15 @@ export default function ImagesView({
                     />
                     <IconButton
                         size="sm"
-                        icon="trash-2"
-                        className="ms-1"
-                        variant="danger"
-                        onClick={() => onDelete(id)}
+                        icon={deleted_at ? "refresh-cw" : "trash-2"}
+                        color="white"
+                        className="mx-1"
+                        variant={deleted_at ? "success" : "danger"}
+                        onClick={() => onTrigger(id, !deleted_at)}
                     />
                     <IconButton
                         size="sm"
                         icon="copy"
-                        className="ms-1"
                         variant="secondary"
                         onClick={() => copy(link)}
                     />
@@ -85,7 +92,12 @@ export default function ImagesView({
 
     return (
         <AuthenticatedLayout user={auth.user}>
-            <TableV2<File> data={data} columns={columns} links={links} />
+            <TableV2<File>
+                data={data}
+                columns={columns}
+                links={links}
+                trashed
+            />
         </AuthenticatedLayout>
     );
 }
