@@ -43,7 +43,7 @@ const Editor: FC<
                     toolbar:
                         "undo redo | blocks fontfamily fontsize quicklink | bold italic underline image forecolor backcolor | align | link anchor | numlist bullist indent outdent",
                 }}
-                value={value}
+                value={value?.replace(/\\/g, "")}
                 {...props}
             />
         </Fragment>

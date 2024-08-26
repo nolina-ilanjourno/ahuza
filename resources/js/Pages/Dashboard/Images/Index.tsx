@@ -65,19 +65,24 @@ export default function ImagesView({
             cell: (info) => info.getValue(),
         },
         {
-            header: "Label",
-            footer: (props) => props.column.id,
-            accessorFn: ({ label }) => label ?? "N/A",
-            id: "label",
-            cell: (info) => info.getValue(),
-        },
-        {
             header: "Aperçu",
             footer: (props) => props.column.id,
             accessorFn: ({ link }) => (
-                <Image src={link} thumbnail width={100} />
+                <Image src={link} thumbnail width={150} height={150} />
             ),
             id: "link",
+            cell: (info) => info.getValue(),
+        },
+        {
+            header: "Label",
+            meta: {
+                style: {
+                    minWidth: "200px",
+                },
+            },
+            footer: (props) => props.column.id,
+            accessorFn: ({ label }) => label ?? "N/A",
+            id: "label",
             cell: (info) => info.getValue(),
         },
         {
