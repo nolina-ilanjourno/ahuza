@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ArticleStoreOrUpdateRequest;
 use App\Http\Resources\ArticleCollection;
 use App\Models\Article;
+use App\Models\InternalCategory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -16,9 +17,10 @@ class ArticleController extends Controller
     public function index()
     {
         return Inertia::render('Dashboard/Articles/Index', [
-            'filters' => Request::all('search', 'trashed', 'published'),
+            'filters' => Request::all('search', 'trashed', 'published', 'internal_category_id'),
+            'internalCategory' => InternalCategory::find(Request::get('internal_category_id')),
             'articles' =>  new ArticleCollection(
-                Article::with(['categories', 'illustration'])->filter(Request::only('search', 'trashed', 'published'))
+                Article::with(['categories', 'illustration', 'internalCategories'])->filter(Request::only('search', 'trashed', 'published', 'internal_category_id'))
                 ->orderBy('title', 'asc')
                 ->paginate(30)
             ),
@@ -40,13 +42,15 @@ class ArticleController extends Controller
 
         $article->categories()->attach($request->category_ids);
 
+        $article->internal_categories()->attach($request->internal_category_ids);
+
         return Redirect::route('dashboard.articles.index')->with('success', 'Article created.');
     }
 
      public function edit(Article $article)
     {
         return Inertia::render('Dashboard/Articles/Edit', [
-            'article' => $article->load(['categories', 'traductions', 'illustration']),
+            'article' => $article->load(['categories', 'traductions', 'illustration', 'internalCategories']),
         ]);
     }
 
@@ -60,6 +64,7 @@ class ArticleController extends Controller
         }
 
         $article->categories()->sync($request->category_ids);
+        $article->internalCategories()->sync($request->internal_category_ids);
 
         return Redirect::back()->with('success', 'Article updated.');
     }

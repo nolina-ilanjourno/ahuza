@@ -18,7 +18,8 @@ import { OptionProps, SingleValueProps, components } from "react-select";
 const ArticleForm: FC<{
     article?: Article;
 }> = ({ article }) => {
-    const { loadCategoriesLazy, loadFilesLazy } = useLoadOptions();
+    const { loadCategoriesLazy, loadFilesLazy, loadInternalCategoriesLazy } =
+        useLoadOptions();
     const {
         data,
         setData,
@@ -35,6 +36,8 @@ const ArticleForm: FC<{
         keywords: article?.keywords ?? "",
         published_at: article?.published_at ?? null,
         category_ids: article?.categories.map((c) => c.id) ?? [],
+        internal_category_ids:
+            article?.internal_categories.map((c) => c.id) ?? [],
         traductions: article?.traductions ?? [
             {
                 id: Math.random().toString(),
@@ -266,6 +269,28 @@ const ArticleForm: FC<{
                                     onChange={(value) => {
                                         setData(
                                             "category_ids",
+                                            value.map((v) => v.id)
+                                        );
+                                    }}
+                                />
+                            </Form.Group>
+                        </Col>
+                        <Col lg={12}>
+                            <Form.Group>
+                                <Form.Label>Categories internes</Form.Label>
+                                <Select
+                                    loadOptions={loadInternalCategoriesLazy}
+                                    getOptionValue={(option) => option.id}
+                                    getOptionLabel={(option) => option.label}
+                                    defaultOptions
+                                    isMulti
+                                    defaultValue={article?.internal_categories}
+                                    aria-errormessage={
+                                        errors.internal_category_ids
+                                    }
+                                    onChange={(value) => {
+                                        setData(
+                                            "internal_category_ids",
                                             value.map((v) => v.id)
                                         );
                                     }}

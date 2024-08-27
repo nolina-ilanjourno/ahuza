@@ -1,8 +1,10 @@
 import Category from "@/Interfaces/Category";
 import File from "@/Interfaces/File";
+import InternalCategory from "@/Interfaces/InternalCategory";
 import PaginatedData from "@/Interfaces/PaginatedData";
 import { useLazyGetCategoriesQuery } from "@/Services/categories";
 import { useLazyGetFilesQuery } from "@/Services/files";
+import { useLazyGetInternalCategoriesQuery } from "@/Services/internalCategories";
 import { GroupBase, OptionsOrGroups } from "react-select";
 
 type IProps =
@@ -15,6 +17,8 @@ const useLoadOptions = ({ onCallback }: IProps = {}) => {
     const [getCategoriesLazy] =
         useLazyGetCategoriesQuery<PaginatedData<Category>>();
     const [getFilesLazy] = useLazyGetFilesQuery<PaginatedData<File>>();
+    const [getInternalCategoriesLazy] =
+        useLazyGetInternalCategoriesQuery<PaginatedData<InternalCategory>>();
 
     const loadCategoriesLazy = async (
         search: string,
@@ -26,6 +30,25 @@ const useLoadOptions = ({ onCallback }: IProps = {}) => {
             ...filters,
         }).unwrap();
         onCallback?.("loadCategoriesLazy", response);
+        return {
+            options: response.data,
+            hasMore: response.meta.current_page !== response.meta.last_page,
+            additional: {
+                page: response.meta.current_page + 1,
+            },
+        };
+    };
+
+    const loadInternalCategoriesLazy = async (
+        search: string,
+        _: OptionsOrGroups<InternalCategory, GroupBase<InternalCategory>>,
+        filters?: { page: number }
+    ) => {
+        const response = await getInternalCategoriesLazy({
+            search,
+            ...filters,
+        }).unwrap();
+        onCallback?.("loadInternalCategoriesLazy", response);
         return {
             options: response.data,
             hasMore: response.meta.current_page !== response.meta.last_page,
@@ -57,6 +80,7 @@ const useLoadOptions = ({ onCallback }: IProps = {}) => {
     return {
         loadCategoriesLazy,
         loadFilesLazy,
+        loadInternalCategoriesLazy,
     };
 };
 

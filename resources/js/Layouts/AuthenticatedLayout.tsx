@@ -75,6 +75,19 @@ export default function AuthenticatedLayout({
                                             <Link
                                                 className="nav-link"
                                                 href={route(
+                                                    "dashboard.internal-categories.index"
+                                                )}
+                                            >
+                                                <i className="align-bottom bx bx-user"></i>
+                                                <span className="ms-2">
+                                                    Catégories internes
+                                                </span>
+                                            </Link>
+                                        </li>
+                                        <li className="nav-item">
+                                            <Link
+                                                className="nav-link"
+                                                href={route(
                                                     "dashboard.faqs.index"
                                                 )}
                                             >

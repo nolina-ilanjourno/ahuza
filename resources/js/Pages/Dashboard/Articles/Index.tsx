@@ -109,6 +109,7 @@ const ArticlesView: FC<
                 links={links}
                 trashed
                 published
+                internal
             />
         </AuthenticatedLayout>
     );

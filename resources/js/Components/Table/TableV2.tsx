@@ -26,6 +26,10 @@ import IconButton from "../atoms/IconButton";
 import FieldGroup from "../Form/FieldGroup";
 import SelectInput from "../Form/SelectInput";
 import TextInput from "../Form/TextInput";
+import useLoadOptions from "@/Hooks/useLoadOptions";
+import Select from "../Select";
+import InternalCategory from "@/Interfaces/InternalCategory";
+import { SingleValue } from "react-select";
 
 interface TableProps<D> {
     data: D[];
@@ -33,6 +37,7 @@ interface TableProps<D> {
     links: MetaLinks[];
     trashed?: boolean;
     published?: boolean;
+    internal?: boolean;
 }
 
 export default function TableV2<D>({
@@ -41,7 +46,9 @@ export default function TableV2<D>({
     links,
     trashed = false,
     published = false,
+    internal = false,
 }: PropsWithoutRef<TableProps<D>>) {
+    const { loadInternalCategoriesLazy } = useLoadOptions();
     const entity = useRef<string | undefined>(
         route().current()?.split(".").slice(0, -1).join(".")
     ).current;
@@ -51,8 +58,14 @@ export default function TableV2<D>({
             route().current()?.split(".").slice(1, -1).join(" ") || "Table"
         )
     ).current;
-    const { filters } = usePage<{
-        filters: { search?: string; trashed?: string; published?: string };
+    const { filters, internalCategory } = usePage<{
+        filters: {
+            search?: string;
+            trashed?: string;
+            published?: string;
+            internal_category_id?: string;
+        };
+        internalCategory: InternalCategory | null;
     }>().props;
     const [opened, setOpened] = useState<boolean>(false);
 
@@ -60,6 +73,9 @@ export default function TableV2<D>({
         search: filters.search || "",
         ...(trashed && { trashed: filters.trashed || "" }),
         ...(published && { published: filters.published || "" }),
+        ...(internal && {
+            internal_category_id: filters.internal_category_id || "",
+        }),
     });
 
     const prevValues = usePrevious(values);
@@ -85,6 +101,15 @@ export default function TableV2<D>({
         setValues((values) => ({
             ...values,
             [name]: value,
+        }));
+
+        if (opened) setOpened(false);
+    };
+
+    const handleInternalChange = (value: SingleValue<InternalCategory>) => {
+        setValues((values) => ({
+            ...values,
+            internal_category_id: value?.id,
         }));
 
         if (opened) setOpened(false);
@@ -143,7 +168,7 @@ export default function TableV2<D>({
                         </Row>
                         <div className="border-bottom border-200 my-3"></div>
                         <div className="d-flex align-items-center justify-content-between justify-content-lg-end px-x1">
-                            {(trashed || published) && (
+                            {(trashed || published || internal) && (
                                 <Fragment>
                                     <Dropdown
                                         align="end"
@@ -208,6 +233,32 @@ export default function TableV2<D>({
                                                                 label: "Only Published",
                                                             },
                                                         ]}
+                                                    />
+                                                </FieldGroup>
+                                            )}
+                                            {internal && (
+                                                <FieldGroup
+                                                    label="Catégorie interne"
+                                                    name="internal_category_id"
+                                                >
+                                                    <Select
+                                                        loadOptions={
+                                                            loadInternalCategoriesLazy
+                                                        }
+                                                        isClearable
+                                                        getOptionValue={(
+                                                            option
+                                                        ) => option.id}
+                                                        getOptionLabel={(
+                                                            option
+                                                        ) => option.label}
+                                                        defaultOptions
+                                                        defaultValue={
+                                                            internalCategory
+                                                        }
+                                                        onChange={
+                                                            handleInternalChange
+                                                        }
                                                     />
                                                 </FieldGroup>
                                             )}

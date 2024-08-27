@@ -37,6 +37,11 @@ class Article extends Model
         return $this->belongsToMany(Category::class)->using(ArticleCategory::class)->withTimestamps();
     }
 
+    public function internalCategories()
+    {
+        return $this->belongsToMany(InternalCategory::class)->using(ArticleInternalCategory::class)->withTimestamps();
+    }
+
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? null, fn ($query, string $search) =>
@@ -52,6 +57,12 @@ class Article extends Model
                 $query->onlyTrashed();
             }
         });
+
+        $query->when($filters['internal_category_id'] ?? null, fn ($query, string $internal_category_id) =>
+            $query->whereHas('internalCategories', fn ($query) =>
+                $query->where('internal_category_id', $internal_category_id)
+            )
+        );
 
         $query->when($filters['published'] ?? null, function($query, string $published) {
             if ($published === 'only') {
