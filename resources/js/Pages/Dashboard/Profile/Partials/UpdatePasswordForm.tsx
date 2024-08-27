@@ -24,7 +24,7 @@ export default function UpdatePasswordForm() {
     const updatePassword: FormEventHandler = (e) => {
         e.preventDefault();
 
-        put(route("password.update"), {
+        put(route("dashboard.password.update"), {
             preserveScroll: true,
             onSuccess: () => reset(),
             onError: (errors) => {
@@ -67,6 +67,7 @@ export default function UpdatePasswordForm() {
                                 onChange={(e) =>
                                     setData("current_password", e.target.value)
                                 }
+                                isInvalid={!!errors.current_password}
                                 type="password"
                                 className="mt-1 block w-full"
                                 autoComplete="current-password"
@@ -87,6 +88,7 @@ export default function UpdatePasswordForm() {
                                 onChange={(e) =>
                                     setData("password", e.target.value)
                                 }
+                                isInvalid={!!errors.password}
                                 type="password"
                                 className="mt-1 block w-full"
                                 autoComplete="new-password"
@@ -110,6 +112,7 @@ export default function UpdatePasswordForm() {
                                         e.target.value
                                     )
                                 }
+                                isInvalid={!!errors.password_confirmation}
                                 type="password"
                                 className="mt-1 block w-full"
                                 autoComplete="new-password"
