@@ -1,10 +1,12 @@
 import Category from "@/Interfaces/Category";
 import File from "@/Interfaces/File";
 import InternalCategory from "@/Interfaces/InternalCategory";
+import Keyword from "@/Interfaces/Keyword";
 import PaginatedData from "@/Interfaces/PaginatedData";
 import { useLazyGetCategoriesQuery } from "@/Services/categories";
 import { useLazyGetFilesQuery } from "@/Services/files";
 import { useLazyGetInternalCategoriesQuery } from "@/Services/internalCategories";
+import { useLazyGetKeywordsQuery } from "@/Services/keywords";
 import { GroupBase, OptionsOrGroups } from "react-select";
 
 type IProps =
@@ -19,6 +21,7 @@ const useLoadOptions = ({ onCallback }: IProps = {}) => {
     const [getFilesLazy] = useLazyGetFilesQuery<PaginatedData<File>>();
     const [getInternalCategoriesLazy] =
         useLazyGetInternalCategoriesQuery<PaginatedData<InternalCategory>>();
+    const [getKeywordsLazy] = useLazyGetKeywordsQuery<PaginatedData<Keyword>>();
 
     const loadCategoriesLazy = async (
         search: string,
@@ -58,6 +61,25 @@ const useLoadOptions = ({ onCallback }: IProps = {}) => {
         };
     };
 
+    const loadKeywordsLazy = async (
+        search: string,
+        _: OptionsOrGroups<Keyword, GroupBase<Keyword>>,
+        filters?: { page: number }
+    ) => {
+        const response = await getKeywordsLazy({
+            search,
+            ...filters,
+        }).unwrap();
+        onCallback?.("loadKeywordsLazy", response);
+        return {
+            options: response.data,
+            hasMore: response.meta.current_page !== response.meta.last_page,
+            additional: {
+                page: response.meta.current_page + 1,
+            },
+        };
+    };
+
     const loadFilesLazy = async (
         search: string,
         _: OptionsOrGroups<File, GroupBase<File>>,
@@ -81,6 +103,7 @@ const useLoadOptions = ({ onCallback }: IProps = {}) => {
         loadCategoriesLazy,
         loadFilesLazy,
         loadInternalCategoriesLazy,
+        loadKeywordsLazy,
     };
 };
 

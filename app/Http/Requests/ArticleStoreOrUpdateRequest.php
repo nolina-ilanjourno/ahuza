@@ -18,6 +18,7 @@ class ArticleStoreOrUpdateRequest extends FormRequest
             'title' => ['required', 'max:255'],
             'category_ids' => ['required', 'exists:categories,id'],
             'internal_category_ids' => ['nullable', 'exists:internal_categories,id'],
+            'keyword_ids' => ['nullable', 'exists:keywords,id'],
             'slug' => ['required', 'unique:articles,slug,' . ($this->article ? $this->article->id : 'NULL')],
             'published_at' => ['nullable', 'date'],
             'traductions' => ['required', 'array'],

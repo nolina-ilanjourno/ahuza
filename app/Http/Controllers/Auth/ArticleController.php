@@ -20,7 +20,7 @@ class ArticleController extends Controller
             'filters' => Request::all('search', 'trashed', 'published', 'internal_category_id'),
             'internalCategory' => InternalCategory::find(Request::get('internal_category_id')),
             'articles' =>  new ArticleCollection(
-                Article::with(['categories', 'illustration', 'internalCategories'])->filter(Request::only('search', 'trashed', 'published', 'internal_category_id'))
+                Article::with(['categories', 'illustration', 'internalCategories', 'keywords'])->filter(Request::only('search', 'trashed', 'published', 'internal_category_id'))
                 ->orderBy('title', 'asc')
                 ->paginate(30)
             ),
@@ -41,8 +41,8 @@ class ArticleController extends Controller
         }
 
         $article->categories()->attach($request->category_ids);
-
         $article->internal_categories()->attach($request->internal_category_ids);
+        $article->keywords()->attach($request->keyword_ids);
 
         return Redirect::route('dashboard.articles.index')->with('success', 'Article created.');
     }
@@ -50,7 +50,7 @@ class ArticleController extends Controller
      public function edit(Article $article)
     {
         return Inertia::render('Dashboard/Articles/Edit', [
-            'article' => $article->load(['categories', 'traductions', 'illustration', 'internalCategories']),
+            'article' => $article->load(['categories', 'traductions', 'illustration', 'internalCategories', 'keywords']),
         ]);
     }
 
@@ -65,6 +65,7 @@ class ArticleController extends Controller
 
         $article->categories()->sync($request->category_ids);
         $article->internalCategories()->sync($request->internal_category_ids);
+        $article->keywords()->sync($request->keyword_ids);
 
         return Redirect::back()->with('success', 'Article updated.');
     }

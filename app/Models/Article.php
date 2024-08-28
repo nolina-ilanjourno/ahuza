@@ -42,6 +42,11 @@ class Article extends Model
         return $this->belongsToMany(InternalCategory::class)->using(ArticleInternalCategory::class)->withTimestamps();
     }
 
+    public function keywords()
+    {
+        return $this->belongsToMany(Keyword::class)->withTimestamps();
+    }
+
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? null, fn ($query, string $search) =>

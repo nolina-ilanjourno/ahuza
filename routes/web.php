@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\FAQController;
 use App\Http\Controllers\Auth\DashboardController;
 use App\Http\Controllers\Auth\ImageController;
 use App\Http\Controllers\Auth\InternalCategoryController;
+use App\Http\Controllers\Auth\KeywordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,7 @@ Route::middleware('auth')->prefix('/dashboard')->name('dashboard.')->group(funct
     Route::resource('/categories', CategoryController::class);
     Route::resource('/articles', AuthArticleController::class);
     Route::resource('/internal-categories', InternalCategoryController::class);
+    Route::resource('/keywords', KeywordController::class);
     Route::resource('/images', ImageController::class);
     Route::put('/images/{file}/restore', [ImageController::class, 'restore'])->name('images.restore');
     Route::resource('/faq', FAQController::class)->names('faqs');

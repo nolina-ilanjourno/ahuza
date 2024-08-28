@@ -1,7 +1,7 @@
 import Editor from "@/Components/Editor";
 import SelectInput from "@/Components/Form/SelectInput";
 import TrashedMessage from "@/Components/molecules/Messages/TrashedMessage";
-import Select, { CreatableSelect } from "@/Components/Select";
+import Select from "@/Components/Select";
 import LANGUES from "@/Constants/langues";
 import { slugify } from "@/Helpers/utils";
 import useLoadOptions from "@/Hooks/useLoadOptions";
@@ -18,8 +18,12 @@ import { OptionProps, SingleValueProps, components } from "react-select";
 const ArticleForm: FC<{
     article?: Article;
 }> = ({ article }) => {
-    const { loadCategoriesLazy, loadFilesLazy, loadInternalCategoriesLazy } =
-        useLoadOptions();
+    const {
+        loadCategoriesLazy,
+        loadFilesLazy,
+        loadInternalCategoriesLazy,
+        loadKeywordsLazy,
+    } = useLoadOptions();
     const {
         data,
         setData,
@@ -33,11 +37,11 @@ const ArticleForm: FC<{
         title: article?.title ?? "",
         slug: article?.slug ?? "",
         description: article?.description ?? "",
-        keywords: article?.keywords ?? "",
         published_at: article?.published_at ?? null,
         category_ids: article?.categories.map((c) => c.id) ?? [],
         internal_category_ids:
             article?.internal_categories.map((c) => c.id) ?? [],
+        keyword_ids: article?.keywords.map((c) => c.id) ?? [],
         traductions: article?.traductions ?? [
             {
                 id: Math.random().toString(),
@@ -303,14 +307,23 @@ const ArticleForm: FC<{
                                     Mots clé{" "}
                                     <span className="text-danger">*</span> :
                                 </Form.Label>
-                                <CreatableSelect
+                                <Select
+                                    loadOptions={loadKeywordsLazy}
+                                    getOptionValue={(option) => option.id}
+                                    getOptionLabel={(option) => option.label}
+                                    defaultOptions
                                     isMulti
-                                    options={[]}
-                                    value={data.keywords}
-                                    aria-errormessage={errors.keywords}
+                                    defaultValue={article?.keywords}
+                                    aria-errormessage={errors.keyword_ids}
+                                    onChange={(value) => {
+                                        setData(
+                                            "keyword_ids",
+                                            value.map((v) => v.id)
+                                        );
+                                    }}
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                    {errors.keywords}
+                                    {errors.keyword_ids}
                                 </Form.Control.Feedback>
                             </Form.Group>
                         </Col>
@@ -411,24 +424,19 @@ const ArticleForm: FC<{
                                                 Contenu{" "}
                                                 <span className="text-danger">
                                                     *
-                                                </span>
+                                                </span>{" "}
+                                                :
                                             </Form.Label>
-                                            <Row>
-                                                <Col>
-                                                    <Editor
-                                                        onEditorChange={(
-                                                            value
-                                                        ) =>
-                                                            setDataTraductions(
-                                                                index,
-                                                                "traduction",
-                                                                value
-                                                            )
-                                                        }
-                                                        value={traduction}
-                                                    />
-                                                </Col>
-                                            </Row>
+                                            <Editor
+                                                onEditorChange={(value) =>
+                                                    setDataTraductions(
+                                                        index,
+                                                        "traduction",
+                                                        value
+                                                    )
+                                                }
+                                                value={traduction}
+                                            />
                                             <Form.Control.Feedback type="invalid">
                                                 {errors.traductions}
                                             </Form.Control.Feedback>
