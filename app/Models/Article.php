@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
 
 class Article extends Model
 {
@@ -23,7 +23,7 @@ class Article extends Model
     public function scopeWithTraductionInLocale(Builder $query)
     {
         return $query->with('traductions', function ($query) {
-            return $query->where('langue', App::getLocale());
+            return $query->where('langue', Session::get('locale'));
         });
     }
 

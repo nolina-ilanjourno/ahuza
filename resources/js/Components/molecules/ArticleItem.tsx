@@ -13,7 +13,11 @@ const ArticleItem: FC<ArticleItemProps> = ({ article }) => {
     return (
         <Col as="article" lg={4} md={6} xs={12}>
             <Figure className="mb-4 zoom-img w-100">
-                <Link href={route("articles.show", article.slug)}>
+                <Link
+                    href={route("articles.show", {
+                        article: article.slug,
+                    })}
+                >
                     <Image
                         src={
                             article.illustration
@@ -44,7 +48,9 @@ const ArticleItem: FC<ArticleItemProps> = ({ article }) => {
             ))}
             <h3 className="my-3 lh-base h4">
                 <Link
-                    href={route("articles.show", article.slug)}
+                    href={route("articles.show", {
+                        article: article.slug,
+                    })}
                     className="text-reset"
                 >
                     {article.title}
