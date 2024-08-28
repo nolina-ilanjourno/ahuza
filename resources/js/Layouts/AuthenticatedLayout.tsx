@@ -11,7 +11,7 @@ export default function AuthenticatedLayout({
 }: PropsWithChildren<{ user: User; header?: ReactNode }>) {
     return (
         <Fragment>
-            <Navigation transparent={false} />
+            <Navigation transparent={false} isGuest={false} />
             <div className="h-100 bg-gray-100">
                 <section className="py-lg-7 py-5 bg-light-subtle">
                     <div className="container">

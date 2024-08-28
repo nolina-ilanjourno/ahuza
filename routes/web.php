@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\InternalCategoryController;
 use App\Http\Controllers\Auth\KeywordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->prefix('/dashboard')->name('dashboard.')->group(function () {
@@ -27,11 +28,13 @@ Route::middleware('auth')->prefix('/dashboard')->name('dashboard.')->group(funct
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::prefix('/{locale?}')->group(function () {
+require __DIR__.'/auth.php';
+require __DIR__.'/api.php';
+
+Route::middleware(SetLocale::class)->prefix('/{locale?}')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('welcome');
     Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
     Route::get('/articles/{article:slug}', [ArticleController::class, 'show'])->name('articles.show');
 });
 
-require __DIR__.'/auth.php';
-require __DIR__.'/api.php';
+

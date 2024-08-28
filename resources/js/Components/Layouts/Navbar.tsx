@@ -16,12 +16,14 @@ interface NavbarProps {
     isClone?: boolean;
     variant?: "light" | "dark";
     transparent?: boolean;
+    isGuest?: boolean;
 }
 
 const Navbar: FC<NavbarProps> = ({
     isClone,
     variant = "dark",
     transparent,
+    isGuest,
 }) => {
     const [navbarSticky, setNavbarSticky] = useState<boolean>(false);
 
@@ -117,9 +119,11 @@ const Navbar: FC<NavbarProps> = ({
                                         Contact
                                     </Nav.Link>
                                 </Nav.Item>
-                                <Nav.Item>
-                                    <FlagSelect />
-                                </Nav.Item>
+                                {isGuest && (
+                                    <Nav.Item>
+                                        <FlagSelect />
+                                    </Nav.Item>
+                                )}
                             </Nav>
                         </Offcanvas.Body>
                     </NavbarBootstrap.Offcanvas>
@@ -140,13 +144,14 @@ const Navbar: FC<NavbarProps> = ({
     );
 };
 
-export const Navigation: FC<{ transparent?: NavbarProps["transparent"] }> = ({
-    transparent = true,
-}) => {
+export const Navigation: FC<{
+    transparent?: NavbarProps["transparent"];
+    isGuest?: boolean;
+}> = (props) => {
     return (
         <Fragment>
-            <Navbar variant="dark" transparent={transparent} />
-            <Navbar isClone variant="light" transparent={transparent} />
+            <Navbar variant="dark" {...props} />
+            <Navbar isClone variant="light" {...props} />
         </Fragment>
     );
 };
