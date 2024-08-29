@@ -147,11 +147,20 @@ const Navbar: FC<NavbarProps> = ({
 export const Navigation: FC<{
     transparent?: NavbarProps["transparent"];
     isGuest?: boolean;
-}> = (props) => {
+}> = ({ transparent = true, isGuest = true }) => {
     return (
         <Fragment>
-            <Navbar variant="dark" {...props} />
-            <Navbar isClone variant="light" {...props} />
+            <Navbar
+                variant="dark"
+                transparent={transparent}
+                isGuest={isGuest}
+            />
+            <Navbar
+                isClone
+                variant="light"
+                transparent={transparent}
+                isGuest={isGuest}
+            />
         </Fragment>
     );
 };
