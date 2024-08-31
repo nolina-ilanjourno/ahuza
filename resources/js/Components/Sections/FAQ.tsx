@@ -1,9 +1,11 @@
+import useTranslation from "@/Hooks/useTranslation";
 import type IFAQ from "@/Interfaces/FAQ";
 import { PageProps } from "@/types";
 import { usePage } from "@inertiajs/react";
 import { Accordion, Col, Container, Row } from "react-bootstrap";
 
 const FAQ = () => {
+    const { t } = useTranslation();
     const { faqs } = usePage<
         PageProps<{
             faqs: IFAQ[];
@@ -17,12 +19,11 @@ const FAQ = () => {
                     <Row>
                         <Col lg={10} className="offset-lg-1 col-md-12 col-12">
                             <div className="text-center mb-7">
-                                <h2>Questions fréquemment posées</h2>
+                                <h2>{t("faqs.title")}</h2>
                                 <p className="mb-0">
-                                    Vous ne trouvez pas ce que vous cherchez ?{" "}
-                                    <br />
+                                    {t("faqs.description")} <br />
                                     <a href="#" className="text-primary">
-                                        Contactez moi
+                                        {t("faqs.contact")}
                                     </a>
                                 </p>
                             </div>

@@ -3,8 +3,10 @@ import { Col, Container, Row } from "react-bootstrap";
 import ArticleItem from "../molecules/ArticleItem";
 import { PageProps } from "@/types";
 import Article from "@/Interfaces/Article";
+import useTranslation from "@/Hooks/useTranslation";
 
 export default function Blog() {
+    const { t } = useTranslation();
     const { articles } = usePage<
         PageProps<{
             articles: Article[];
@@ -16,14 +18,14 @@ export default function Blog() {
                 <Row>
                     <Col lg={6} className="offset-lg-3">
                         <div className="text-center mb-xl-7 mb-5">
-                            <h2 className="h1 mb-3">Mes articles</h2>
+                            <h2 className="h1 mb-3">{t("articles.title")}</h2>
                             <p className="mb-0">
-                                Retrouvez ici mes derniers articles. <br />
+                                {t("articles.description")} <br />
                                 <Link
                                     href={route("articles.index")}
                                     className="text-primary"
                                 >
-                                    Voir tous les articles
+                                    {t("articles.plus")}
                                 </Link>
                             </p>
                         </div>
@@ -43,7 +45,7 @@ export default function Blog() {
                                 href={route("articles.index")}
                                 className="icon-link icon-link-hover text-dark"
                             >
-                                Voir tous les articles
+                                {t("articles.plus")}
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="16"

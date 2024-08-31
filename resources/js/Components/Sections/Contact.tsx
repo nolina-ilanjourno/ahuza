@@ -1,6 +1,9 @@
 import Avatar from "@/Assets/images/avatar.jpeg";
+import useTranslation from "@/Hooks/useTranslation";
 
 export default function Contact() {
+    const { t } = useTranslation();
+
     return (
         <section id="contact">
             <div className="container">
@@ -11,8 +14,7 @@ export default function Contact() {
                                 <div className="card bg-light">
                                     <div className="card-body p-5">
                                         <h3 className="mb-4">
-                                            Vous avez une question ou besoin
-                                            d'aide ? Contactez-moi
+                                            {t("contact.title")}
                                         </h3>
 
                                         <form
@@ -24,7 +26,7 @@ export default function Contact() {
                                                     htmlFor="YourNameInput"
                                                     className="form-label"
                                                 >
-                                                    Votre nom complet :
+                                                    {t("contact.fullname")}
                                                 </label>
                                                 <input
                                                     type="text"
@@ -42,7 +44,7 @@ export default function Contact() {
                                                     htmlFor="yourEmailInput"
                                                     className="form-label"
                                                 >
-                                                    Votre adresse e-mail :
+                                                    {t("contact.emailLabel")}
                                                 </label>
                                                 <input
                                                     type="email"
@@ -61,7 +63,7 @@ export default function Contact() {
                                                     htmlFor="messageTextarea"
                                                     className="form-label"
                                                 >
-                                                    Message :
+                                                    {t("contact.message")}
                                                 </label>
                                                 <textarea
                                                     className="form-control"
@@ -78,7 +80,7 @@ export default function Contact() {
                                                 className="btn btn-primary"
                                                 type="submit"
                                             >
-                                                Envoyer
+                                                {t("contact.send")}
                                             </button>
                                         </form>
                                     </div>
@@ -97,7 +99,7 @@ export default function Contact() {
                                     <h3 className="mb-0">
                                         Dr. Claude Allouche
                                     </h3>
-                                    <small>Gynécologue obstétricien</small>
+                                    <small>{t("contact.job")}</small>
                                 </div>
                                 <div className="d-flex mb-4">
                                     <div>
@@ -113,7 +115,9 @@ export default function Contact() {
                                         </svg>
                                     </div>
                                     <div className="ms-2">
-                                        <h5 className="mb-0">Adresse :</h5>
+                                        <h5 className="mb-0">
+                                            {t("contact.address")}
+                                        </h5>
                                         <small>
                                             Ahuza Clinic 133 Ahuza, Ra`anana,
                                             Israel
@@ -134,7 +138,9 @@ export default function Contact() {
                                         </svg>
                                     </div>
                                     <div className="ms-2">
-                                        <h5 className="mb-0">Téléphone :</h5>
+                                        <h5 className="mb-0">
+                                            {t("contact.phone")}
+                                        </h5>
                                         <small>058-726-0264</small>
                                     </div>
                                 </div>
@@ -153,7 +159,9 @@ export default function Contact() {
                                         </svg>
                                     </div>
                                     <div className="ms-2">
-                                        <h5 className="mb-0">E-mail:</h5>
+                                        <h5 className="mb-0">
+                                            {t("contact.email")}
+                                        </h5>
 
                                         <small>
                                             <a href="#!" className="text-reset">

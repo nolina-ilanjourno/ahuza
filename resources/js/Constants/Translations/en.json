@@ -1,0 +1,69 @@
+{
+    "navigation": {
+        "home": "Home",
+        "about": "About",
+        "articles": "Articles",
+        "faq": "FAQ",
+        "contact": "Contact"
+    },
+    "jobname": "Gynecologist",
+    "mainDescription": "As a specialist in gynecology and obstetrics, I support you with professionalism and care at every stage of your life as a woman.",
+    "takeAppointment": "Make an appointment",
+    "myNetworks": "My social networks",
+    "aboutOf": "About",
+    "me": "me",
+    "less": "less",
+    "plus": "more",
+    "see": "See",
+    "about": {
+        "first": "I am Dr. Claude Allouche, a gynecologist-obstetrician in Raanana and Netanya, with many years of experience and a remarkable background in various fields of my specialty.",
+        "second": "With French training, after studying medicine in Paris and completing my obstetrics and gynecology residency in Caen, I worked for over 25 years as a hospital practitioner at the Évreux hospital in Normandy, where I headed the Women's-Mother-Children's division of the Évreux and Vernon hospitals.",
+        "last": "After making aliyah at the end of 2018, I now work as a gynecologist-obstetrician in Israel at the Laniado Hospital, at the Clalit Health Fund in Netanya, and in my private practice at the Ahuza Clinic in Raanana. In my Raanana clinic, a range of services is offered, including.",
+        "plus": "Gynecological follow-up with IUD placement, contraception monitoring, smear tests, and gynecological ultrasounds. Pregnancy follow-up, obstetric ultrasounds, and care for pregnant women.",
+        "tab1": "Gynecological follow-up with IUD placement, contraception monitoring, smear tests, and gynecological ultrasounds.",
+        "tab2": "Pregnancy follow-up, obstetric ultrasounds, and care for pregnant women.",
+        "tab3": "Menopause follow-up and treatment."
+    },
+    "clinic": {
+        "title": "Ahuza Clinic in",
+        "city": "Ra'anana.",
+        "description": "At my Ahuza Clinic in Ra'anana, I support my patients with flexibility and patience, personal attention, and great availability throughout the three stages of a woman's life:",
+        "tabs1": {
+            "title": "Before pregnancy",
+            "description": "To ensure gynecological follow-up, perform smear tests, and establish personalized contraception tailored to each of you."
+        },
+        "tabs2": {
+            "title": "During pregnancy",
+            "description": "Where the follow-up will also be personalized with clear explanations in French about the different stages we will go through together over the next 9 months."
+        },
+        "tabs3": {
+            "title": "And menopause",
+            "description": "A pivotal period in a woman's life, during which you need to be supported more than ever with expert advice and sometimes medical treatments."
+        }
+    },
+    "whatsapp": {
+        "title": "WhatsApp",
+        "description": "Do you have questions or want to make an appointment? Contact me via WhatsApp."
+    },
+    "articles": {
+        "title": "My articles",
+        "description": "Find my latest articles here.",
+        "plus": "See all articles"
+    },
+    "faqs": {
+        "title": "Frequently Asked Questions",
+        "description": "Can't find what you're looking for?",
+        "contact": "Contact me"
+    },
+    "contact": {
+        "title": "Do you have a question or need help? Contact me",
+        "fullname": "Your full name:",
+        "emailLabel": "Your email address:",
+        "message": "Message:",
+        "address": "Address:",
+        "phone": "Phone:",
+        "email": "Email:",
+        "job": "Gynecologist-obstetrician",
+        "send": "Send"
+    }
+}

@@ -11,6 +11,7 @@ import {
     Offcanvas,
 } from "react-bootstrap";
 import FlagSelect from "../molecules/FlagSelect";
+import useTranslation from "@/Hooks/useTranslation";
 
 interface NavbarProps {
     isClone?: boolean;
@@ -25,6 +26,7 @@ const Navbar: FC<NavbarProps> = ({
     transparent,
     isGuest,
 }) => {
+    const { t } = useTranslation();
     const [navbarSticky, setNavbarSticky] = useState<boolean>(false);
 
     const handleScroll = () => {
@@ -75,7 +77,7 @@ const Navbar: FC<NavbarProps> = ({
                                     size="sm"
                                     className="mx-2"
                                 >
-                                    Prendre rendez-vous
+                                    {t("takeAppointment")}
                                 </Button>
                             </div>
                             <Nav className="align-items-lg-center mx-auto">
@@ -84,7 +86,7 @@ const Navbar: FC<NavbarProps> = ({
                                         as={Link}
                                         href={route("welcome") + "/#"}
                                     >
-                                        Home
+                                        {t("navigation.home")}
                                     </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
@@ -92,7 +94,7 @@ const Navbar: FC<NavbarProps> = ({
                                         as={Link}
                                         href={route("welcome") + "/#about"}
                                     >
-                                        À propos
+                                        {t("navigation.about")}
                                     </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
@@ -100,7 +102,7 @@ const Navbar: FC<NavbarProps> = ({
                                         as={Link}
                                         href={route("articles.index")}
                                     >
-                                        Les articles
+                                        {t("navigation.articles")}
                                     </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
@@ -108,7 +110,7 @@ const Navbar: FC<NavbarProps> = ({
                                         as={Link}
                                         href={route("welcome") + "/#faq"}
                                     >
-                                        F.A.Q
+                                        {t("navigation.faq")}
                                     </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
@@ -116,7 +118,7 @@ const Navbar: FC<NavbarProps> = ({
                                         as={Link}
                                         href={route("welcome") + "/#contact"}
                                     >
-                                        Contact
+                                        {t("navigation.contact")}
                                     </Nav.Link>
                                 </Nav.Item>
                                 {isGuest && (

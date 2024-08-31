@@ -1,9 +1,11 @@
-import { Col, Container, Figure, Image, Nav, Row, Tab } from "react-bootstrap";
 import Illustration1 from "@/Assets/images/illustration2.jpeg";
 import Illustration2 from "@/Assets/images/illustration3.jpeg";
 import Illustration3 from "@/Assets/images/illustration4.jpeg";
+import useTranslation from "@/Hooks/useTranslation";
+import { Col, Container, Figure, Image, Nav, Row, Tab } from "react-bootstrap";
 
 export default function Services() {
+    const { t } = useTranslation();
     return (
         <section className="my-xl-9 my-5">
             <Container>
@@ -12,17 +14,13 @@ export default function Services() {
                         <Col lg={8} className="offset-lg-2">
                             <div className="text-center mb-xl-7 mb-5">
                                 <h2 className="mb-3">
-                                    Ahuza Clinic à{" "}
+                                    {t("clinic.title")}{" "}
                                     <span className="text-primary">
-                                        Ra'anana.
+                                        {t("clinic.city")}
                                     </span>
                                 </h2>
                                 <p className="mb-0">
-                                    Dans ma clinique Ahuza Clinic à Ra'anana,
-                                    j'accompagne mes patientes avec flexibilité
-                                    et patience, une attention personnelle et
-                                    une grande disponibilité tout au long des 3
-                                    périodes de la vie d’une femme :
+                                    {t("clinic.description")}
                                 </p>
                             </div>
                         </Col>
@@ -58,15 +56,10 @@ export default function Services() {
                                         </div>
                                         <div className="ms-4">
                                             <h4 className="mb-0">
-                                                Avant les grossesses{" "}
+                                                {t("clinic.tabs1.title")}
                                             </h4>
                                             <p className="mb-0 mt-lg-3 d-none d-lg-block">
-                                                Pour assurer le suivi
-                                                gynécologique, la réalisation de
-                                                frottis et la mise en place
-                                                d’une contraception
-                                                personnalisée adaptée à chacune
-                                                d’entre vous.
+                                                {t("clinic.tabs1.description")}
                                             </p>
                                         </div>
                                     </Nav.Link>
@@ -92,15 +85,10 @@ export default function Services() {
                                         </div>
                                         <div className="ms-4">
                                             <h4 className="mb-0">
-                                                Pendant la grossesse
+                                                {t("clinic.tabs2.title")}
                                             </h4>
                                             <p className="mb-0 mt-lg-3 d-none d-lg-block">
-                                                Où le suivi sera également
-                                                personnalisé avec des
-                                                explications claires en français
-                                                sur les différentes étapes que
-                                                nous traverserons ensemble les 9
-                                                prochains mois.
+                                                {t("clinic.tabs2.description")}
                                             </p>
                                         </div>
                                     </Nav.Link>
@@ -127,16 +115,10 @@ export default function Services() {
                                         </div>
                                         <div className="ms-4">
                                             <h4 className="mb-0">
-                                                Et la ménopause
+                                                {t("clinic.tabs3.title")}
                                             </h4>
                                             <p className="mb-0 mt-lg-3 d-none d-lg-block">
-                                                Période charnière de la vie
-                                                d’une femme, au cours de
-                                                laquelle vous avez plus que
-                                                jamais besoin d’être accompagnée
-                                                par des conseils avisés, et
-                                                parfois des traitements
-                                                médicaux.
+                                                {t("clinic.tabs3.description")}
                                             </p>
                                         </div>
                                     </Nav.Link>

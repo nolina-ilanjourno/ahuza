@@ -1,8 +1,10 @@
+import AboutImage from "@/Assets/images/about.jpeg";
+import useTranslation from "@/Hooks/useTranslation";
 import React from "react";
-import { Collapse } from "react-bootstrap";
-import Image from "@/Assets/images/about.jpeg";
+import { Collapse, Image } from "react-bootstrap";
 
 export default function About() {
+    const { t } = useTranslation();
     const [open, setOpen] = React.useState<boolean>(false);
 
     const onClick = (event: any) => {
@@ -17,49 +19,19 @@ export default function About() {
                     <div className="col-lg-6">
                         <div className="mb-5">
                             <h2 className="mb-3">
-                                À propos de{" "}
-                                <span className="text-primary">moi</span>
+                                {t("aboutOf")}{" "}
+                                <span className="text-primary">{t("me")}</span>
                             </h2>
-                            <p>
-                                Je suis le Dr Claude Allouche,
-                                gynécologue-obstétricien à Raanana et Netanya,
-                                avec de nombreuses années d'expérience et un
-                                parcours remarquable dans les différents
-                                domaines de ma spécialité.
-                            </p>
-                            <p>
-                                De Formation française, après avoir fait mes
-                                études de médecine à Paris et mon internat de
-                                Gynecologie obstétrique à Caen , j’ai travaillé
-                                pendant plus de 25 ans en tant que praticien
-                                hospitalier à l’hôpital d’Évreux en Normandie,
-                                où j’ai dirigé le pôle Femme-mère-enfants des
-                                hôpitaux d’Évreux et de Vernon.
-                            </p>
-                            <p>
-                                Après avoir fait mon alya fin 2018 je travaille
-                                désormais comme médecin-gynécologue obstétricien
-                                en Israel à l'hôpital Laniado , à la koupat
-                                holim Clalit de Netanya et dans mon cabinet de
-                                la clinique Ahuza à Raanana . Dans ma clinique
-                                de Raanana, une gamme de services est proposée,
-                                notamment
-                            </p>
+                            <p>{t("about.first")}</p>
+                            <p>{t("about.second")}</p>
+                            <p>{t("about.last")}</p>
                             <Collapse in={open}>
                                 <div>
-                                    <p>
-                                        Le suivi gynécologiques avec pose de
-                                        stérilet , suivi de contraception,
-                                        realisation de frottis, échographies
-                                        gynécologiques. Le suivi de la
-                                        grossesse, les échographies
-                                        obstétricales et le traitement des
-                                        femmes enceintes.
-                                    </p>
+                                    <p>{t("about.plus")}</p>
                                 </div>
                             </Collapse>
                             <a href="#!" onClick={onClick} aria-expanded={open}>
-                                Voir {open ? "moins" : "plus"}
+                                {t("see")} {open ? t("less") : t("plus")}
                                 <span className="ms-2">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -89,11 +61,7 @@ export default function About() {
                                 >
                                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
                                 </svg>
-                                <span className="ms-2">
-                                    Suivis gynécologiques avec pose de stérilet
-                                    , suivi de contraception, realisation de
-                                    frottis, échographies gynécologiques
-                                </span>
+                                <span className="ms-2">{t("about.tab1")}</span>
                             </li>
                             <li className="mb-3">
                                 <svg
@@ -106,11 +74,7 @@ export default function About() {
                                 >
                                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
                                 </svg>
-                                <span className="ms-2">
-                                    Le suivi de la grossesse, les échographies
-                                    obstétricales et le traitement des femmes
-                                    enceintes
-                                </span>
+                                <span className="ms-2">{t("about.tab2")}</span>
                             </li>
                             <li className="mb-3 d-flex">
                                 <svg
@@ -123,18 +87,17 @@ export default function About() {
                                 >
                                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
                                 </svg>
-                                <span className="ms-2">
-                                    Le suivi et le traitement de la ménopause.
-                                </span>
+                                <span className="ms-2">{t("about.tab3")}</span>
                             </li>
                         </ul>
                     </div>
                     <div className="col-lg-6">
                         <figure>
-                            <img
-                                src={Image}
+                            <Image
+                                src={AboutImage}
                                 alt="events"
-                                className="img-fluid rounded-3"
+                                fluid
+                                className="rounded-3"
                             />
                         </figure>
                     </div>

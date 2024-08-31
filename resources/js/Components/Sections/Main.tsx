@@ -1,7 +1,10 @@
 import Youtube from "@/Assets/images/youtube.jpg";
 import Icon from "../atoms/Icon";
+import useTranslation from "@/Hooks/useTranslation";
 
 export default function Main() {
+    const { t } = useTranslation();
+
     return (
         <section className="bg-primary-dark pt-9 right-slant-shape">
             <div className="container">
@@ -16,19 +19,16 @@ export default function Main() {
                                     Dr. Claude Allouche
                                     <br />
                                     <span className="text-pattern-line text-secondary">
-                                        Gynécologue
+                                        {t("jobname")}
                                     </span>
                                 </h1>
                                 <p className="mb-0 text-white-stable lead">
-                                    Spécialiste en gynécologie-obstétrique, je
-                                    vous accompagne avec professionnalisme et
-                                    bienveillance à chaque étape de votre vie de
-                                    femme.
+                                    {t("mainDescription")}
                                 </p>
                             </div>
                             <div data-cues="slideInDown">
                                 <a href="#" className="btn btn-primary me-2">
-                                    Prendre rendez-vous
+                                    {t("takeAppointment")}
                                 </a>
                                 <a
                                     href="#"

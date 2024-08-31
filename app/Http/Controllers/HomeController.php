@@ -18,7 +18,7 @@ class HomeController extends Controller
             'canRegister' => Route::has('register'),
             'laravelVersion' => Application::VERSION,
             'phpVersion' => PHP_VERSION,
-            'faqs' => FAQ::withTraductionInLocale()->get(),
+            'faqs' => FAQ::withTraductionInLocale()->orderBy('id')->get(),
             'articles' => new ResourceCollection(
                 Article::with(['categories', 'illustration'])
                 ->whereNot('published_at', null)

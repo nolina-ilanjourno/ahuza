@@ -1,0 +1,69 @@
+{
+    "navigation": {
+        "home": "Accueil",
+        "about": "À propos",
+        "articles": "Les articles",
+        "faq": "FAQ",
+        "contact": "Contact"
+    },
+    "jobname": "Gynécologue",
+    "mainDescription": "Spécialiste en gynécologie-obstétrique, je vous accompagne avec professionnalisme et bienveillance à chaque étape de votre vie de femme.",
+    "takeAppointment": "Prendre rendez-vous",
+    "myNetworks": "Mes réseaux sociaux",
+    "aboutOf": "À propos de",
+    "me": "moi",
+    "less": "moins",
+    "plus": "plus",
+    "see": "Voir",
+    "about": {
+        "first": "Je suis le Dr Claude Allouche, gynécologue-obstétricien à Raanana et Netanya, avec de nombreuses années d'expérience et un parcours remarquable dans les différents domaines de ma spécialité.",
+        "second": "De Formation française, après avoir fait mes études de médecine à Paris et mon internat de Gynecologie obstétrique à Caen , j’ai travaillé pendant plus de 25 ans en tant que praticien hospitalier à l’hôpital d’Évreux en Normandie, où j’ai dirigé le pôle Femme-mère-enfants des hôpitaux d’Évreux et de Vernon.",
+        "last": "Après avoir fait mon alya fin 2018 je travaille désormais comme médecin-gynécologue obstétricien en Israel à l'hôpital Laniado , à la koupat holim Clalit de Netanya et dans mon cabinet de la clinique Ahuza à Raanana . Dans ma clinique de Raanana, une gamme de services est proposée, notamment.",
+        "plus": "Le suivi gynécologiques avec pose de stérilet , suivi de contraception, realisation de frottis, échographies gynécologiques. Le suivi de la grossesse, les échographies obstétricales et le traitement des femmes enceintes.",
+        "tab1": "Suivis gynécologiques avec pose de stérilet , suivi de contraception, realisation de frottis, échographies gynécologiques.",
+        "tab2": "Le suivi de la grossesse, les échographies obstétricales et le traitement des femmes enceintes.",
+        "tab3": "Le suivi et le traitement de la ménopause."
+    },
+    "clinic": {
+        "title": "Ahuza Clinic à",
+        "city": "Ra'anana.",
+        "description": "Dans ma clinique Ahuza Clinic à Ra'anana, j'accompagne mes patientes avec flexibilité et patience, une attention personnelle et une grande disponibilité tout au long des 3 périodes de la vie d’une femme :",
+        "tabs1": {
+            "title": "Avant les grossesses",
+            "description": "Pour assurer le suivi gynécologique, la réalisation de frottis et la mise en place d’une contraception personnalisée adaptée à chacune d’entre vous."
+        },
+        "tabs2": {
+            "title": "Pendant la grossesse",
+            "description": "Où le suivi sera également personnalisé avec des explications claires en français sur les différentes étapes que nous traverserons ensemble les 9 prochains mois."
+        },
+        "tabs3": {
+            "title": "Et la ménopause",
+            "description": "Période charnière de la vie d’une femme, au cours de laquelle vous avez plus que jamais besoin d’être accompagnée par des conseils avisés, et parfois des traitements médicaux."
+        }
+    },
+    "whatsapp": {
+        "title": "Whatsapp",
+        "description": "Vous avez des questions ou vous souhaitez prendre rendez-vous? Contactez-moi via WhatsApp."
+    },
+    "articles": {
+        "title": "Mes articles",
+        "description": "Retrouvez ici mes derniers articles.",
+        "plus": "Voir tous les articles"
+    },
+    "faqs": {
+        "title": "Questions fréquemment posées",
+        "description": "Vous ne trouvez pas ce que vous cherchez ?",
+        "contact": "Contactez-moi"
+    },
+    "contact": {
+        "title": "Vous avez une question ou besoin d'aide ? Contactez-moi",
+        "fullname": "Votre nom complet :",
+        "emailLabel": "Votre adresse e-mail :",
+        "message": "Message :",
+        "address": "Adresse :",
+        "phone": "Téléphone :",
+        "email": "E-mail :",
+        "job": "Gynécologue obstétricien",
+        "send": "Envoyer"
+    }
+}
