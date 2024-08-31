@@ -1,6 +1,8 @@
+import whatsapp from "@/Assets/images/whatsapp.png";
 import Youtube from "@/Assets/images/youtube.jpg";
-import Icon from "../atoms/Icon";
 import useTranslation from "@/Hooks/useTranslation";
+import { Image } from "react-bootstrap";
+import Icon from "../atoms/Icon";
 
 export default function Main() {
     const { t } = useTranslation();
@@ -31,10 +33,17 @@ export default function Main() {
                                     {t("takeAppointment")}
                                 </a>
                                 <a
-                                    href="#"
+                                    href={`whatsapp://send?text=${t(
+                                        "whatsapp.message"
+                                    )}&phone=+9720587260264`}
                                     className="btn btn-outline-secondary"
                                 >
                                     058-726-0264
+                                    <Image
+                                        src={whatsapp}
+                                        width={30}
+                                        className="ms-1 mb-1"
+                                    />
                                 </a>
                             </div>
                         </div>

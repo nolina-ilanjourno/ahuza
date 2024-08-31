@@ -43,6 +43,7 @@
     },
     "whatsapp": {
         "title": "Whatsapp",
+        "message": "Bonjour Dr. Claude Allouche, je souhaite prendre rendez-vous.",
         "description": "Vous avez des questions ou vous souhaitez prendre rendez-vous? Contactez-moi via WhatsApp."
     },
     "articles": {

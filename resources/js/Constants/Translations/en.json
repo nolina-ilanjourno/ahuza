@@ -43,6 +43,7 @@
     },
     "whatsapp": {
         "title": "WhatsApp",
+        "message": "Hello Dr. Claude Allouche, I would like to make an appointment.",
         "description": "Do you have questions or want to make an appointment? Contact me via WhatsApp."
     },
     "articles": {

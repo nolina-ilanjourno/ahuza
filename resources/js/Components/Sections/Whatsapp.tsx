@@ -1,6 +1,5 @@
 import whatsapp from "@/Assets/images/whatsapp.png";
 import useTranslation from "@/Hooks/useTranslation";
-import { Link } from "@inertiajs/react";
 import { Image } from "react-bootstrap";
 
 export default function Whatsapp() {
@@ -23,12 +22,14 @@ export default function Whatsapp() {
                             <p className="text-white-50 px-lg-7 mb-5">
                                 {t("whatsapp.description")}
                             </p>
-                            <Link
-                                href="whatsapp://send?text=Hello World!&phone=+9198********1"
+                            <a
+                                href={`whatsapp://send?text=${t(
+                                    "whatsapp.message"
+                                )}&phone=+9720587260264`}
                                 className="btn btn-dark"
                             >
                                 058-726-0264
-                            </Link>
+                            </a>
                         </div>
                     </div>
                 </div>
