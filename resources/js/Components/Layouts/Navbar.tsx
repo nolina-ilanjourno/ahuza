@@ -133,16 +133,17 @@ const Navbar: FC<NavbarProps> = ({
                             </Nav>
                         </Offcanvas.Body>
                     </NavbarBootstrap.Offcanvas>
-
-                    <Link
-                        href="tel:058-726-0264"
+                    <a
+                        href={`whatsapp://send?text=${t(
+                            "whatsapp.message"
+                        )}&phone=+9720587260264`}
                         className={classNames("mb-0", {
                             "text-white": variant === "dark" && transparent,
                             "text-dark": variant === "light" || !transparent,
                         })}
                     >
                         058-726-0264
-                    </Link>
+                    </a>
                     <NavbarBootstrap.Toggle aria-controls="offcanvasNavbar" />
                 </Container>
             </NavbarBootstrap>

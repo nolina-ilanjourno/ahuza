@@ -18,7 +18,7 @@ export default function Main() {
                         >
                             <div className="mb-4">
                                 <h1 className="mb-5 display-5 text-white-stable">
-                                    Dr. Claude Allouche
+                                    {t("name")}
                                     <br />
                                     <span className="text-pattern-line text-secondary">
                                         {t("jobname")}
