@@ -1,13 +1,13 @@
 import { FC } from "react";
-import { Image } from "react-bootstrap";
+import { Col, Container, Image, Row } from "react-bootstrap";
 import Logo from "@/Assets/images/logo.png";
 
 const Footer: FC = () => {
     return (
         <footer>
-            <div className="container mt-5">
-                <div className="row align-items-center">
-                    <div className="col-md-9">
+            <Container className="my-5">
+                <Row className="row align-items-center">
+                    <Col md={9}>
                         <a href="#" className="text-inverse">
                             <Image src={Logo} alt="logo" width={175} />
                         </a>
@@ -17,8 +17,8 @@ const Footer: FC = () => {
                                 <a href="#">Claude Allouche</a>
                             </span>
                         </div>
-                    </div>
-                    <div className="col-md-3">
+                    </Col>
+                    <Col md={3}>
                         <div className="text-md-end d-flex align-items-center justify-content-md-end">
                             <div className="ms-3 d-flex gap-2">
                                 <a
@@ -68,9 +68,9 @@ const Footer: FC = () => {
                                 </a>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </Col>
+                </Row>
+            </Container>
         </footer>
     );
 };

@@ -14,7 +14,7 @@ import { FC } from "react";
 import useTranslation from "@/Hooks/useTranslation";
 
 const Welcome: FC = () => {
-    useTranslation();
+    const { t } = useTranslation();
     return (
         <main>
             <Head>

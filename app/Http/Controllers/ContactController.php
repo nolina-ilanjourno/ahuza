@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\ContactStoreRequest;
+use App\Models\Contact;
+use App\Models\Customer;
+use Illuminate\Support\Facades\Redirect;
 
 class ContactController extends Controller
 {
-    public function store(Request $request)
+    public function store(ContactStoreRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'message' => 'required',
+        $customer = Customer::firstOrCreate($request->only('email'), $request->only('fullname', 'email'));
+
+        Contact::create([
+            'message' => $request->message,
+            'customer_id' => $customer->id,
         ]);
 
-        // Send email
-
-        return redirect()->back()->with('message', 'Thanks for your message! We\'ll be in touch.');
+        return Redirect::back()->with('success', 'Message sent successfully');
     }
 }

@@ -65,6 +65,7 @@
         "phone": "Téléphone :",
         "email": "E-mail :",
         "job": "Gynécologue obstétricien",
-        "send": "Envoyer"
+        "send": "Envoyer",
+        "messageAlert": "Votre message a bien été envoyé."
     }
 }

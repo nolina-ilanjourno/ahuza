@@ -38,6 +38,7 @@ interface TableProps<D> {
     trashed?: boolean;
     published?: boolean;
     internal?: boolean;
+    showCreateButton?: boolean;
 }
 
 export default function TableV2<D>({
@@ -47,6 +48,7 @@ export default function TableV2<D>({
     trashed = false,
     published = false,
     internal = false,
+    showCreateButton = true,
 }: PropsWithoutRef<TableProps<D>>) {
     const { loadInternalCategoriesLazy } = useLoadOptions();
     const entity = useRef<string | undefined>(
@@ -270,18 +272,20 @@ export default function TableV2<D>({
                                     ></div>
                                 </Fragment>
                             )}
-                            <IconButton
-                                variant="primary"
-                                size="sm"
-                                icon={"plus"}
-                                href={route(`${entity}.create`)}
-                                overlayTitle="Créer un nouvel article"
-                                iconAlign="middle"
-                            >
-                                <span className="d-none d-sm-inline-block d-xl-none d-xxl-inline-block ms-1">
-                                    Nouveau
-                                </span>
-                            </IconButton>
+                            {showCreateButton && (
+                                <IconButton
+                                    variant="primary"
+                                    size="sm"
+                                    icon={"plus"}
+                                    href={route(`${entity}.create`)}
+                                    overlayTitle="Créer un nouvel article"
+                                    iconAlign="middle"
+                                >
+                                    <span className="d-none d-sm-inline-block d-xl-none d-xxl-inline-block ms-1">
+                                        Nouveau
+                                    </span>
+                                </IconButton>
+                            )}
                         </div>
                     </Card.Header>
                     <Card.Body className="p-0">

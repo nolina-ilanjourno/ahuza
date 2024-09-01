@@ -83,10 +83,12 @@ const ArticleForm: FC<{
     };
 
     const removeTraduction = (index: number) => {
-        setData(
-            "traductions",
-            data.traductions.filter((_, i) => i !== index)
-        );
+        if (confirm("Êtes vous sûr de vouloir supprimer cette traduction ?")) {
+            setData(
+                "traductions",
+                data.traductions.filter((_, i) => i !== index)
+            );
+        }
     };
 
     const restore = () => {
@@ -228,7 +230,6 @@ const ArticleForm: FC<{
                                 <Form.Control
                                     type="text"
                                     name="title"
-                                    placeholder="ex: Comment bien choisir son matériel de ski ?"
                                     value={data.title}
                                     onChange={handleTitleChange}
                                     isInvalid={!!errors.title}
@@ -336,7 +337,6 @@ const ArticleForm: FC<{
                                 <Form.Control
                                     as={"textarea"}
                                     name="description"
-                                    placeholder="ex: Comment bien choisir son matériel de ski ?"
                                     value={data.description}
                                     onChange={(e) =>
                                         setData("description", e.target.value)
@@ -376,16 +376,26 @@ const ArticleForm: FC<{
                                         )}
                                     >
                                         <h4>Traduction {index + 1}</h4>
-                                        <Button
-                                            variant="link"
-                                            size="sm"
-                                            className="text-danger"
-                                            onClick={() =>
-                                                removeTraduction(index)
-                                            }
-                                        >
-                                            Supprimer
-                                        </Button>
+                                        <div>
+                                            <Button
+                                                variant="link"
+                                                type="submit"
+                                                size="sm"
+                                                disabled={processing}
+                                            >
+                                                Sauvegarder
+                                            </Button>
+                                            <Button
+                                                variant="link"
+                                                size="sm"
+                                                className="text-danger"
+                                                onClick={() =>
+                                                    removeTraduction(index)
+                                                }
+                                            >
+                                                Supprimer
+                                            </Button>
+                                        </div>
                                     </Col>
                                     <Col lg={12}>
                                         <Form.Group>

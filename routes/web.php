@@ -3,11 +3,14 @@
 use App\Http\Controllers\Auth\ArticleController as AuthArticleController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\CategoryController;
+use App\Http\Controllers\Auth\CustomerController;
 use App\Http\Controllers\Auth\FAQController;
 use App\Http\Controllers\Auth\DashboardController;
 use App\Http\Controllers\Auth\ImageController;
 use App\Http\Controllers\Auth\InternalCategoryController;
 use App\Http\Controllers\Auth\KeywordController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Auth\ContactController as AuthContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\SetLocale;
@@ -17,6 +20,8 @@ Route::middleware('auth')->prefix('/dashboard')->name('dashboard.')->group(funct
     Route::get('/', [DashboardController::class, 'index'])->name('index');
     Route::resource('/categories', CategoryController::class);
     Route::resource('/articles', AuthArticleController::class);
+    Route::resource('/customers', CustomerController::class);
+    Route::resource('/contacts', AuthContactController::class)->only(['index', 'show']);
     Route::resource('/internal-categories', InternalCategoryController::class);
     Route::resource('/keywords', KeywordController::class);
     Route::resource('/images', ImageController::class);
@@ -30,6 +35,8 @@ Route::middleware('auth')->prefix('/dashboard')->name('dashboard.')->group(funct
 
 require __DIR__.'/auth.php';
 require __DIR__.'/api.php';
+
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 Route::middleware(SetLocale::class)->prefix('/{locale?}')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('welcome');

@@ -65,6 +65,7 @@
         "phone": "Phone:",
         "email": "Email:",
         "job": "Gynecologist-obstetrician",
-        "send": "Send"
+        "send": "Send",
+        "messageAlert": "Your message has been sent."
     }
 }
