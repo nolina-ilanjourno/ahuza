@@ -1,4 +1,5 @@
 import Avatar from "@/Assets/images/avatar.jpeg";
+import useTranslation from "@/Hooks/useTranslation";
 import Article from "@/Interfaces/Article";
 import { Link } from "@inertiajs/react";
 import classNames from "classnames";
@@ -10,12 +11,14 @@ interface ArticleItemProps {
 }
 
 const ArticleItem: FC<ArticleItemProps> = ({ article }) => {
+    const { locale } = useTranslation();
     return (
         <Col as="article" lg={4} md={6} xs={12}>
             <Figure className="mb-4 zoom-img w-100">
                 <Link
                     href={route("articles.show", {
                         article: article.slug,
+                        locale,
                     })}
                 >
                     <Image
@@ -50,6 +53,7 @@ const ArticleItem: FC<ArticleItemProps> = ({ article }) => {
                 <Link
                     href={route("articles.show", {
                         article: article.slug,
+                        locale,
                     })}
                     className="text-reset"
                 >

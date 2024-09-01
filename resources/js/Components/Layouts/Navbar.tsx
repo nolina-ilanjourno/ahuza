@@ -26,7 +26,7 @@ const Navbar: FC<NavbarProps> = ({
     transparent,
     isGuest,
 }) => {
-    const { t } = useTranslation();
+    const { t, locale } = useTranslation();
     const [navbarSticky, setNavbarSticky] = useState<boolean>(false);
 
     const handleScroll = () => {
@@ -100,7 +100,9 @@ const Navbar: FC<NavbarProps> = ({
                                 <Nav.Item>
                                     <Nav.Link
                                         as={Link}
-                                        href={route("articles.index")}
+                                        href={route("articles.index", {
+                                            locale,
+                                        })}
                                     >
                                         {t("navigation.articles")}
                                     </Nav.Link>

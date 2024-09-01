@@ -3,9 +3,14 @@ import { NavDropdown } from "react-bootstrap";
 import Flag from "../atoms/Flag";
 import { usePage } from "@inertiajs/react";
 import { PageProps } from "@/types";
+import Article from "@/Interfaces/Article";
 
 const FlagSelect = () => {
-    const { locale } = usePage<PageProps>().props;
+    const { locale, article } = usePage<
+        PageProps<{
+            article?: Article;
+        }>
+    >().props;
 
     return (
         <NavDropdown
@@ -15,6 +20,7 @@ const FlagSelect = () => {
         >
             <NavDropdown.Item
                 href={route(route().current() as string, {
+                    ...(article && { article: article.slug }),
                     locale: "fr",
                 })}
             >
@@ -23,6 +29,7 @@ const FlagSelect = () => {
             </NavDropdown.Item>
             <NavDropdown.Item
                 href={route(route().current() as string, {
+                    ...(article && { article: article.slug }),
                     locale: "en",
                 })}
             >
@@ -31,6 +38,7 @@ const FlagSelect = () => {
             </NavDropdown.Item>
             <NavDropdown.Item
                 href={route(route().current() as string, {
+                    ...(article && { article: article.slug }),
                     locale: "he",
                 })}
             >
