@@ -13,7 +13,7 @@ import {
 import FlagSelect from "../molecules/FlagSelect";
 import useTranslation from "@/Hooks/useTranslation";
 
-interface NavbarProps {
+export interface NavbarProps {
     isClone?: boolean;
     variant?: "light" | "dark";
     transparent?: boolean;
@@ -66,13 +66,15 @@ const Navbar: FC<NavbarProps> = ({
                     >
                         <Offcanvas.Header closeButton>
                             <Offcanvas.Title id="offcanvasNavbarLabel">
-                                <Image src={Logo} alt="Logo" width={175} />
+                                <Link href={route("welcome")}>
+                                    <Image src={Logo} alt="Logo" width={175} />
+                                </Link>
                             </Offcanvas.Title>
                         </Offcanvas.Header>
                         <Offcanvas.Body>
                             <div className="d-flex flex-column mt-3 mt-lg-0 align-items-center">
                                 <Button
-                                    href="#contact"
+                                    href={route("welcome") + "/#contact"}
                                     variant="light"
                                     size="sm"
                                     className="mx-2"
@@ -151,11 +153,12 @@ const Navbar: FC<NavbarProps> = ({
 export const Navigation: FC<{
     transparent?: NavbarProps["transparent"];
     isGuest?: boolean;
-}> = ({ transparent = true, isGuest = true }) => {
+    variant?: NavbarProps["variant"];
+}> = ({ transparent = true, isGuest = true, variant = "dark" }) => {
     return (
         <Fragment>
             <Navbar
-                variant="dark"
+                variant={variant}
                 transparent={transparent}
                 isGuest={isGuest}
             />

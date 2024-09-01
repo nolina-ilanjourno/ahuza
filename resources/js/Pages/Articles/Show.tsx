@@ -10,7 +10,7 @@ const ArticleShow: FC<
     }>
 > = ({ article }) => {
     return (
-        <GuestLayout>
+        <GuestLayout variant="light" transparent={false}>
             <div className="pattern-square"></div>
             <div className="py-xl-9 py-4">
                 <Container>

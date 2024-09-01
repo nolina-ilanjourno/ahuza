@@ -3,7 +3,7 @@ import GuestLayout from "@/Layouts/GuestLayout";
 
 export default function ArticlesView() {
     return (
-        <GuestLayout>
+        <GuestLayout variant="light" transparent={false}>
             <div className="pattern-square"></div>
             <section className="py-5 py-lg-8">
                 <div className="container">
