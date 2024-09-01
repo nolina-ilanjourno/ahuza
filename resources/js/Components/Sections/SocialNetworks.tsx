@@ -17,12 +17,22 @@ export default function SocialNetworks() {
                             <div className="d-flex justify-content-center gap-5 pb-6">
                                 <div>
                                     <figure className="text-center">
-                                        <Icon name="facebook" />
+                                        <a
+                                            href="https://www.facebook.com/DrAllouche2020"
+                                            target="_blank"
+                                        >
+                                            <Icon name="facebook" />
+                                        </a>
                                     </figure>
                                 </div>
                                 <div>
                                     <figure className="text-center">
-                                        <Icon name="linkedin" />
+                                        <a
+                                            href="https://www.linkedin.com/in/claude-allouche-776ba719b/"
+                                            target="_blank"
+                                        >
+                                            <Icon name="linkedin" />
+                                        </a>
                                     </figure>
                                 </div>
                             </div>

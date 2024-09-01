@@ -6,7 +6,7 @@ import Article from "@/Interfaces/Article";
 import useTranslation from "@/Hooks/useTranslation";
 
 export default function Blog() {
-    const { t } = useTranslation();
+    const { t, locale } = useTranslation();
     const { articles } = usePage<
         PageProps<{
             articles: Article[];
@@ -22,7 +22,9 @@ export default function Blog() {
                             <p className="mb-0">
                                 {t("articles.description")} <br />
                                 <Link
-                                    href={route("articles.index")}
+                                    href={route("articles.index", {
+                                        locale,
+                                    })}
                                     className="text-primary"
                                 >
                                     {t("articles.plus")}
@@ -42,7 +44,9 @@ export default function Blog() {
                     <Col lg={12}>
                         <div className="mt-lg-8 mt-5">
                             <Link
-                                href={route("articles.index")}
+                                href={route("articles.index", {
+                                    locale,
+                                })}
                                 className="icon-link icon-link-hover text-dark"
                             >
                                 {t("articles.plus")}
