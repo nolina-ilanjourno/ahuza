@@ -1,3 +1,4 @@
+import { parseTextWithLinks } from "@/Helpers/utils";
 import useTranslation from "@/Hooks/useTranslation";
 import type IFAQ from "@/Interfaces/FAQ";
 import { PageProps } from "@/types";
@@ -51,10 +52,10 @@ const FAQ = () => {
                                                 whiteSpace: "break-spaces",
                                             }}
                                         >
-                                            {
+                                            {parseTextWithLinks(
                                                 faq.traductions[0].traduction
                                                     .answer
-                                            }
+                                            )}
                                         </Accordion.Body>
                                     </Accordion.Item>
                                 ))}
