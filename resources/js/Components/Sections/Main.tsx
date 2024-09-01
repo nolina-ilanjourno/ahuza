@@ -29,7 +29,10 @@ export default function Main() {
                                 </p>
                             </div>
                             <div data-cues="slideInDown">
-                                <a href="#" className="btn btn-primary me-2">
+                                <a
+                                    href="#contact"
+                                    className="btn btn-primary me-2"
+                                >
                                     {t("takeAppointment")}
                                 </a>
                                 <a
