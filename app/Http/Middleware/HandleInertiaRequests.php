@@ -37,7 +37,7 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
-            'locale' => Session::get('locale'),
+            'locale' => Session::get('locale') ?? "fr",
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),

@@ -1,3 +1,4 @@
+import IconButton from "@/Components/atoms/IconButton";
 import SelectInput from "@/Components/Form/SelectInput";
 import LANGUES from "@/Constants/langues";
 import Category, { type CategoryForm } from "@/Interfaces/Category";
@@ -73,9 +74,13 @@ const CategoryForm: FC<{
     return (
         <Card className="border-0 shadow-sm mb-4">
             <Card.Header>
-                <Link href={route("dashboard.categories.index")}>
-                    <ArrowLeft size={16} />
-                </Link>
+                <IconButton
+                    icon="arrow-left"
+                    variant="link"
+                    size="sm"
+                    className="p-0"
+                    onClick={() => history.back()}
+                />
                 <div className="mt-3">
                     <h4>
                         {!!category

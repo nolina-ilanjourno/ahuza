@@ -1,4 +1,5 @@
 import Logo from "@/Assets/images/logo.jpeg";
+import useTranslation from "@/Hooks/useTranslation";
 import { Link } from "@inertiajs/react";
 import classNames from "classnames";
 import { FC, Fragment, useEffect, useState } from "react";
@@ -11,7 +12,6 @@ import {
     Offcanvas,
 } from "react-bootstrap";
 import FlagSelect from "../molecules/FlagSelect";
-import useTranslation from "@/Hooks/useTranslation";
 
 export interface NavbarProps {
     isClone?: boolean;

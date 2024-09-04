@@ -25,11 +25,16 @@ class Traduction extends Model
 
     public function getTraductionAttribute($value)
     {
-        // Vérifie si la valeur est un JSON valide
         if (is_string($value) && $this->isJson($value)) {
-            return json_decode($value, true);
+            $result =  json_decode($value, true);
+
+            if(array_key_exists('illustration_id', $result)){
+                $result['illustration'] = File::find($result['illustration_id']);
+            }
+
+            return $result;
         }
-        // Si ce n'est pas un JSON valide, retourne la valeur brute
+
         return $value;
     }
 

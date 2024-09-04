@@ -1,3 +1,4 @@
+import IconButton from "@/Components/atoms/IconButton";
 import Editor from "@/Components/Editor";
 import SelectInput from "@/Components/Form/SelectInput";
 import TrashedMessage from "@/Components/molecules/Messages/TrashedMessage";
@@ -8,9 +9,8 @@ import useLoadOptions from "@/Hooks/useLoadOptions";
 import Article, { type ArticleForm } from "@/Interfaces/Article";
 import File from "@/Interfaces/File";
 import { Transition } from "@headlessui/react";
-import { Link, router, useForm } from "@inertiajs/react";
+import { router, useForm } from "@inertiajs/react";
 import classNames from "classnames";
-import { ArrowLeft } from "lucide-react";
 import { FC, FormEventHandler, Fragment } from "react";
 import { Button, Card, Col, Form, Image, Row } from "react-bootstrap";
 import { OptionProps, SingleValueProps, components } from "react-select";
@@ -33,10 +33,8 @@ const ArticleForm: FC<{
         post,
         patch,
     } = useForm<ArticleForm>({
-        illustration_id: article?.illustration_id ?? null,
         title: article?.title ?? "",
         slug: article?.slug ?? "",
-        description: article?.description ?? "",
         published_at: article?.published_at ?? null,
         category_ids: article?.categories.map((c) => c.id) ?? [],
         internal_category_ids:
@@ -45,7 +43,13 @@ const ArticleForm: FC<{
         traductions: article?.traductions ?? [
             {
                 id: Math.random().toString(),
-                traduction: "",
+                traduction: {
+                    title: "",
+                    article: "",
+                    description: "",
+                    illustration_id: null,
+                    illustration: null,
+                },
                 langue: "fr",
             },
         ],
@@ -65,21 +69,35 @@ const ArticleForm: FC<{
             ...data.traductions,
             {
                 id: Math.random().toString(),
-                traduction: "",
+                traduction: {
+                    title: "",
+                    article: "",
+                    description: "",
+                    illustration_id: null,
+                    illustration: null,
+                },
                 langue: "fr",
             },
         ]);
     };
 
     const setDataTraductions = (index: number, name: string, value: string) => {
-        setData("traductions", [
-            ...data.traductions.slice(0, index),
-            {
-                ...data.traductions[index],
+        const newTraductions = [...data.traductions];
+        if (name === "langue") {
+            newTraductions[index] = {
+                ...newTraductions[index],
                 [name]: value,
-            },
-            ...data.traductions.slice(index + 1),
-        ]);
+            };
+        } else {
+            newTraductions[index] = {
+                ...newTraductions[index],
+                traduction: {
+                    ...newTraductions[index].traduction!,
+                    [name]: value,
+                },
+            };
+        }
+        setData("traductions", newTraductions);
     };
 
     const removeTraduction = (index: number) => {
@@ -140,18 +158,14 @@ const ArticleForm: FC<{
     return (
         <Card className="border-0 shadow-sm mb-4">
             <Card.Header>
-                <Link href={route("dashboard.articles.index")}>
-                    <ArrowLeft size={16} />
-                </Link>
+                <IconButton
+                    icon="arrow-left"
+                    variant="link"
+                    size="sm"
+                    className="p-0"
+                    onClick={() => history.back()}
+                />
                 <div className="d-flex align-items-center mt-3">
-                    {article?.illustration && (
-                        <Image
-                            src={article.illustration.link}
-                            alt="Preview"
-                            width={100}
-                            className="me-3"
-                        />
-                    )}
                     <div>
                         <h4>
                             {!!article
@@ -175,52 +189,6 @@ const ArticleForm: FC<{
             <Card.Body>
                 <Form noValidate onSubmit={submit}>
                     <Row className="g-3">
-                        <Col md={6}>
-                            <Form.Group>
-                                <Form.Label>
-                                    Image d'illustration{" "}
-                                    <span className="text-danger">*</span> :
-                                </Form.Label>
-                                <Select
-                                    loadOptions={loadFilesLazy}
-                                    getOptionValue={(option) => option.id}
-                                    getOptionLabel={(option) => option.label}
-                                    defaultOptions
-                                    isMulti={false}
-                                    components={{
-                                        Option,
-                                        SingleValue,
-                                    }}
-                                    defaultValue={article?.illustration}
-                                    aria-errormessage={errors.illustration_id}
-                                    onChange={(value) =>
-                                        setData(
-                                            "illustration_id",
-                                            value?.id ?? null
-                                        )
-                                    }
-                                />
-                            </Form.Group>
-                        </Col>
-                        <Col md={6}>
-                            <Form.Group>
-                                <Form.Label>Date de publication</Form.Label>
-                                <Form.Control
-                                    type="date"
-                                    name="published_at"
-                                    value={
-                                        data.published_at
-                                            ? new Date(data.published_at)
-                                                  .toISOString()
-                                                  .split("T")[0]
-                                            : ""
-                                    }
-                                    onChange={(e) =>
-                                        setData("published_at", e.target.value)
-                                    }
-                                />
-                            </Form.Group>
-                        </Col>
                         <Col lg={12}>
                             <Form.Group>
                                 <Form.Label>
@@ -230,12 +198,12 @@ const ArticleForm: FC<{
                                 <Form.Control
                                     type="text"
                                     name="title"
-                                    value={data.title}
+                                    value={data?.title}
                                     onChange={handleTitleChange}
-                                    isInvalid={!!errors.title}
+                                    isInvalid={!!errors.traductions}
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                    {errors.title}
+                                    {errors.traductions}
                                 </Form.Control.Feedback>
                             </Form.Group>
                         </Col>
@@ -255,6 +223,25 @@ const ArticleForm: FC<{
                                 <Form.Control.Feedback type="invalid">
                                     {errors.slug}
                                 </Form.Control.Feedback>
+                            </Form.Group>
+                        </Col>
+                        <Col md={6}>
+                            <Form.Group>
+                                <Form.Label>Date de publication</Form.Label>
+                                <Form.Control
+                                    type="date"
+                                    name="published_at"
+                                    value={
+                                        data.published_at
+                                            ? new Date(data.published_at)
+                                                  .toISOString()
+                                                  .split("T")[0]
+                                            : ""
+                                    }
+                                    onChange={(e) =>
+                                        setData("published_at", e.target.value)
+                                    }
+                                />
                             </Form.Group>
                         </Col>
                         <Col lg={6}>
@@ -280,7 +267,7 @@ const ArticleForm: FC<{
                                 />
                             </Form.Group>
                         </Col>
-                        <Col lg={12}>
+                        <Col lg={6}>
                             <Form.Group>
                                 <Form.Label>Categories internes</Form.Label>
                                 <Select
@@ -325,26 +312,6 @@ const ArticleForm: FC<{
                                 />
                                 <Form.Control.Feedback type="invalid">
                                     {errors.keyword_ids}
-                                </Form.Control.Feedback>
-                            </Form.Group>
-                        </Col>
-                        <Col lg={12}>
-                            <Form.Group>
-                                <Form.Label>
-                                    Description{" "}
-                                    <span className="text-danger">*</span> :
-                                </Form.Label>
-                                <Form.Control
-                                    as={"textarea"}
-                                    name="description"
-                                    value={data.description}
-                                    onChange={(e) =>
-                                        setData("description", e.target.value)
-                                    }
-                                    isInvalid={!!errors.description}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    {errors.description}
                                 </Form.Control.Feedback>
                             </Form.Group>
                         </Col>
@@ -428,6 +395,95 @@ const ArticleForm: FC<{
                                             />
                                         </Form.Group>
                                     </Col>
+                                    <Col md={6}>
+                                        <Form.Group>
+                                            <Form.Label>
+                                                Image d'illustration{" "}
+                                                <span className="text-danger">
+                                                    *
+                                                </span>{" "}
+                                                :
+                                            </Form.Label>
+                                            <Select
+                                                loadOptions={loadFilesLazy}
+                                                getOptionValue={(option) =>
+                                                    option.id
+                                                }
+                                                getOptionLabel={(option) =>
+                                                    option.label
+                                                }
+                                                defaultOptions
+                                                isMulti={false}
+                                                components={{
+                                                    Option,
+                                                    SingleValue,
+                                                }}
+                                                defaultValue={
+                                                    traduction?.illustration
+                                                }
+                                                aria-errormessage={
+                                                    errors.traductions
+                                                }
+                                                onChange={(value) =>
+                                                    setDataTraductions(
+                                                        index,
+                                                        "illustration_id",
+                                                        value!.id
+                                                    )
+                                                }
+                                            />
+                                        </Form.Group>
+                                    </Col>
+                                    <Col lg={6}>
+                                        <Form.Group>
+                                            <Form.Label>
+                                                Titre{" "}
+                                                <span className="text-danger">
+                                                    *
+                                                </span>{" "}
+                                                :
+                                            </Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                name="title"
+                                                value={traduction?.title}
+                                                onChange={(e) =>
+                                                    setDataTraductions(
+                                                        index,
+                                                        "title",
+                                                        e.target.value
+                                                    )
+                                                }
+                                                isInvalid={!!errors.traductions}
+                                            />
+                                            <Form.Control.Feedback type="invalid">
+                                                {errors.traductions}
+                                            </Form.Control.Feedback>
+                                        </Form.Group>
+                                    </Col>
+                                    <Col lg={12}>
+                                        <Form.Group>
+                                            <Form.Label>
+                                                Description :
+                                            </Form.Label>
+                                            <Form.Control
+                                                as={"textarea"}
+                                                name="description"
+                                                value={traduction?.description}
+                                                onChange={(e) =>
+                                                    setDataTraductions(
+                                                        index,
+                                                        "description",
+                                                        e.target.value
+                                                    )
+                                                }
+                                                isInvalid={!!errors.traductions}
+                                            />
+                                            <Form.Control.Feedback type="invalid">
+                                                {errors.traductions}
+                                            </Form.Control.Feedback>
+                                        </Form.Group>
+                                    </Col>
                                     <Col lg={12}>
                                         <Form.Group>
                                             <Form.Label>
@@ -441,11 +497,11 @@ const ArticleForm: FC<{
                                                 onEditorChange={(value) =>
                                                     setDataTraductions(
                                                         index,
-                                                        "traduction",
+                                                        "article",
                                                         value
                                                     )
                                                 }
-                                                value={traduction}
+                                                value={traduction?.article}
                                             />
                                             <Form.Control.Feedback type="invalid">
                                                 {errors.traductions}

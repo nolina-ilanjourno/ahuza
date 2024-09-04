@@ -47,10 +47,10 @@ class ArticleController extends Controller
         return Redirect::route('dashboard.articles.index')->with('success', 'Article created.');
     }
 
-     public function edit(Article $article)
+    public function edit(Article $article)
     {
         return Inertia::render('Dashboard/Articles/Edit', [
-            'article' => $article->load(['categories', 'traductions', 'illustration', 'internalCategories', 'keywords']),
+            'article' => $article->load(['categories', 'traductions', 'internalCategories', 'keywords']),
         ]);
     }
 

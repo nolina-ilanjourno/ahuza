@@ -24,6 +24,8 @@ class Article extends Model
     {
         return $query->with('traductions', function ($query) {
             return $query->where('langue', Session::get('locale'));
+        })->whereHas('traductions', function (Builder $builder) {
+            $builder->where('langue', Session::get('locale'));
         });
     }
 

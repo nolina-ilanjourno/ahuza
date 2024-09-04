@@ -13,6 +13,7 @@ class InternalCategoryController extends Controller
     {
         return new ResourceCollection(
             InternalCategory::filter(Request::only('search', 'trashed'))
+            ->orderBy('label', 'asc')
             ->paginate()
             ->appends(Request::all())
         );

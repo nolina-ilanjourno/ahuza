@@ -13,6 +13,7 @@ class CategoriesController extends Controller
     {
         return new CategoryCollection(Category::with('traductions')
         ->filter(Request::only('search', 'trashed'))
+        ->orderBy('label', 'asc')
         ->paginate()
         ->appends(Request::all()));
     }

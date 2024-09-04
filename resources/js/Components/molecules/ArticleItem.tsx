@@ -23,8 +23,9 @@ const ArticleItem: FC<ArticleItemProps> = ({ article }) => {
                 >
                     <Image
                         src={
-                            article.illustration
-                                ? article.illustration!.link
+                            article.traductions[0].traduction.illustration
+                                ? article.traductions[0].traduction
+                                      .illustration!.link
                                 : ""
                         }
                         width={"100%"}
@@ -57,7 +58,7 @@ const ArticleItem: FC<ArticleItemProps> = ({ article }) => {
                     })}
                     className="text-reset"
                 >
-                    {article.title}
+                    {article.traductions[0].traduction.title}
                 </Link>
             </h3>
             <div className="d-flex align-items-center justify-content-between mb-3 mb-md-0">

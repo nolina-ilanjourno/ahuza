@@ -1,9 +1,9 @@
+import IconButton from "@/Components/atoms/IconButton";
 import TrashedMessage from "@/Components/molecules/Messages/TrashedMessage";
 import type File from "@/Interfaces/File";
 import { type FileForm } from "@/Interfaces/File";
 import { Transition } from "@headlessui/react";
-import { Link, router, useForm } from "@inertiajs/react";
-import { ArrowLeft } from "lucide-react";
+import { router, useForm } from "@inertiajs/react";
 import { FC, FormEventHandler, Fragment } from "react";
 import {
     Button,
@@ -54,9 +54,13 @@ const ImageForm: FC<{
     return (
         <Card className="border-0 shadow-sm mb-4">
             <Card.Header>
-                <Link href={route("dashboard.images.index")}>
-                    <ArrowLeft size={16} />
-                </Link>
+                <IconButton
+                    icon="arrow-left"
+                    variant="link"
+                    size="sm"
+                    className="p-0"
+                    onClick={() => history.back()}
+                />
                 <div className="d-flex align-items-center mt-3">
                     {image && (
                         <Image

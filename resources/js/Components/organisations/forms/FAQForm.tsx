@@ -1,10 +1,10 @@
+import IconButton from "@/Components/atoms/IconButton";
 import SelectInput from "@/Components/Form/SelectInput";
 import LANGUES from "@/Constants/langues";
 import FAQ, { type FAQForm } from "@/Interfaces/FAQ";
 import { Transition } from "@headlessui/react";
-import { Link, useForm } from "@inertiajs/react";
+import { useForm } from "@inertiajs/react";
 import classNames from "classnames";
-import { ArrowLeft } from "lucide-react";
 import React, { FC, FormEventHandler, Fragment } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 
@@ -81,9 +81,13 @@ const FAQForm: FC<{
     return (
         <Card className="border-0 shadow-sm mb-4">
             <Card.Header>
-                <Link href={route("dashboard.faqs.index")}>
-                    <ArrowLeft size={16} />
-                </Link>
+                <IconButton
+                    icon="arrow-left"
+                    variant="link"
+                    size="sm"
+                    className="p-0"
+                    onClick={() => history.back()}
+                />
                 <div className="mt-3">
                     <h4>
                         {!!faq

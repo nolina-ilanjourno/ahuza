@@ -1,4 +1,5 @@
 import {
+    ArrowLeft,
     Copy,
     Eye,
     Facebook,
@@ -23,7 +24,8 @@ export type CustomIcon =
     | "facebook"
     | "linkedin"
     | "search"
-    | "filter";
+    | "filter"
+    | "arrow-left";
 
 interface IconProps extends Omit<LucideProps, "ref"> {
     name: CustomIcon;
@@ -54,6 +56,8 @@ const Icon = ({ name, ...props }: IconProps) => {
                 <Linkedin {...props} />
             ) : name === "search" ? (
                 <Search {...props} />
+            ) : name === "arrow-left" ? (
+                <ArrowLeft {...props} />
             ) : (
                 <Filter {...props} />
             )}

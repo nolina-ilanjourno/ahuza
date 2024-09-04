@@ -20,7 +20,8 @@ class HomeController extends Controller
             'phpVersion' => PHP_VERSION,
             'faqs' => FAQ::withTraductionInLocale()->orderBy('id')->get(),
             'articles' => new ResourceCollection(
-                Article::with(['categories', 'illustration'])
+                Article::with(['categories'])
+                ->withTraductionInLocale()
                 ->whereNot('published_at', null)
                 ->orderBy('published_at', 'desc')
                 ->limit(3)->get()

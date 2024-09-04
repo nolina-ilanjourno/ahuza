@@ -13,6 +13,7 @@ class ArticlesController extends Controller
     {
         return new ResourceCollection(
             Article::with(['categories', 'illustration'])
+            ->withTraductionInLocale()
             ->filter(Request::only('search'))
             ->whereNot('published_at', null)
             ->orderBy('published_at', 'desc')

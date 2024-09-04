@@ -1,7 +1,7 @@
+import IconButton from "@/Components/atoms/IconButton";
 import Keyword, { type KeywordForm } from "@/Interfaces/Keyword";
 import { Transition } from "@headlessui/react";
-import { Link, useForm } from "@inertiajs/react";
-import { ArrowLeft } from "lucide-react";
+import { useForm } from "@inertiajs/react";
 import { FC, FormEventHandler } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 
@@ -32,9 +32,13 @@ const KeywordForm: FC<{
     return (
         <Card className="border-0 shadow-sm mb-4">
             <Card.Header>
-                <Link href={route("dashboard.internal-categories.index")}>
-                    <ArrowLeft size={16} />
-                </Link>
+                <IconButton
+                    icon="arrow-left"
+                    variant="link"
+                    size="sm"
+                    className="p-0"
+                    onClick={() => history.back()}
+                />
                 <div className="mt-3">
                     <h4>
                         {!!keyword

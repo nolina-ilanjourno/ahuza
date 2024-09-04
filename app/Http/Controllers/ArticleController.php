@@ -15,7 +15,8 @@ class ArticleController extends Controller
         return Inertia::render('Articles/Index', [
             'filters' => Request::all('search'),
             'articles' => new ResourceCollection(
-                Article::with(['categories', 'illustration'])
+                Article::with(['categories'])
+                ->withTraductionInLocale()
                 ->filter(Request::only('search'))
                 ->whereNot('published_at', null)
                 ->orderBy('published_at', 'desc')
@@ -26,7 +27,7 @@ class ArticleController extends Controller
 
     public function show(string $locale, Article $article)
     {
-        $article = $article->load(['categories', 'illustration', 'traductions' => fn ($query) => $query->where('langue', $locale)]);
+        $article = $article->load(['categories', 'traductions' => fn ($query) => $query->where('langue', $locale)]);
 
         if($article->traductions->isEmpty()) {
            throw new NotFoundHttpException();

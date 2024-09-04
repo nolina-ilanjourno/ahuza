@@ -18,7 +18,8 @@ const ArticleShow: FC<
                         <Col lg={8} className="offset-lg-2">
                             <article
                                 dangerouslySetInnerHTML={{
-                                    __html: article.traductions[0].traduction,
+                                    __html: article.traductions[0].traduction
+                                        .article,
                                 }}
                             />
                         </Col>

@@ -13,6 +13,7 @@ class KeywordController extends Controller
     {
         return new ResourceCollection(
             Keyword::filter(Request::only('search', 'trashed'))
+            ->orderBy('label', 'asc')
             ->paginate()
             ->appends(Request::all())
         );

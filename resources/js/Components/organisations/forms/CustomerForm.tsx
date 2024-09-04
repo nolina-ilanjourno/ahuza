@@ -1,7 +1,7 @@
+import IconButton from "@/Components/atoms/IconButton";
 import Customer, { type CustomerForm } from "@/Interfaces/Customer";
 import { Transition } from "@headlessui/react";
-import { Link, useForm } from "@inertiajs/react";
-import { ArrowLeft } from "lucide-react";
+import { useForm } from "@inertiajs/react";
 import { FC, FormEventHandler } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 
@@ -34,9 +34,13 @@ const CustomerForm: FC<{
     return (
         <Card className="border-0 shadow-sm mb-4">
             <Card.Header>
-                <Link href={route("dashboard.customers.index")}>
-                    <ArrowLeft size={16} />
-                </Link>
+                <IconButton
+                    icon="arrow-left"
+                    variant="link"
+                    size="sm"
+                    className="p-0"
+                    onClick={() => history.back()}
+                />
                 <div className="mt-3">
                     <h4>
                         {!!customer

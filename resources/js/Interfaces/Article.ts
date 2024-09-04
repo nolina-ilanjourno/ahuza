@@ -4,25 +4,29 @@ import InternalCategory from "./InternalCategory";
 import Keyword from "./Keyword";
 import Traduction from "./Traduction";
 
-export interface ArticleForm {
-    illustration_id: string | null;
+interface ArticleTraduction {
+    article: string;
     title: string;
     description: string;
+    illustration_id: number | null;
+    illustration: File | null;
+}
+
+export interface ArticleForm {
+    title: string;
     slug: string;
     category_ids: string[];
     internal_category_ids: string[];
     keyword_ids: string[];
     published_at: string | null;
-    traductions: Partial<Traduction>[];
+    traductions: Partial<Traduction<ArticleTraduction>>[];
 }
 
 export default interface Article {
     id: string;
-    illustration_id: string | null;
     title: string;
-    description: string;
     slug: string;
-    traductions: Traduction[];
+    traductions: Traduction<ArticleTraduction>[];
     categories: Category[];
     internal_categories: InternalCategory[];
     keywords: Keyword[];

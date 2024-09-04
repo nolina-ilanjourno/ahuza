@@ -17,6 +17,7 @@ class ContactController extends Controller
             'filters' => Request::all('search'),
             'contacts' => new ResourceCollection(
                 Contact::with('customer')
+                ->orderBy('created_at', 'desc')
                 ->filter(Request::only('search'))
                 ->paginate()
             ),

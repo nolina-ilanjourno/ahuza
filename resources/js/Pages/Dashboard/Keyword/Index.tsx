@@ -33,7 +33,7 @@ export default function KeywordsView({
                     <IconButton
                         size="sm"
                         icon="eye"
-                        href={route("dashboard.internal-categories.edit", id)}
+                        href={route("dashboard.keywords.edit", id)}
                     />
                     <IconButton
                         size="sm"
