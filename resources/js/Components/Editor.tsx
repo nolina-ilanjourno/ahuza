@@ -35,7 +35,7 @@ const Editor: FC<EditorProps> = ({ value, show = false, ...props }) => {
                 <TinEditor
                     ref={editorRef}
                     onLoadContent={() => setIsLoading(false)}
-                    apiKey="wyfwpj4shk2r19v64m7is3mgsj1tegsnonqaghu050k8egns"
+                    apiKey="lnhpvwxvzoojxvaxinltqeoev3poa0ce6aixh71i9lapnfsg"
                     init={{
                         height: 900,
                         images_upload_handler,
