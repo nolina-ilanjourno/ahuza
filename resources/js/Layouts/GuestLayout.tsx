@@ -1,3 +1,4 @@
+import Youtube from "@/Assets/images/youtube.jpg";
 import Footer from "@/Components/Layouts/Footer";
 import Navigation, { NavbarProps } from "@/Components/Layouts/Navbar";
 import useTranslation from "@/Hooks/useTranslation";
@@ -11,25 +12,57 @@ export default function GuestLayout({
     title,
     description,
     keywords,
+    imageUrl,
 }: PropsWithChildren<{
     transparent?: boolean;
     variant?: NavbarProps["variant"];
     description?: string;
     keywords?: string[];
     title?: string;
+    imageUrl?: string;
 }>) {
-    const { t } = useTranslation();
+    const { t, locale } = useTranslation();
+
     return (
         <Fragment>
             <Head>
                 <title>{title ?? t("title")}</title>
                 <meta
                     name="description"
-                    content={description ?? t("mainDescription")}
+                    content={description ?? t("about.first")}
                 />
                 <meta
                     name="keywords"
                     content={keywords ? keywords.join(", ") : t("keywords")}
+                />
+                <link rel="canonical" href={window.location.href} />
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1.0"
+                />
+                <meta property="og:title" content={title ?? t("title")} />
+                <meta
+                    property="og:description"
+                    content={description ?? t("mainDescription")}
+                />
+                <meta property="og:url" content={window.location.href} />
+                <meta property="og:type" content="website" />
+                <meta property="og:image" content={imageUrl ?? Youtube} />
+                <meta property="og:locale" content={locale ?? "fr_FR"} />
+                <link
+                    rel="alternate"
+                    hrefLang="fr"
+                    href={route("welcome", { locale: "fr" })}
+                />
+                <link
+                    rel="alternate"
+                    hrefLang="en"
+                    href={route("welcome", { locale: "en" })}
+                />
+                <link
+                    rel="alternate"
+                    hrefLang="he"
+                    href={route("welcome", { locale: "he" })}
                 />
             </Head>
             <Navigation transparent={transparent} variant={variant} />
