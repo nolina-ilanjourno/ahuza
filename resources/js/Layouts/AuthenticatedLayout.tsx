@@ -2,7 +2,7 @@ import Avatar from "@/Assets/images/avatar.jpeg";
 import Footer from "@/Components/Layouts/Footer";
 import Navigation from "@/Components/Layouts/Navbar";
 import { User } from "@/types";
-import { Link } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import { Fragment, PropsWithChildren, ReactNode } from "react";
 
 export default function AuthenticatedLayout({
@@ -11,6 +11,10 @@ export default function AuthenticatedLayout({
 }: PropsWithChildren<{ user: User; header?: ReactNode }>) {
     return (
         <Fragment>
+            <Head>
+                <title>Dashboard</title>
+                <meta name="robots" content="noindex, nofollow" />
+            </Head>
             <Navigation transparent={false} isGuest={false} />
             <div className="h-100 bg-gray-100">
                 <section className="py-lg-7 py-5 bg-light-subtle">
