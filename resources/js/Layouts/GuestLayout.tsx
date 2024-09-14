@@ -37,7 +37,7 @@ export default function GuestLayout({
                 />
                 <link
                     rel="canonical"
-                    href={route(route().current() as string)}
+                    href={route(route().current() as string, route().params)}
                 />
                 <meta
                     name="viewport"
@@ -50,7 +50,7 @@ export default function GuestLayout({
                 />
                 <meta
                     property="og:url"
-                    content={route(route().current() as string)}
+                    content={route(route().current() as string, route().params)}
                 />
                 <meta property="og:type" content="website" />
                 <meta property="og:image" content={imageUrl ?? Youtube} />
