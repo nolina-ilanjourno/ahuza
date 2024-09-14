@@ -16,6 +16,7 @@ const ArticleShow: FC<
             title={article.traductions[0].traduction.title}
             description={article.traductions[0].traduction.description}
             keywords={article.keywords.map((keyword) => keyword.label)}
+            imageUrl={article.traductions[0].traduction.illustration?.link}
         >
             <div className="pattern-square"></div>
             <div className="py-xl-9 py-4">
