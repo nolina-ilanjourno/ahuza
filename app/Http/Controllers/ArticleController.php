@@ -18,7 +18,7 @@ class ArticleController extends Controller
                 Article::with(['categories'])
                 ->withTraductionInLocale()
                 ->filter(Request::only('search'))
-                ->where('published_at', '<=', now())
+                ->where('published_at', '<=', 'now()')
                 ->orderBy('published_at', 'desc')
                 ->paginate(30)
             )

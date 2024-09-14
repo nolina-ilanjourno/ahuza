@@ -1,2 +1,3 @@
 User-agent: *
 Disallow:
+Sitemap: https://claude-allouche.com/sitemap.xml
