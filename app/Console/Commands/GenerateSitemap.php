@@ -3,9 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
-use App\Models\Article; // Utilise ton propre modèle
+use App\Models\Article;
+use Spatie\Sitemap\Sitemap;
 
 class GenerateSitemap extends Command
 {
@@ -14,31 +14,48 @@ class GenerateSitemap extends Command
 
     public function handle()
     {
-        $sitemap = Sitemap::create();
+        // Générer le sitemap de base
+        $sitemap = Sitemap::create("https://claude-allouche.com");
 
-        $sitemap->add(Url::create('/fr'));
-        $sitemap->add(Url::create('/en'));
-        $sitemap->add(Url::create('/he'));
-        $sitemap->add(Url::create('/fr/articles'));
-        $sitemap->add(Url::create('/en/articles'));
-        $sitemap->add(Url::create('/he/articles'));
+        // URLs statiques de base (pages principales)
+        collect([
+            'https://claude-allouche.com',
+            'https://claude-allouche.com/fr',
+            'https://claude-allouche.com/en',
+            'https://claude-allouche.com/he',
+            'https://claude-allouche.com/fr/articles',
+            'https://claude-allouche.com/en/articles',
+            'https://claude-allouche.com/he/articles',
+        ])->each(function($url) use ($sitemap) {
+            $sitemap->add(Url::create($url));
+        });
 
-        $articles =  Article::with('traductions')
-        ->where('published_at', '<=', 'now()')
-        ->get();
-              
-        foreach ($articles as $article) {
-            $traductions = $article->traductions()->pluck('langue')->toArray();
-            foreach ($traductions as $locale) {
-                $sitemap->add(Url::create("/$locale/articles/{$article->slug}")
-                    ->setLastModificationDate($article->updated_at)
-                    ->setChangeFrequency(Url::CHANGE_FREQUENCY_DAILY)
-                    ->setPriority(0.8));
-            }
-        }
-        
+        // Récupérer les articles publiés avec leurs traductions et images
+        $articles = Article::with(['traductions'])
+            ->where('published_at', '<=', now()) // Articles publiés
+            ->get();
+
+        // Ajouter les articles traduits et leurs images dans le sitemap
+        $articles->each(function ($article) use ($sitemap) {
+            $article->traductions->each(function ($translation) use ($article, $sitemap) {
+                
+                // Construire l'URL de l'article en fonction de la langue
+                $url = Url::create("https://claude-allouche.com/{$translation->langue}/articles/{$article->slug}")
+                    ->setLastModificationDate($article->updated_at);
+
+                if ($translation->traduction['illustration']) {
+                    $url->addImage($translation->traduction['illustration']['link']);
+                }
+
+                // Ajouter l'URL avec les images au sitemap
+                $sitemap->add($url);
+            });
+        });
+
+        // Écrire le sitemap dans un fichier XML
         $sitemap->writeToFile(public_path('sitemap.xml'));
 
+        // Message de confirmation
         $this->info('Sitemap généré avec succès!');
     }
 }
