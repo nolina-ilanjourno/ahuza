@@ -35,7 +35,10 @@ export default function GuestLayout({
                     name="keywords"
                     content={keywords ? keywords.join(", ") : t("keywords")}
                 />
-                <link rel="canonical" href={window.location.href} />
+                <link
+                    rel="canonical"
+                    href={route(route().current() as string)}
+                />
                 <meta
                     name="viewport"
                     content="width=device-width, initial-scale=1.0"
@@ -45,7 +48,10 @@ export default function GuestLayout({
                     property="og:description"
                     content={description ?? t("mainDescription")}
                 />
-                <meta property="og:url" content={window.location.href} />
+                <meta
+                    property="og:url"
+                    content={route(route().current() as string)}
+                />
                 <meta property="og:type" content="website" />
                 <meta property="og:image" content={imageUrl ?? Youtube} />
                 <meta property="og:locale" content={locale ?? "fr_FR"} />

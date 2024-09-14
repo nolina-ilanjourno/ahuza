@@ -15,17 +15,17 @@ class GenerateSitemap extends Command
     public function handle()
     {
         // Générer le sitemap de base
-        $sitemap = Sitemap::create("https://claude-allouche.com");
+        $sitemap = Sitemap::create("/");
 
         // URLs statiques de base (pages principales)
         collect([
-            'https://claude-allouche.com',
-            'https://claude-allouche.com/fr',
-            'https://claude-allouche.com/en',
-            'https://claude-allouche.com/he',
-            'https://claude-allouche.com/fr/articles',
-            'https://claude-allouche.com/en/articles',
-            'https://claude-allouche.com/he/articles',
+            '/',
+            '/fr',
+            '/en',
+            '/he',
+            '/fr/articles',
+            '/en/articles',
+            '/he/articles',
         ])->each(function($url) use ($sitemap) {
             $sitemap->add(Url::create($url));
         });
@@ -40,7 +40,7 @@ class GenerateSitemap extends Command
             $article->traductions->each(function ($translation) use ($article, $sitemap) {
                 
                 // Construire l'URL de l'article en fonction de la langue
-                $url = Url::create("https://claude-allouche.com/{$translation->langue}/articles/{$article->slug}")
+                $url = Url::create("/{$translation->langue}/articles/{$article->slug}")
                     ->setLastModificationDate($article->updated_at);
 
                 if ($translation->traduction['illustration']) {
