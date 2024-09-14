@@ -27,7 +27,7 @@ class ArticleController extends Controller
 
     public function show(string $locale, Article $article)
     {
-        $article = $article->load(['categories', 'traductions' => fn ($query) => $query->where('langue', $locale)]);
+        $article = $article->load(['categories', 'traductions' => fn ($query) => $query->where('langue', $locale), 'keywords']);
 
         if($article->traductions->isEmpty()) {
            throw new NotFoundHttpException();

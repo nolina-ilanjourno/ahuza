@@ -10,7 +10,13 @@ const ArticleShow: FC<
     }>
 > = ({ article }) => {
     return (
-        <GuestLayout variant="light" transparent={false}>
+        <GuestLayout
+            variant="light"
+            transparent={false}
+            title={article.traductions[0].traduction.title}
+            description={article.traductions[0].traduction.description}
+            keywords={article.keywords.map((keyword) => keyword.label)}
+        >
             <div className="pattern-square"></div>
             <div className="py-xl-9 py-4">
                 <Container>
