@@ -14,6 +14,7 @@ class ArticleStoreOrUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'title' => ['required', 'max:255'],
             'category_ids' => ['required', 'exists:categories,id'],
             'internal_category_ids' => ['nullable', 'exists:internal_categories,id'],
             'keyword_ids' => ['nullable', 'exists:keywords,id'],
