@@ -1,9 +1,11 @@
-import ReactDOMServer from "react-dom/server";
 import { createInertiaApp } from "@inertiajs/react";
 import createServer from "@inertiajs/react/server";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
-import { route } from "../../vendor/tightenco/ziggy";
+import ReactDOMServer from "react-dom/server";
+import { Provider } from "react-redux";
 import { RouteName } from "ziggy-js";
+import { route } from "../../vendor/tightenco/ziggy";
+import { store } from "./store";
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
@@ -26,7 +28,11 @@ createServer((page) =>
                     location: new URL(page.props.ziggy.location),
                 });
 
-            return <App {...props} />;
+            return (
+                <Provider store={store}>
+                    <App {...props} />
+                </Provider>
+            );
         },
     })
 );

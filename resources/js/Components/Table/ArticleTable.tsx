@@ -1,23 +1,11 @@
-import Avatar from "@/Assets/images/avatar.jpeg";
 import Article from "@/Interfaces/Article";
 import PaginatedData from "@/Interfaces/PaginatedData";
 import { useLazyGetArticlesQuery } from "@/Services/articles";
 import { PageProps } from "@/types";
-import { Link, router, usePage } from "@inertiajs/react";
-import classNames from "classnames";
-import { pickBy } from "lodash";
+import { router, usePage } from "@inertiajs/react";
 import { FC, useEffect, useState } from "react";
-import {
-    Button,
-    Col,
-    Container,
-    Figure,
-    Form,
-    Image,
-    Row,
-} from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useInView } from "react-intersection-observer";
-import { usePrevious } from "react-use";
 import TextInput from "../Form/TextInput";
 import ArticleItem from "../molecules/ArticleItem";
 
@@ -40,8 +28,6 @@ const ArticleTable: FC = () => {
     });
 
     const { ref, inView } = useInView();
-
-    const prevValues = usePrevious(values);
 
     const handleChange = (e: any) => {
         const name = e.target.name;
@@ -85,19 +71,21 @@ const ArticleTable: FC = () => {
     };
 
     useEffect(() => {
-        if (inView && hasMore && prevValues) {
-            getArticlesLazy(
-                pickBy({
-                    ...values,
-                    page: values.page + 1,
-                })
-            )
+        if (inView && hasMore) {
+            getArticlesLazy({
+                ...values,
+                page: values.page + 1,
+            })
                 .unwrap()
                 .then((response) => {
                     setArticleList((articleList) => [
                         ...articleList,
                         ...response.data,
                     ]);
+                    setValues((values) => ({
+                        ...values,
+                        page: response.meta.current_page,
+                    }));
                     setHasMore(
                         response.meta.current_page !== response.meta.last_page
                     );

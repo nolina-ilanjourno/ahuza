@@ -1,6 +1,6 @@
 import { Link } from "@inertiajs/react";
 import get from "lodash/get";
-import { ChevronRight, EyeIcon } from "lucide-react";
+import { EyeIcon } from "lucide-react";
 
 interface TableProps<T> {
     columns: {

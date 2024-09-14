@@ -20,7 +20,7 @@ class ArticleController extends Controller
                 ->filter(Request::only('search'))
                 ->where('published_at', '<=', 'now()')
                 ->orderBy('published_at', 'desc')
-                ->paginate(30)
+                ->paginate(15)
             )
         ]);
     }
