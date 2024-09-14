@@ -41,7 +41,7 @@ class ArticleController extends Controller
         }
 
         $article->categories()->attach($request->category_ids);
-        $article->internal_categories()->attach($request->internal_category_ids);
+        $article->internalCategories()->attach($request->internal_category_ids);
         $article->keywords()->attach($request->keyword_ids);
 
         return Redirect::route('dashboard.articles.index')->with('success', 'Article created.');
