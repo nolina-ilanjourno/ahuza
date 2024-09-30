@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\InternalCategoryController;
 use App\Http\Controllers\Auth\KeywordController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Auth\ContactController as AuthContactController;
+use App\Http\Controllers\Auth\KeywordGroupController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\SetLocale;
@@ -24,6 +25,7 @@ Route::middleware('auth')->prefix('/dashboard')->name('dashboard.')->group(funct
     Route::resource('/contacts', AuthContactController::class)->only(['index', 'show']);
     Route::resource('/internal-categories', InternalCategoryController::class);
     Route::resource('/keywords', KeywordController::class);
+    Route::resource('/keyword-groups', KeywordGroupController::class);
     Route::resource('/images', ImageController::class);
     Route::put('/images/{file}/restore', [ImageController::class, 'restore'])->name('images.restore');
     Route::resource('/faq', FAQController::class)->names('faqs');

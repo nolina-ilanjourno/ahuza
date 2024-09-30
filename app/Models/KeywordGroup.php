@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Keyword extends Model
+class KeywordGroup extends Model
 {
     use HasFactory;
 
@@ -13,12 +13,12 @@ class Keyword extends Model
 
     public function articles()
     {
-        return $this->belongsToMany(Article::class)->withTimestamps();
+        return $this->manyto(Article::class)->withTimestamps();
     }
 
-    public function groups()
+    public function keywords()
     {
-        return $this->belongsToMany(KeywordGroup::class)->withTimestamps();
+        return $this->belongsToMany(Keyword::class)->withTimestamps();
     }
 
     public function scopeFilter($query, array $filters)

@@ -4,25 +4,36 @@ import SelectInput from "@/Components/Form/SelectInput";
 import TrashedMessage from "@/Components/molecules/Messages/TrashedMessage";
 import Select from "@/Components/Select";
 import LANGUES from "@/Constants/langues";
-import { slugify } from "@/Helpers/utils";
+import { slugify, uniqueByKey } from "@/Helpers/utils";
 import useLoadOptions from "@/Hooks/useLoadOptions";
 import Article, { type ArticleForm } from "@/Interfaces/Article";
 import File from "@/Interfaces/File";
+import Keyword from "@/Interfaces/Keyword";
+import KeywordGroup from "@/Interfaces/KeywordGroup";
 import { Transition } from "@headlessui/react";
 import { router, useForm } from "@inertiajs/react";
 import classNames from "classnames";
-import { FC, FormEventHandler, Fragment } from "react";
+import { FC, FormEventHandler, Fragment, useState } from "react";
 import { Button, Card, Col, Form, Image, Row } from "react-bootstrap";
-import { OptionProps, SingleValueProps, components } from "react-select";
+import {
+    MultiValue,
+    OptionProps,
+    SingleValueProps,
+    components,
+} from "react-select";
 
 const ArticleForm: FC<{
     article?: Article;
 }> = ({ article }) => {
+    const [keywords, setKeywords] = useState<Keyword[]>(
+        article?.keywords ?? []
+    );
     const {
         loadCategoriesLazy,
         loadFilesLazy,
         loadInternalCategoriesLazy,
         loadKeywordsLazy,
+        loadKeywordGroupsLazy,
     } = useLoadOptions();
     const {
         data,
@@ -116,6 +127,26 @@ const ArticleForm: FC<{
         ) {
             router.put(route("dashboard.articles.restore", article.id));
         }
+    };
+
+    const onKeywordGroupChange = (value: MultiValue<KeywordGroup>) => {
+        const keywords = value.map((v) => v.keywords).flat();
+        return setKeywords((old) => {
+            const unique = uniqueByKey([...old, ...keywords], "id");
+            setData(
+                "keyword_ids",
+                unique.map((v) => v.id)
+            );
+            return unique;
+        });
+    };
+
+    const onKeywordChange = (value: MultiValue<Keyword>) => {
+        setData(
+            "keyword_ids",
+            value.map((v) => v.id)
+        );
+        return setKeywords(value as Keyword[]);
     };
 
     const SingleValue = ({ children, ...props }: SingleValueProps<File>) => (
@@ -301,14 +332,25 @@ const ArticleForm: FC<{
                                     getOptionLabel={(option) => option.label}
                                     defaultOptions
                                     isMulti
-                                    defaultValue={article?.keywords}
+                                    value={keywords}
                                     aria-errormessage={errors.keyword_ids}
-                                    onChange={(value) => {
-                                        setData(
-                                            "keyword_ids",
-                                            value.map((v) => v.id)
-                                        );
-                                    }}
+                                    onChange={onKeywordChange}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.keyword_ids}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                        </Col>
+                        <Col lg={12}>
+                            <Form.Group>
+                                <Form.Label>Groupe de mots clé </Form.Label>
+                                <Select
+                                    loadOptions={loadKeywordGroupsLazy}
+                                    getOptionValue={(option) => option.id}
+                                    getOptionLabel={(option) => option.label}
+                                    isMulti
+                                    defaultOptions
+                                    onChange={onKeywordGroupChange}
                                 />
                                 <Form.Control.Feedback type="invalid">
                                     {errors.keyword_ids}

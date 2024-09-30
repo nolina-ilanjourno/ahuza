@@ -105,6 +105,19 @@ export default function AuthenticatedLayout({
                                             <Link
                                                 className="nav-link"
                                                 href={route(
+                                                    "dashboard.keyword-groups.index"
+                                                )}
+                                            >
+                                                <i className="align-bottom bx bx-user"></i>
+                                                <span className="ms-2">
+                                                    Groupes de mots-clés
+                                                </span>
+                                            </Link>
+                                        </li>
+                                        <li className="nav-item">
+                                            <Link
+                                                className="nav-link"
+                                                href={route(
                                                     "dashboard.faqs.index"
                                                 )}
                                             >

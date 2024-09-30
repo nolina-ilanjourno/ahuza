@@ -1,4 +1,5 @@
 import IconButton from "@/Components/atoms/IconButton";
+import SoftBadge from "@/Components/SoftBasge";
 import TableV2 from "@/Components/Table/TableV2";
 import Article from "@/Interfaces/Article";
 import PaginatedData from "@/Interfaces/PaginatedData";
@@ -56,6 +57,23 @@ const ArticlesView: FC<
                     />
                 </Fragment>
             ),
+            cell: (info) => info.getValue(),
+        },
+        {
+            header: "Publié le",
+            footer: (props) => props.column.id,
+            accessorFn: ({ published_at }) =>
+                published_at ? (
+                    DateTime.fromFormat(
+                        published_at,
+                        "yyyy-MM-dd HH:mm:ss"
+                    ).toFormat("dd-MM-yyyy HH:mm")
+                ) : (
+                    <SoftBadge bg="red" textColor="white">
+                        Non publié
+                    </SoftBadge>
+                ),
+            id: "published_at",
             cell: (info) => info.getValue(),
         },
         {

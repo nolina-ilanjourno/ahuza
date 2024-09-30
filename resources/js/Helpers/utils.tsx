@@ -3,6 +3,15 @@ export const capitalizeFirstLetter = (string?: string): string => {
     return string[0].toUpperCase() + string.slice(1);
 };
 
+export function uniqueByKey<T>(array: T[], key: keyof T): T[] {
+    const uniqueItems = array.reduce((acc, item) => {
+        acc[String(item[key])] = item; // Utilise la valeur de la clé pour rendre l'élément unique
+        return acc;
+    }, {} as Record<string, T>);
+
+    return Object.values(uniqueItems); // Retourne les valeurs uniques
+}
+
 export const splitText = (
     text: string | undefined | null,
     limit: number = 30

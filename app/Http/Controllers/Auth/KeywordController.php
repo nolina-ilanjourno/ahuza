@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\KeywordStroreOrUpdateRequest;
+use App\Http\Requests\KeywordStoreOrUpdateRequest;
 use App\Models\Keyword;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Request;
@@ -31,7 +31,7 @@ class KeywordController extends Controller
         return Inertia::render('Dashboard/Keyword/Create');
     }
 
-    public function store(KeywordStroreOrUpdateRequest $request): RedirectResponse {
+    public function store(KeywordStoreOrUpdateRequest $request): RedirectResponse {
         Keyword::create($request->validated());
 
         return Redirect::route('dashboard.keywords.index')->with('success', 'Keyword created.');
@@ -44,7 +44,7 @@ class KeywordController extends Controller
         ]);
     }
 
-    public function update(Keyword $keyword, KeywordStroreOrUpdateRequest $request): RedirectResponse {
+    public function update(Keyword $keyword, KeywordStoreOrUpdateRequest $request): RedirectResponse {
         $keyword->updateOrFail($request->validated());
         
         return Redirect::back()->with('success', 'keyword updated.');
