@@ -16,5 +16,6 @@ Route::middleware('auth')->prefix('/api')->group(function () {
     Route::post('/files', [FileStorageController::class, 'store']);
     Route::get('/files/list', [FileStorageController::class, 'list'])->name('files.list');
     Route::get('/files', [FileStorageController::class, 'index']);
-    Route::get('/articles', [ArticlesController::class, 'index']);
 });
+
+Route::get('/articles', [ArticlesController::class, 'index']);
