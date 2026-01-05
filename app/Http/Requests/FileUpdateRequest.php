@@ -15,7 +15,7 @@ class FileUpdateRequest extends FormRequest
     {
         return [
             'file' => ['nullable', 'file', 'mimes:jpeg,png,jpg,gif,svg,webp,jfif', 'max:2048'],
-            'label' => ['required', 'string'],
+            'label' => ['nullable', 'string'],
         ];
     }
 }

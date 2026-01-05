@@ -56,8 +56,10 @@ class ImageController extends Controller
 
     public function update(File $image, FileUpdateRequest $request)
     {
-        // Update the label
-        $image->label = $request->label;
+        // Update the label if provided and not empty
+        if ($request->filled('label')) {
+            $image->label = $request->label;
+        }
 
         // If a new file is uploaded, process it
         if ($request->hasFile('file')) {
