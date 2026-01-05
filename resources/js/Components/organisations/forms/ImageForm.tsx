@@ -21,7 +21,7 @@ const ImageForm: FC<{
 }> = ({ image }) => {
     const [copiedText, copy] = useCopyToClipboard();
 
-    const { data, setData, put, post, errors, processing, recentlySuccessful } =
+    const { data, setData, post, errors, processing, recentlySuccessful } =
         useForm<Partial<FileForm>>({
             label: image?.label ?? "",
         });
@@ -38,7 +38,9 @@ const ImageForm: FC<{
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
         if (image) {
-            return put(route("dashboard.images.update", image.id));
+            return post(route("dashboard.images.update", image.id), {
+                forceFormData: true,
+            });
         }
 
         return post(route("dashboard.images.store"));

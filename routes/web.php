@@ -26,7 +26,8 @@ Route::middleware('auth')->prefix('/dashboard')->name('dashboard.')->group(funct
     Route::resource('/internal-categories', InternalCategoryController::class);
     Route::resource('/keywords', KeywordController::class);
     Route::resource('/keyword-groups', KeywordGroupController::class);
-    Route::resource('/images', ImageController::class);
+    Route::resource('/images', ImageController::class)->except(['update']);
+    Route::post('/images/{image}', [ImageController::class, 'update'])->name('images.update');
     Route::put('/images/{file}/restore', [ImageController::class, 'restore'])->name('images.restore');
     Route::resource('/faq', FAQController::class)->names('faqs');
     Route::put('/articles/{article}/restore', [AuthArticleController::class, 'restore'])->name('articles.restore');
