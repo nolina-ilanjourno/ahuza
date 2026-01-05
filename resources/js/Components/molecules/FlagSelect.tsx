@@ -1,5 +1,4 @@
 // Import des images des drapeaux
-import { NavDropdown } from "react-bootstrap";
 import Flag from "../atoms/Flag";
 import { usePage } from "@inertiajs/react";
 import { PageProps } from "@/types";
@@ -12,40 +11,38 @@ const FlagSelect = () => {
         }>
     >().props;
 
+    const languages = [
+        { code: "fr", label: "Français" },
+        { code: "en", label: "English" },
+        { code: "he", label: "עברית" },
+    ];
+
     return (
-        <NavDropdown
-            title={<Flag lang={locale} />}
-            menuVariant="light"
-            className="bg-light rounded"
-        >
-            <NavDropdown.Item
-                href={route(route().current() as string, {
-                    ...(article && { article: article.slug }),
-                    locale: "fr",
-                })}
-            >
-                <Flag lang="fr" />
-                Français
-            </NavDropdown.Item>
-            <NavDropdown.Item
-                href={route(route().current() as string, {
-                    ...(article && { article: article.slug }),
-                    locale: "en",
-                })}
-            >
-                <Flag lang="en" />
-                English
-            </NavDropdown.Item>
-            <NavDropdown.Item
-                href={route(route().current() as string, {
-                    ...(article && { article: article.slug }),
-                    locale: "he",
-                })}
-            >
-                <Flag lang="he" />
-                עברית
-            </NavDropdown.Item>
-        </NavDropdown>
+        <div className="d-flex gap-2 align-items-center">
+            {languages.map((lang) => (
+                <a
+                    key={lang.code}
+                    href={route(route().current() as string, {
+                        ...(article && { article: article.slug }),
+                        locale: lang.code,
+                    })}
+                    className={`flag-link ${locale === lang.code ? "active" : ""}`}
+                    title={lang.label}
+                    style={{
+                        opacity: locale === lang.code ? 1 : 0.6,
+                        transition: "opacity 0.2s",
+                        cursor: "pointer",
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+                    onMouseLeave={(e) =>
+                        (e.currentTarget.style.opacity =
+                            locale === lang.code ? "1" : "0.6")
+                    }
+                >
+                    <Flag lang={lang.code} />
+                </a>
+            ))}
+        </div>
     );
 };
 
