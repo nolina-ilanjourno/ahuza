@@ -63,11 +63,12 @@ class ImageController extends Controller
 
         // If a new file is uploaded, process it
         if ($request->hasFile('file')) {
-            // Delete the old file
+                 // Delete the old file
             Storage::delete($image->name);
 
             // Store the new file
             $name = $request->file('file')->store();
+
 
             // Update file-related fields
             $image->name = $name;
