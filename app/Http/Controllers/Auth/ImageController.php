@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FileStoreRequest;
+use App\Http\Requests\FileUpdateRequest;
 use App\Models\File;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -53,9 +54,27 @@ class ImageController extends Controller
         ]);
     }
 
-    public function update(File $image, FileStoreRequest $request)
+    public function update(File $image, FileUpdateRequest $request)
     {
-        $image->update($request->validated());
+        // Update the label
+        $image->label = $request->label;
+
+        // If a new file is uploaded, process it
+        if ($request->hasFile('file')) {
+            // Delete the old file
+            Storage::delete($image->name);
+
+            // Store the new file
+            $name = $request->file('file')->store();
+
+            // Update file-related fields
+            $image->name = $name;
+            $image->size = $request->file('file')->getSize();
+            $image->mime_type = $request->file('file')->getMimeType();
+            $image->link = Storage::url($name);
+        }
+
+        $image->save();
 
         return Redirect::back()->with('success', 'Article updated.');
     }
